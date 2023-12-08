@@ -26,6 +26,10 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 
 #ifndef _keyboard_public
 #define _keyboard_public
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -215,17 +219,17 @@ extern "C"
   =============================================================================
   */
 
-  void KB_KeyEvent(int scancode, int keypressed);  // Interprets scancodes
-  int KB_KeyWaiting(void);                         // Checks if a character is waiting in the keyboard queue
-  uint8_t KB_Getch(void);                          // Gets the next keypress
-  void KB_Addch(uint8_t ch);                       // Adds key to end of queue
-  void KB_FlushKeyboardQueue(void);                // Empties the keyboard queue of all waiting characters.
-  void KB_ClearKeysDown(void);                     // Clears all keys down flags.
-  char* KB_ScanCodeToString(kb_scancode scancode); // convert scancode into a string
-  kb_scancode KB_StringToScanCode(char* string);   // convert a string into a scancode
-  void KB_TurnKeypadOn(void);                      // turn the keypad on
-  void KB_TurnKeypadOff(void);                     // turn the keypad off
-  int KB_KeypadActive(void);                       // check whether keypad is active
+  void KB_KeyEvent(int32_t scancode, int32_t keypressed); // Interprets scancodes
+  int32_t KB_KeyWaiting(void);                            // Checks if a character is waiting in the keyboard queue
+  uint8_t KB_Getch(void);                                 // Gets the next keypress
+  void KB_Addch(uint8_t ch);                              // Adds key to end of queue
+  void KB_FlushKeyboardQueue(void);                       // Empties the keyboard queue of all waiting characters.
+  void KB_ClearKeysDown(void);                            // Clears all keys down flags.
+  char* KB_ScanCodeToString(kb_scancode scancode);        // convert scancode into a string
+  kb_scancode KB_StringToScanCode(char* string);          // convert a string into a scancode
+  void KB_TurnKeypadOn(void);                             // turn the keypad on
+  void KB_TurnKeypadOff(void);                            // turn the keypad off
+  int32_t KB_KeypadActive(void);                          // check whether keypad is active
   void KB_Startup(void);
   void KB_Shutdown(void);
 

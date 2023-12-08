@@ -33,18 +33,20 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #ifndef _sounds_public_
 #define _sounds_public_
 
+#include <stdint.h>
+
 #define HIRESMUSICPATH "tunes"
 
 extern int32_t FXDevice;
-extern int32 MusicDevice;
-extern int32 FXVolume;
-extern int32 MusicVolume;
-extern int32 NumVoices;
-extern int32 NumChannels;
-extern int32 NumBits;
-extern int32 MixRate;
-extern int32 MidiPort;
-extern int32 ReverseStereo;
+extern int32_t MusicDevice;
+extern int32_t FXVolume;
+extern int32_t MusicVolume;
+extern int32_t NumVoices;
+extern int32_t NumChannels;
+extern int32_t NumBits;
+extern int32_t MixRate;
+extern int32_t MidiPort;
+extern int32_t ReverseStereo;
 
 void SoundStartup(void);
 void SoundShutdown(void);

@@ -28,6 +28,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include <malloc.h>
 #endif
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,10 +44,10 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 // STATICS
 //=============
 
-int32 numlumps;
+int32_t numlumps;
 static uint8_t** lumpcache;
 static lumpinfo_t* lumpinfo; // location of each lump on disk
-static boolean RTS_Started = false;
+static bool RTS_Started = false;
 
 uint8_t lumplockbyte[11];
 
@@ -75,9 +76,9 @@ RTS_AddFile(char* filename)
 {
   wadinfo_t header;
   lumpinfo_t* lump_p;
-  int32 i;
-  int32 handle, length;
-  int32 startlump;
+  int32_t i;
+  int32_t handle, length;
+  int32_t startlump;
   filelump_t* fileinfo;
 
   //
@@ -131,7 +132,7 @@ RTS_AddFile(char* filename)
 void
 RTS_Init(char* filename)
 {
-  int32 length;
+  int32_t length;
   //
   // open all the files, load headers, and count lumps
   //
@@ -162,7 +163,7 @@ RTS_Init(char* filename)
 ====================
 */
 
-int32
+int32_t
 RTS_NumSounds(void)
 {
   return numlumps - 1;
@@ -178,8 +179,8 @@ RTS_NumSounds(void)
 ====================
 */
 
-int32
-RTS_SoundLength(int32 lump)
+int32_t
+RTS_SoundLength(int32_t lump)
 {
   lump++;
   if (lump >= numlumps)
@@ -196,7 +197,7 @@ RTS_SoundLength(int32 lump)
 */
 
 char*
-RTS_GetSoundName(int32 i)
+RTS_GetSoundName(int32_t i)
 {
   i++;
   if (i >= numlumps)
@@ -214,7 +215,7 @@ RTS_GetSoundName(int32 i)
 ====================
 */
 void
-RTS_ReadLump(int32 lump, void* dest)
+RTS_ReadLump(int32_t lump, void* dest)
 {
   lumpinfo_t* l;
 
@@ -235,10 +236,10 @@ RTS_ReadLump(int32 lump, void* dest)
 ====================
 */
 void*
-RTS_GetSound(int32 lump)
+RTS_GetSound(int32_t lump)
 {
   lump++;
-  if ((uint32)lump >= numlumps)
+  if ((uint32_t)lump >= numlumps)
     Error(EXIT_FAILURE, "RTS_GetSound: %i >= %i\n", lump, numlumps);
 
   if (lumpcache[lump] == NULL)

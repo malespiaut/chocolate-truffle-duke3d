@@ -389,7 +389,7 @@ SCRIPT_findinchildren(scriptnode_t* parent, char* s)
 =
 ==============
 */
-int32
+int32_t
 SCRIPT_Init(uint8_t* name)
 {
   STUBBED("Init");
@@ -405,7 +405,7 @@ SCRIPT_Init(uint8_t* name)
 ==============
 */
 void
-SCRIPT_Free(int32 scripthandle)
+SCRIPT_Free(int32_t scripthandle)
 {
   /* STUBBED("Free"); */
   if (scripthandle == -1)
@@ -423,8 +423,8 @@ SCRIPT_Free(int32 scripthandle)
 ==============
 */
 
-int32
-SCRIPT_Parse(uint8_t* data, int32 length, char* name)
+int32_t
+SCRIPT_Parse(uint8_t* data, int32_t length, char* name)
 {
   STUBBED("Parse");
 
@@ -439,7 +439,7 @@ SCRIPT_Parse(uint8_t* data, int32 length, char* name)
 ==============
 */
 
-int32
+int32_t
 SCRIPT_Load(char* filename)
 {
   FILE* fp;
@@ -540,7 +540,7 @@ SCRIPT_Load(char* filename)
 ==============
 */
 void
-SCRIPT_Save(int32 scripthandle, char* filename)
+SCRIPT_Save(int32_t scripthandle, char* filename)
 {
   FILE* fp;
   scriptnode_t* head;
@@ -566,8 +566,8 @@ SCRIPT_Save(int32 scripthandle, char* filename)
 ==============
 */
 
-int32
-SCRIPT_NumberSections(int32 scripthandle)
+int32_t
+SCRIPT_NumberSections(int32_t scripthandle)
 {
   STUBBED("NumberSections");
 
@@ -583,7 +583,7 @@ SCRIPT_NumberSections(int32 scripthandle)
 */
 
 uint8_t*
-SCRIPT_Section(int32 scripthandle, int32 which)
+SCRIPT_Section(int32_t scripthandle, int32_t which)
 {
   STUBBED("Section");
 
@@ -598,11 +598,11 @@ SCRIPT_Section(int32 scripthandle, int32 which)
 ==============
 */
 
-int32
-SCRIPT_NumberEntries(int32 scripthandle, char* sectionname)
+int32_t
+SCRIPT_NumberEntries(int32_t scripthandle, char* sectionname)
 {
   scriptnode_t* node = NULL;
-  int32 entries = 0;
+  int32_t entries = 0;
 
   if (scripthandle >= MAX_SCRIPTS || scripthandle < 0)
     return 0;
@@ -628,10 +628,10 @@ SCRIPT_NumberEntries(int32 scripthandle, char* sectionname)
 ==============
 */
 char*
-SCRIPT_Entry(int32 scripthandle, char* sectionname, int32 which)
+SCRIPT_Entry(int32_t scripthandle, char* sectionname, int32_t which)
 {
   scriptnode_t* node = NULL;
-  int32 entrynum = 0;
+  int32_t entrynum = 0;
   char* val = NULL;
 
   if (scripthandle >= MAX_SCRIPTS || scripthandle < 0)
@@ -662,7 +662,7 @@ SCRIPT_Entry(int32 scripthandle, char* sectionname, int32 which)
 ==============
 */
 char*
-SCRIPT_GetRaw(int32 scripthandle, char* sectionname, char* entryname)
+SCRIPT_GetRaw(int32_t scripthandle, char* sectionname, char* entryname)
 {
   STUBBED("GetRaw");
 
@@ -678,7 +678,7 @@ SCRIPT_GetRaw(int32 scripthandle, char* sectionname, char* entryname)
 */
 void
 SCRIPT_GetString(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
   char* dest)
@@ -712,7 +712,7 @@ SCRIPT_GetString(
 */
 void
 SCRIPT_GetDoubleString(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
   char* dest1,
@@ -746,12 +746,12 @@ SCRIPT_GetDoubleString(
 =
 ==============
 */
-boolean
+bool
 SCRIPT_GetNumber(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
-  int32* number)
+  int32_t* number)
 {
   scriptnode_t* cur;
 
@@ -784,10 +784,10 @@ SCRIPT_GetNumber(
 */
 void
 SCRIPT_GetBoolean(
-  int32 scripthandle,
+  int32_t scripthandle,
   uint8_t* sectionname,
   uint8_t* entryname,
-  boolean* bool)
+  bool* boolean)
 {
   STUBBED("GetBoolean");
 }
@@ -799,9 +799,9 @@ SCRIPT_GetBoolean(
 =
 ==============
 */
-boolean
+bool
 SCRIPT_GetFloat(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
   float* floatnumber)
@@ -837,7 +837,7 @@ SCRIPT_GetFloat(
 
 void
 SCRIPT_GetDouble(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
   double* number)
@@ -853,7 +853,7 @@ SCRIPT_GetDouble(
 ==============
 */
 void
-SCRIPT_PutComment(int32 scripthandle, uint8_t* sectionname, uint8_t* comment)
+SCRIPT_PutComment(int32_t scripthandle, uint8_t* sectionname, uint8_t* comment)
 {
   STUBBED("PutComment");
 }
@@ -866,7 +866,7 @@ SCRIPT_PutComment(int32 scripthandle, uint8_t* sectionname, uint8_t* comment)
 ==============
 */
 void
-SCRIPT_PutEOL(int32 scripthandle, uint8_t* sectionname)
+SCRIPT_PutEOL(int32_t scripthandle, uint8_t* sectionname)
 {
   STUBBED("PutEOL");
 }
@@ -880,7 +880,7 @@ SCRIPT_PutEOL(int32 scripthandle, uint8_t* sectionname)
 */
 void
 SCRIPT_PutMultiComment(
-  int32 scripthandle,
+  int32_t scripthandle,
   uint8_t* sectionname,
   uint8_t* comment,
   ...)
@@ -896,7 +896,7 @@ SCRIPT_PutMultiComment(
 ==============
 */
 void
-SCRIPT_PutSection(int32 scripthandle, uint8_t* sectionname)
+SCRIPT_PutSection(int32_t scripthandle, uint8_t* sectionname)
 {
   STUBBED("PutSection");
 }
@@ -910,7 +910,7 @@ SCRIPT_PutSection(int32 scripthandle, uint8_t* sectionname)
 */
 void
 SCRIPT_PutRaw(
-  int32 scripthandle,
+  int32_t scripthandle,
   uint8_t* sectionname,
   uint8_t* entryname,
   uint8_t* raw)
@@ -927,7 +927,7 @@ SCRIPT_PutRaw(
 */
 void
 SCRIPT_PutString(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
   char* string)
@@ -981,7 +981,7 @@ SCRIPT_PutString(
 */
 void
 SCRIPT_PutDoubleString(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
   char* string1,
@@ -1038,12 +1038,12 @@ SCRIPT_PutDoubleString(
 */
 void
 SCRIPT_PutNumber(
-  int32 scripthandle,
+  int32_t scripthandle,
   char* sectionname,
   char* entryname,
-  int32 number,
-  boolean hexadecimal,
-  boolean defaultvalue)
+  int32_t number,
+  bool hexadecimal,
+  bool defaultvalue)
 {
   /* DDOI - I don't know what "defaultvalue" is for so it's ignored */
   scriptnode_t* head;
@@ -1094,10 +1094,10 @@ SCRIPT_PutNumber(
 */
 void
 SCRIPT_PutBoolean(
-  int32 scripthandle,
+  int32_t scripthandle,
   uint8_t* sectionname,
   uint8_t* entryname,
-  boolean bool)
+  bool boolean)
 {
   STUBBED("PutBoolean");
 }
@@ -1112,11 +1112,11 @@ SCRIPT_PutBoolean(
 
 void
 SCRIPT_PutDouble(
-  int32 scripthandle,
+  int32_t scripthandle,
   uint8_t* sectionname,
   uint8_t* entryname,
   double number,
-  boolean defaultvalue)
+  bool defaultvalue)
 {
   STUBBED("PutDouble");
 }

@@ -33,6 +33,9 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #ifndef _control_public
 #define _control_public
 
+#include <stdbool.h>
+
+#include "gamedefs.h"
 #include "keyboard.h"
 
 #ifdef __cplusplus
@@ -111,19 +114,19 @@ extern "C"
 
   typedef struct
   {
-    boolean button0;
-    boolean button1;
+    bool button0;
+    bool button1;
     direction dir;
   } UserInput;
 
   typedef struct
   {
-    fixed dx;
-    fixed dy;
-    fixed dz;
-    fixed dyaw;
-    fixed dpitch;
-    fixed droll;
+    int32_t dx;
+    int32_t dy;
+    int32_t dz;
+    int32_t dyaw;
+    int32_t dpitch;
+    int32_t droll;
   } ControlInfo;
 
   /*
@@ -156,17 +159,17 @@ extern "C"
   //
   //***************************************************************************
 
-  extern uint32 CONTROL_RudderEnabled;
-  extern boolean CONTROL_MousePresent;
-  extern boolean CONTROL_JoysPresent[MaxJoys];
-  extern boolean CONTROL_MouseEnabled;
-  extern boolean CONTROL_JoystickEnabled;
-  extern byte CONTROL_JoystickPort;
-  extern uint32 CONTROL_MouseButtonState1;
-  extern uint32 CONTROL_MouseButtonState2;
-  // extern uint32   CONTROL_ButtonHeldState1;
-  // extern uint32   CONTROL_ButtonHeldState2;
-  extern uint32 CONTROL_JoyButtonState;
+  extern uint32_t CONTROL_RudderEnabled;
+  extern bool CONTROL_MousePresent;
+  extern bool CONTROL_JoysPresent[MaxJoys];
+  extern bool CONTROL_MouseEnabled;
+  extern bool CONTROL_JoystickEnabled;
+  extern uint8_t CONTROL_JoystickPort;
+  extern uint32_t CONTROL_MouseButtonState1;
+  extern uint32_t CONTROL_MouseButtonState2;
+  // extern uint32_t   CONTROL_ButtonHeldState1;
+  // extern uint32_t   CONTROL_ButtonHeldState2;
+  extern uint32_t CONTROL_JoyButtonState;
 
   //***************************************************************************
   //
@@ -175,32 +178,32 @@ extern "C"
   //***************************************************************************
   struct _KeyMapping
   {
-    boolean key_active;
+    bool key_active;
     kb_scancode key1;
     kb_scancode key2;
 
     /* other mappings go here */
   } KeyMapping[MAXGAMEBUTTONS];
 
-  int32 MouseMapping[MAXMOUSEBUTTONS];
-  int32 MouseDigitalAxeMapping[MAXMOUSEAXES][2]; // [axesX/Y][directionLeft/Right or directionUp/Down]
+  int32_t MouseMapping[MAXMOUSEBUTTONS];
+  int32_t MouseDigitalAxeMapping[MAXMOUSEAXES][2]; // [axesX/Y][directionLeft/Right or directionUp/Down]
 
-  int ACTION(int i);
-  int RESET_ACTION(int i);
-  void RESBUTTON(int i);
-  void CONTROL_MapKey(int32 which, kb_scancode key1, kb_scancode key2);
+  int32_t ACTION(int32_t i);
+  int32_t RESET_ACTION(int32_t i);
+  void RESBUTTON(int32_t i);
+  void CONTROL_MapKey(int32_t which, kb_scancode key1, kb_scancode key2);
   void CONTROL_MapButton(
-    int32 whichfunction,
-    int32 whichbutton,
-    boolean clicked_or_doubleclicked);
-  void CONTROL_MapJoyButton(int32 whichfunction, int32 whichbutton, boolean doubleclicked);
-  void CONTROL_MapJoyHat(int32 whichfunction, int32 whichhat, int32 whichvalue);
-  void CONTROL_DefineFlag(int32 which, boolean toggle);
-  boolean CONTROL_FlagActive(int32 which);
+    int32_t whichfunction,
+    int32_t whichbutton,
+    bool clicked_or_doubleclicked);
+  void CONTROL_MapJoyButton(int32_t whichfunction, int32_t whichbutton, bool doubleclicked);
+  void CONTROL_MapJoyHat(int32_t whichfunction, int32_t whichhat, int32_t whichvalue);
+  void CONTROL_DefineFlag(int32_t which, bool toggle);
+  bool CONTROL_FlagActive(int32_t which);
   void CONTROL_ClearAssignments(void);
   void CONTROL_GetUserInput(UserInput* info);
   void CONTROL_GetInput(ControlInfo* info);
-  void CONTROL_ClearAction(int32 whichbutton);
+  void CONTROL_ClearAction(int32_t whichbutton);
   void CONTROL_ClearUserInput(UserInput* info);
   void CONTROL_WaitRelease(void);
   void CONTROL_Ack(void);
@@ -210,37 +213,37 @@ extern "C"
     void (*LowerRight)(void),
     void (*CenterThrottle)(void),
     void (*CenterRudder)(void));
-  int32 CONTROL_GetMouseSensitivity_X(void);
-  void CONTROL_SetMouseSensitivity_X(int32 newsensitivity);
-  int32 CONTROL_GetMouseSensitivity_Y(void);
-  void CONTROL_SetMouseSensitivity_Y(int32 newsensitivity);
+  int32_t CONTROL_GetMouseSensitivity_X(void);
+  void CONTROL_SetMouseSensitivity_X(int32_t newsensitivity);
+  int32_t CONTROL_GetMouseSensitivity_Y(void);
+  void CONTROL_SetMouseSensitivity_Y(int32_t newsensitivity);
   void CONTROL_Startup(
     controltype which,
-    int32 (*TimeFunction)(void),
-    int32 ticspersecond);
+    int32_t (*TimeFunction)(void),
+    int32_t ticspersecond);
   void CONTROL_Shutdown(void);
 
   void CONTROL_MapAnalogAxis(
-    int32 whichaxis,
-    int32 whichanalog);
+    int32_t whichaxis,
+    int32_t whichanalog);
 
   void CONTROL_MapDigitalAxis(
-    int32 whichaxis,
-    int32 whichfunction,
-    int32 direction);
+    int32_t whichaxis,
+    int32_t whichfunction,
+    int32_t direction);
   void CONTROL_SetAnalogAxisScale(
-    int32 whichaxis,
+    int32_t whichaxis,
     float axisscale);
   void CONTROL_SetAnalogAxisDeadzone(
-    int32 whichaxis,
-    int32 axisdeadzone);
-  int32 CONTROL_FilterDeadzone(
-    int32 axisvalue,
-    int32 axisdeadzone);
-  int32 CONTROL_GetFilteredAxisValue(int32 axis);
+    int32_t whichaxis,
+    int32_t axisdeadzone);
+  int32_t CONTROL_FilterDeadzone(
+    int32_t axisvalue,
+    int32_t axisdeadzone);
+  int32_t CONTROL_GetFilteredAxisValue(int32_t axis);
   void CONTROL_PrintAxes(void);
 
-  void CONTROL_UpdateKeyboardState(int key, int pressed);
+  void CONTROL_UpdateKeyboardState(int32_t key, int32_t pressed);
 
 #ifdef __cplusplus
 };

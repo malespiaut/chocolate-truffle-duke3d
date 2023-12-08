@@ -81,11 +81,11 @@ uint8_t qe, cp;
 uint8_t nHostForceDisableAutoaim = 0;
 
 // Game play speed
-int g_iTickRate = 120;
-int g_iTicksPerFrame = 26;
+int32_t g_iTickRate = 120;
+int32_t g_iTicksPerFrame = 26;
 
-int32 CommandSoundToggleOff = 0;
-int32 CommandMusicToggleOff = 0;
+int32_t CommandSoundToggleOff = 0;
+int32_t CommandMusicToggleOff = 0;
 
 // For addfaz's stun server. use /stun to activate
 uint16_t g_bStun = 0;
@@ -100,20 +100,20 @@ char firstdemofile[80] = {'\0'};
     rotatesprite(0, (200 - 34) << 16, 65536L, 0, BOTTOMSTATUSBAR, 4, 0, 10 + 16 + 64 + 128, scale(x1, xdim, 320), scale(y1, ydim, 200), scaleup(x2, xdim, 320) - 1, scaleup(y2, ydim, 200) - 1); \
   }
 
-void newint24(int errval, int ax, int bp, int si);
+void newint24(int32_t errval, int32_t ax, int32_t bp, int32_t si);
 
-int recfilep, totalreccnt;
+int32_t recfilep, totalreccnt;
 uint8_t debug_on = 0, actor_tog = 0, memorycheckoveride = 0;
 uint8_t* rtsptr;
 
 extern uint8_t syncstate;
-extern int32 numlumps;
+extern int32_t numlumps;
 
 FILE* frecfilep = (FILE*)NULL;
 void pitch_test(void);
 
 uint8_t restorepalette, screencapt, nomorelogohack;
-int sendmessagecommand = -1;
+int32_t sendmessagecommand = -1;
 
 extern int32_t lastvisinc;
 
@@ -124,9 +124,9 @@ timerhandler(void)
 }
 
 int
-gametext(int x, int y, char* t, uint8_t s, short dabits)
+gametext(int32_t x, int32_t y, char* t, uint8_t s, int16_t dabits)
 {
-  short ac, newx;
+  int16_t ac, newx;
   char* oldt;
   uint8_t centre;
 
@@ -189,9 +189,9 @@ gametext(int x, int y, char* t, uint8_t s, short dabits)
 }
 
 int
-gametextpal(int x, int y, char* t, uint8_t s, uint8_t p)
+gametextpal(int32_t x, int32_t y, char* t, uint8_t s, uint8_t p)
 {
-  short ac, newx;
+  int16_t ac, newx;
   uint8_t centre;
   char* oldt;
 
@@ -253,9 +253,9 @@ gametextpal(int x, int y, char* t, uint8_t s, uint8_t p)
 }
 
 int
-gametextpart(int x, int y, char* t, uint8_t s, short p)
+gametextpart(int32_t x, int32_t y, char* t, uint8_t s, int16_t p)
 {
-  short ac, newx, cnt;
+  int16_t ac, newx, cnt;
   uint8_t centre;
   char* oldt;
 
@@ -325,9 +325,9 @@ gametextpart(int x, int y, char* t, uint8_t s, short p)
 }
 
 int
-minitext(int x, int y, char* str, uint8_t p, uint8_t sb)
+minitext(int32_t x, int32_t y, char* str, uint8_t p, uint8_t sb)
 {
-  short ac;
+  int16_t ac;
   char buf[128];
   char* t;
 
@@ -356,9 +356,9 @@ minitext(int x, int y, char* str, uint8_t p, uint8_t sb)
 }
 
 int
-minitextshade(int x, int y, char* str, uint8_t s, uint8_t p, uint8_t sb)
+minitextshade(int32_t x, int32_t y, char* str, uint8_t s, uint8_t p, uint8_t sb)
 {
-  short ac;
+  int16_t ac;
   char buf[128];
   char* t;
 
@@ -392,7 +392,7 @@ gamenumber(int32_t x, int32_t y, int32_t n, uint8_t s)
   char b[10];
 
   //
-  // uint8_t  * ltoa(int32_t l, uint8_t  * buffer, int radix);
+  // uint8_t  * ltoa(int32_t l, uint8_t  * buffer, int32_t radix);
   // is NON-STANDARD and equivalent to STANDARD
   // (void) sprintf(buffer, "%ld", l);
   // ltoa(n,b,10);
@@ -427,7 +427,7 @@ allowtimetocorrecterrorswhenquitting(void)
 
 #define MAXUSERQUOTES 4
 int32_t quotebot, quotebotgoal;
-short user_quote_time[MAXUSERQUOTES];
+int16_t user_quote_time[MAXUSERQUOTES];
 char user_quote[MAXUSERQUOTES][128];
 // uint8_t  typebuflen,typebuf[41];
 
@@ -447,10 +447,10 @@ adduserquote(char* daquote)
 }
 
 char*
-grpVersion2char_from_crc(unsigned int crc32_grp_to_identify)
+grpVersion2char_from_crc(uint32_t crc32_grp_to_identify)
 {
   char* id;
-  int i = 0;
+  int32_t i = 0;
 
   id = crc32lookup[MAX_KNOWN_GRP].name; // unknown version
 
@@ -500,7 +500,7 @@ void
 getpackets(void)
 {
   int32_t i, j, k, l;
-  short other, packbufleng;
+  int16_t other, packbufleng;
   input *osyn, *nsyn;
 
   sampletimer();
@@ -1216,7 +1216,7 @@ extern cactype cac[];
 void
 caches(void)
 {
-  short i, k;
+  int16_t i, k;
   char text[512];
 
   k = 0;
@@ -1244,8 +1244,8 @@ caches(void)
 void
 dispVersion(void)
 {
-  int i;
-  int offx, offy, stepx, stepy;
+  int32_t i;
+  int32_t offx, offy, stepx, stepy;
   char text[512];
 
   offx = 21;
@@ -1334,7 +1334,7 @@ checksync(void)
 }
 
 void
-check_fta_sounds(short i)
+check_fta_sounds(int16_t i)
 {
   if (sprite[i].extra > 0)
     switch (PN)
@@ -1471,7 +1471,7 @@ badguy(spritetype* s)
 }
 
 short
-badguypic(short pn)
+badguypic(int16_t pn)
 {
 
   switch (pn)
@@ -1523,10 +1523,10 @@ badguypic(short pn)
 }
 
 void
-myos(int32_t x, int32_t y, short tilenum, int8_t shade, uint8_t orientation)
+myos(int32_t x, int32_t y, int16_t tilenum, int8_t shade, uint8_t orientation)
 {
   uint8_t p;
-  short a;
+  int16_t a;
 
   if (orientation & 4)
     a = 1024;
@@ -1538,10 +1538,10 @@ myos(int32_t x, int32_t y, short tilenum, int8_t shade, uint8_t orientation)
 }
 
 void
-myospal(int32_t x, int32_t y, short tilenum, int8_t shade, uint8_t orientation, uint8_t p)
+myospal(int32_t x, int32_t y, int16_t tilenum, int8_t shade, uint8_t orientation, uint8_t p)
 {
   //    uint8_t  fp;
-  short a;
+  int16_t a;
 
   if (orientation & 4)
     a = 1024;
@@ -1574,7 +1574,7 @@ invennum(int32_t x, int32_t y, uint8_t num1, uint8_t ha, uint8_t sbits)
 }
 
 void
-orderweaponnum(short ind, int32_t x, int32_t y, int32_t num1, int32_t num2, uint8_t ha)
+orderweaponnum(int16_t ind, int32_t x, int32_t y, int32_t num1, int32_t num2, uint8_t ha)
 {
   rotatesprite((x - 7) << 16, y << 16, 65536L, 0, THREEBYFIVE + ind + 1, ha - 10, 7, 10 + 128, 0, 0, xdim - 1, ydim - 1);
   rotatesprite((x - 3) << 16, y << 16, 65536L, 0, THREEBYFIVE + 10, ha, 0, 10 + 128, 0, 0, xdim - 1, ydim - 1);
@@ -1583,7 +1583,7 @@ orderweaponnum(short ind, int32_t x, int32_t y, int32_t num1, int32_t num2, uint
 }
 
 void
-weaponnum(short ind, int32_t x, int32_t y, int32_t num1, int32_t num2, uint8_t ha)
+weaponnum(int16_t ind, int32_t x, int32_t y, int32_t num1, int32_t num2, uint8_t ha)
 {
   char dabuf[80] = {0};
 
@@ -1659,7 +1659,7 @@ weaponnum999(uint8_t ind, int32_t x, int32_t y, int32_t num1, int32_t num2, uint
 void
 weapon_amounts(struct player_struct* p, int32_t x, int32_t y, int32_t u)
 {
-  int cw;
+  int32_t cw;
 
   cw = p->curr_weapon;
 
@@ -1756,11 +1756,11 @@ weapon_amounts(struct player_struct* p, int32_t x, int32_t y, int32_t u)
 void
 digitalnumber(int32_t x, int32_t y, int32_t n, uint8_t s, uint8_t cs)
 {
-  short i, j, k, p, c;
+  int16_t i, j, k, p, c;
   char b[10];
 
   //
-  // uint8_t  * ltoa(int32_t l, uint8_t  * buffer, int radix);
+  // uint8_t  * ltoa(int32_t l, uint8_t  * buffer, int32_t radix);
   // is NON-STANDARD and equivalent to STANDARD
   // (void) sprintf(buffer, "%ld", l);
   // ltoa(n,b,10);
@@ -1805,7 +1805,7 @@ void scratchmarks(int32_t x,int32_t y,int32_t n,uint8_t  s,uint8_t  p)
 void
 displayinventory(struct player_struct* p)
 {
-  short n, j, xoff, y;
+  int16_t n, j, xoff, y;
 
   j = xoff = 0;
 
@@ -1890,7 +1890,7 @@ displayinventory(struct player_struct* p)
 void
 displayfragbar(void)
 {
-  short i, j;
+  int16_t i, j;
   char text[512];
 
   j = 0;
@@ -1919,7 +1919,7 @@ void
 display_boardfilename_FPS_weapon(short* offx, short* offy, short* stepx, short* stepy)
 {
 
-  short i;
+  int16_t i;
 
   // FIX_00025: Can toggle FPS and map name during a game (use dnrate OR toggle
   //            from menu when in deathmatch).
@@ -1944,10 +1944,10 @@ display_boardfilename_FPS_weapon(short* offx, short* offy, short* stepx, short* 
 
 // FIX_00026: Weapon can now be hidden (on your screen only).
 void
-drawsmallweapon(short weapon, float scale, short x, short y)
+drawsmallweapon(int16_t weapon, float scale, int16_t x, int16_t y)
 {
   float t = 60000;
-  int s;
+  int32_t s;
   float offsetx, offsety;
 
   switch (weapon)
@@ -2028,12 +2028,12 @@ drawsmallweapon(short weapon, float scale, short x, short y)
 }
 
 void
-coolgaugetext(short snum)
+coolgaugetext(int16_t snum)
 {
   struct player_struct* p;
   int32_t i, j, o, ss, u;
   uint8_t permbit;
-  short offx = 3, offy = 3, stepx = 60, stepy = 6;
+  int16_t offx = 3, offy = 3, stepx = 60, stepy = 6;
   char text[512];
 
   p = &ps[snum];
@@ -2491,13 +2491,13 @@ coolgaugetext(short snum)
 static int32_t frameval[AVERAGEFRAMES], framecnt = 0;
 
 void
-tics(short offx, short offy, short color)
+tics(int16_t offx, int16_t offy, int16_t color)
 {
   int32_t i;
   char fps[512], mapname[512];
   int32_t currentFps;
   static int32_t fpsAvg = 0, savedFps = 0;
-  static boolean toggle = true;
+  static bool toggle = true;
   char text[512];
 
   strcpy(mapname, boardfilename);
@@ -2549,9 +2549,9 @@ tics(short offx, short offy, short color)
 }
 
 void
-coords(short snum)
+coords(int16_t snum)
 {
-  short x = 200, y = 0;
+  int16_t x = 200, y = 0;
   char text[512];
   // x = 250 is too much on the right and
   // will make the text going out of the screen
@@ -2664,7 +2664,7 @@ operatefta(void)
 }
 
 void
-FTA(short q, struct player_struct* p, int mode)
+FTA(int16_t q, struct player_struct* p, int32_t mode)
 {
   if (ud.fta_on == 1 || mode)
   {
@@ -2687,7 +2687,7 @@ FTA(short q, struct player_struct* p, int mode)
 void
 showtwoscreens(void)
 {
-  short i;
+  int16_t i;
 
   if (VOLUMEONE)
   {
@@ -2825,11 +2825,11 @@ GOTOHERE:
   Error(EXIT_SUCCESS, "");
 }
 
-short inputloc = 0;
+int16_t inputloc = 0;
 short
-strget(short x, short y, char* t, short dalen, short c)
+strget(int16_t x, int16_t y, char* t, int16_t dalen, int16_t c)
 {
-  short ch, sc;
+  int16_t ch, sc;
 
   while (KB_KeyWaiting())
   {
@@ -2900,7 +2900,7 @@ strget(short x, short y, char* t, short dalen, short c)
 void
 typemode(void)
 {
-  short ch, hitstate, i, j;
+  int16_t ch, hitstate, i, j;
   char text[512];
 
   if (ps[myconnectindex].gm & MODE_SENDTOWHOM)
@@ -3033,7 +3033,7 @@ moveclouds(void)
 {
   if (totalclock > cloudtotalclock || totalclock < (cloudtotalclock - 7))
   {
-    short i;
+    int16_t i;
 
     cloudtotalclock = totalclock + 6;
 
@@ -3308,11 +3308,11 @@ updatesectorz(int32_t x, int32_t y, int32_t z, short* sectnum)
 }
 
 void
-view(struct player_struct* pp, int32_t* vx, int32_t* vy, int32_t* vz, short* vsectnum, short ang, short horiz)
+view(struct player_struct* pp, int32_t* vx, int32_t* vy, int32_t* vz, short* vsectnum, int16_t ang, int16_t horiz)
 {
   spritetype* sp;
   int32_t i, nx, ny, nz, hx, hy, hitx, hity, hitz;
-  short bakcstat, hitsect, hitwall, hitsprite, daang;
+  int16_t bakcstat, hitsect, hitwall, hitsprite, daang;
 
   nx = (sintable[(ang + 1536) & 2047] >> 4);
   ny = (sintable[(ang + 1024) & 2047] >> 4);
@@ -3378,7 +3378,7 @@ view(struct player_struct* pp, int32_t* vx, int32_t* vy, int32_t* vz, short* vse
 void
 drawbackground(void)
 {
-  short dapicnum;
+  int16_t dapicnum;
   int32_t x, y, x1, y1, x2, y2;
 
   flushperms();
@@ -3470,13 +3470,13 @@ drawbackground(void)
 #define FOFTILEY 32
 int32_t tempsectorz[MAXSECTORS];
 int32_t tempsectorpicnum[MAXSECTORS];
-// short tempcursectnum;
+// int16_t tempcursectnum;
 
 static void
-SE40_Draw(int spnum, int32_t x, int32_t y, int32_t z, short a, short h, int32_t smoothratio)
+SE40_Draw(int32_t spnum, int32_t x, int32_t y, int32_t z, int16_t a, int16_t h, int32_t smoothratio)
 {
-  int i = 0, j = 0, k = 0;
-  int floor1 = 0, floor2 = 0, ok = 0, fofmode = 0;
+  int32_t i = 0, j = 0, k = 0;
+  int32_t floor1 = 0, floor2 = 0, ok = 0, fofmode = 0;
   int32_t offx, offy;
 
   if (sprite[spnum].ang != 512)
@@ -3607,7 +3607,7 @@ SE40_Draw(int spnum, int32_t x, int32_t y, int32_t z, short a, short h, int32_t 
 static void
 se40code(int32_t x, int32_t y, int32_t z, int32_t a, int32_t h, int32_t smoothratio)
 {
-  int i;
+  int32_t i;
 
   i = headspritestat[15];
   while (i >= 0)
@@ -3633,13 +3633,13 @@ se40code(int32_t x, int32_t y, int32_t z, int32_t a, int32_t h, int32_t smoothra
 static int32_t oyrepeat = -1;
 
 void
-displayrooms(short snum, int32_t smoothratio)
+displayrooms(int16_t snum, int32_t smoothratio)
 {
   int32_t cposx, cposy, cposz, dst, j, fz, cz;
-  short sect, cang, k, choriz;
+  int16_t sect, cang, k, choriz;
   struct player_struct* p;
   int32_t tposx, tposy, i;
-  short tang;
+  int16_t tang;
 
   p = &ps[snum];
 
@@ -3885,9 +3885,9 @@ displayrooms(short snum, int32_t smoothratio)
 }
 
 short
-LocateTheLocator(short n, short sn)
+LocateTheLocator(int16_t n, int16_t sn)
 {
-  short i;
+  int16_t i;
 
   i = headspritestat[7];
   while (i >= 0)
@@ -3900,9 +3900,9 @@ LocateTheLocator(short n, short sn)
 }
 
 short
-EGS(short whatsect, int32_t s_x, int32_t s_y, int32_t s_z, short s_pn, int8_t s_s, int8_t s_xr, int8_t s_yr, short s_a, short s_ve, int32_t s_zv, short s_ow, int8_t s_ss)
+EGS(int16_t whatsect, int32_t s_x, int32_t s_y, int32_t s_z, int16_t s_pn, int8_t s_s, int8_t s_xr, int8_t s_yr, int16_t s_a, int16_t s_ve, int32_t s_zv, int16_t s_ow, int8_t s_ss)
 {
-  short i;
+  int16_t i;
   spritetype* s;
 
   i = insertsprite(whatsect, s_ss);
@@ -3983,7 +3983,7 @@ EGS(short whatsect, int32_t s_x, int32_t s_y, int32_t s_z, short s_pn, int8_t s_
 }
 
 uint8_t
-wallswitchcheck(short i)
+wallswitchcheck(int16_t i)
 {
   switch (PN)
   {
@@ -4034,9 +4034,9 @@ wallswitchcheck(short i)
 
 int32_t tempwallptr;
 short
-spawn(short j, short pn)
+spawn(int16_t j, int16_t pn)
 {
-  short i, s, startwall, endwall, sect, clostest;
+  int16_t i, s, startwall, endwall, sect, clostest;
   int32_t x, y, d;
   spritetype* sp;
   char text[512];
@@ -4341,7 +4341,7 @@ spawn(short j, short pn)
     case BLOODPOOL:
     case PUKE:
     {
-      short s1;
+      int16_t s1;
       s1 = sp->sectnum;
 
       updatesector(sp->x + 108, sp->y + 108, &s1);
@@ -4567,7 +4567,7 @@ spawn(short j, short pn)
     case FOOTPRINTS4:
       if (j >= 0)
       {
-        short s1;
+        int16_t s1;
         s1 = sp->sectnum;
 
         updatesector(sp->x + 84, sp->y + 84, &s1);
@@ -4723,7 +4723,7 @@ spawn(short j, short pn)
     case SHOTGUNSHELL:
       if (j >= 0)
       {
-        short snum, a;
+        int16_t snum, a;
 
         if (sprite[j].picnum == APLAYER)
         {
@@ -5907,9 +5907,9 @@ spawn(short j, short pn)
 }
 
 void
-animatesprites(int32_t x, int32_t y, short a, int32_t smoothratio)
+animatesprites(int32_t x, int32_t y, int16_t a, int32_t smoothratio)
 {
-  short i, j, k, p, sect;
+  int16_t i, j, k, p, sect;
   int32_t l, t1, t3, t4;
   spritetype *s, *t;
 
@@ -6137,7 +6137,7 @@ animatesprites(int32_t x, int32_t y, short a, int32_t smoothratio)
       case FORCESPHERE:
         if (t->statnum == 5)
         {
-          short sqa, sqb;
+          int16_t sqa, sqb;
 
           sqa =
             getangle(
@@ -6713,7 +6713,7 @@ uint8_t cheatbuf[10], cheatbuflen;
 void
 cheats(void)
 {
-  short ch, i, j, k, weapon;
+  int16_t ch, i, j, k, weapon;
 
   if ((ps[myconnectindex].gm & MODE_TYPE) || (ps[myconnectindex].gm & MODE_MENU))
     return;
@@ -6845,7 +6845,7 @@ cheats(void)
 
           if (k == 2)
           {
-            short volnume, levnume;
+            int16_t volnume, levnume;
             volnume = cheatbuf[6] - '0';
             levnume = (cheatbuf[7] - '0') * 10 + (cheatbuf[8] - '0');
 
@@ -7167,7 +7167,7 @@ int32_t nonsharedtimer;
 void
 nonsharedkeys(void)
 {
-  short i, ch;
+  int16_t i, ch;
   int32_t j;
   char text[512];
 
@@ -7728,9 +7728,9 @@ comlinehelp(char** argv)
 }
 
 void
-checkcommandline(int argc, char** argv)
+checkcommandline(int32_t argc, char** argv)
 {
-  short i, j;
+  int16_t i, j;
   char* c;
   char kbdKey;
 
@@ -8099,10 +8099,10 @@ checkcommandline(int argc, char** argv)
 }
 
 void
-printstr(short x, short y, uint8_t string[81], uint8_t attribute)
+printstr(int16_t x, int16_t y, uint8_t string[81], uint8_t attribute)
 {
   uint8_t character;
-  short i, pos;
+  int16_t i, pos;
 
   pos = (y * 80 + x) << 1;
   i = 0;
@@ -8118,7 +8118,7 @@ printstr(short x, short y, uint8_t string[81], uint8_t attribute)
 void
 Logo(void)
 {
-  short i, soundanm;
+  int16_t i, soundanm;
 
   soundanm = 0;
 
@@ -8345,7 +8345,7 @@ compilecons(void)
 void
 Startup(void)
 {
-  int i;
+  int32_t i;
 
   // Init the Console
   CONSOLE_Init();
@@ -8425,7 +8425,7 @@ sendscore(char* s)
 void
 getnames(void)
 {
-  short i, j, l;
+  int16_t i, j, l;
 
   // FIX_00031: Names now limited to 10 chars max that is the fragbar field limit.
   for (l = 0; l <= 9 && myname[l]; l++)
@@ -8595,9 +8595,9 @@ findGRPToUse(uint8_t* groupfilefullpath)
 {
   WIN32_FIND_DATA FindFileData;
   HANDLE hFind = INVALID_HANDLE_VALUE;
-  int i = 0, kbdKey;
+  int32_t i = 0, kbdKey;
   char groupfile[9][512];
-  int grpID;
+  int32_t grpID;
 
   if (getGameDir()[0] != '\0')
   {
@@ -8648,7 +8648,7 @@ findGRPToUse(uint8_t* groupfilefullpath)
 #else
 
 int
-dukeGRP_Match(char* filename, int length)
+dukeGRP_Match(char* filename, int32_t length)
 {
   char* cursor = filename + length - 4;
 
@@ -8719,7 +8719,7 @@ load_duke3d_groupfile(void)
 }
 
 int
-main(int argc, char** argv)
+main(const int argc, const char** argv)
 {
   int32_t i, j;
   int32_t filehandle;
@@ -8750,7 +8750,7 @@ main(int argc, char** argv)
 
   printf("*** Chocolate DukeNukem3D v%d.%d ***\n\n", CHOCOLATE_DUKE_REV_X, CHOCOLATE_DUKE_REV_DOT_Y);
 
-  for (int i = 0; i < argc; ++i)
+  for (int32_t i = 0; i < argc; ++i)
     printf("ARG %d: %s\n", i, argv[i]);
 
   // FIX_00033: Fake multi and AI are now fully working
@@ -8964,7 +8964,7 @@ MAIN_LOOP_RESTART:
 
     if (numplayers > 1 && boardfilename[0] != 0) // check if a user map is loaded and in multiplayer.
     {
-      int c;
+      int32_t c;
 
       ud.level_number = ud.m_level_number = 7; // 7 = usermap.
       ud.volume_number = ud.m_volume_number;
@@ -9018,7 +9018,7 @@ MAIN_LOOP_RESTART:
 
     if (numplayers > 1) // if in multiplayer reset everyones weapon status.
     {
-      int c;
+      int32_t c;
 
       switch (ud.m_coop) // set item spawn options, as they would be if
       {                  // game was started via main menu.
@@ -9169,9 +9169,9 @@ opendemoread(uint8_t which_demo) // 0 = mine
   char d[] = "demo_.dmo";
   char* fname = d;
   uint8_t ver;
-  short i, j;
+  int16_t i, j;
 
-  int32 dummy;
+  int32_t dummy;
   int32_t groupefil_crc32_from_demo[MAXGROUPFILES];
 
   if (which_demo == 10)
@@ -9266,13 +9266,13 @@ opendemoread(uint8_t which_demo) // 0 = mine
   kread(recfilep, (uint8_t*)&ud.m_ffire, sizeof(uint8_t));
   kread(recfilep, (short*)&ud.multimode, sizeof(short));
   kread(recfilep, (short*)&ud.m_monsters_off, sizeof(short));
-  kread(recfilep, (int32*)&ud.m_respawn_monsters, sizeof(int32));
-  kread(recfilep, (int32*)&ud.m_respawn_items, sizeof(int32));
-  kread(recfilep, (int32*)&ud.m_respawn_inventory, sizeof(int32));
-  kread(recfilep, (int32*)&ud.playerai, sizeof(int32));
+  kread(recfilep, (int32_t*)&ud.m_respawn_monsters, sizeof(int32_t));
+  kread(recfilep, (int32_t*)&ud.m_respawn_items, sizeof(int32_t));
+  kread(recfilep, (int32_t*)&ud.m_respawn_inventory, sizeof(int32_t));
+  kread(recfilep, (int32_t*)&ud.playerai, sizeof(int32_t));
   kread(recfilep, (uint8_t*)&ud.user_name[0][0], sizeof(ud.user_name));
   // FIX_00034: Demos do not turn your run mode off anymore:
-  kread(recfilep, (int32*)&dummy /*ud.auto_run*/, sizeof(int32)); // not needed and would affect autorun status in duke3d.cfg when quitting duke from a demo
+  kread(recfilep, (int32_t*)&dummy /*ud.auto_run*/, sizeof(int32_t)); // not needed and would affect autorun status in duke3d.cfg when quitting duke from a demo
   kread(recfilep, (uint8_t*)boardfilename, sizeof(boardfilename));
   if (boardfilename[0] != 0)
   {
@@ -9282,7 +9282,7 @@ opendemoread(uint8_t which_demo) // 0 = mine
 
   for (i = 0; i < ud.multimode; i++)
   {
-    kread(recfilep, (int32*)&ps[i].aim_mode, sizeof(uint8_t));
+    kread(recfilep, (int32_t*)&ps[i].aim_mode, sizeof(uint8_t));
 
     // FIX_00080: Out Of Synch in demos. Tries recovering OOS in old demos v27/28/29/116/117/118. New: v30/v119.
     if (ver == BYTEVERSION)
@@ -9304,7 +9304,7 @@ opendemowrite(void)
   char d[] = "demo1.dmo";
   int32_t dummylong = 0;
   uint8_t ver;
-  short i;
+  int16_t i;
   char fullpathdemofilename[16];
 
   if (ud.recstat == 2)
@@ -9340,17 +9340,17 @@ opendemowrite(void)
   fwrite((uint8_t*)&ud.m_ffire, sizeof(uint8_t), 1, frecfilep);
   fwrite((short*)&ud.multimode, sizeof(short), 1, frecfilep);
   fwrite((short*)&ud.m_monsters_off, sizeof(short), 1, frecfilep);
-  fwrite((int32*)&ud.m_respawn_monsters, sizeof(int32), 1, frecfilep);
-  fwrite((int32*)&ud.m_respawn_items, sizeof(int32), 1, frecfilep);
-  fwrite((int32*)&ud.m_respawn_inventory, sizeof(int32), 1, frecfilep);
-  fwrite((int32*)&ud.playerai, sizeof(int32), 1, frecfilep);
+  fwrite((int32_t*)&ud.m_respawn_monsters, sizeof(int32_t), 1, frecfilep);
+  fwrite((int32_t*)&ud.m_respawn_items, sizeof(int32_t), 1, frecfilep);
+  fwrite((int32_t*)&ud.m_respawn_inventory, sizeof(int32_t), 1, frecfilep);
+  fwrite((int32_t*)&ud.playerai, sizeof(int32_t), 1, frecfilep);
   fwrite((uint8_t*)&ud.user_name[0][0], sizeof(ud.user_name), 1, frecfilep);
-  fwrite((int32*)&ud.auto_run, sizeof(int32), 1, frecfilep);
+  fwrite((int32_t*)&ud.auto_run, sizeof(int32_t), 1, frecfilep);
   fwrite((uint8_t*)boardfilename, sizeof(boardfilename), 1, frecfilep);
 
   for (i = 0; i < ud.multimode; i++)
   {
-    fwrite((int32*)&ps[i].aim_mode, sizeof(uint8_t), 1, frecfilep); // seems wrong; prolly not needed anyway
+    fwrite((int32_t*)&ps[i].aim_mode, sizeof(uint8_t), 1, frecfilep); // seems wrong; prolly not needed anyway
     // FIX_00080: Out Of Synch in demos. Tries recovering OOS in old demos v27/28/29/116/117/118. New: v30/v119.
     fwrite(ud.wchoice[i], sizeof(ud.wchoice[0]), 1, frecfilep);
   }
@@ -9362,7 +9362,7 @@ opendemowrite(void)
 void
 record(void)
 {
-  short i;
+  int16_t i;
   for (i = connecthead; i >= 0; i = connectpoint2[i])
   {
     copybufbyte(&sync[i], &recsync[ud.reccnt], sizeof(input));
@@ -9680,7 +9680,7 @@ fakedomovethings(void)
   struct player_struct* p;
   int32_t i, j, k, doubvel, fz, cz, hz, lz, x, y;
   uint32_t sb_snum;
-  short psect, psectlotag, tempsect, backcstat;
+  int16_t psect, psectlotag, tempsect, backcstat;
   uint8_t shrunk, spritebridge;
 
   syn = (input*)&inputfifo[fakemovefifoplc & (MOVEFIFOSIZ - 1)][myconnectindex];
@@ -10144,7 +10144,7 @@ ENDFAKEPROCESSINPUT:
 uint8_t
 domovethings(void)
 {
-  short i, j;
+  int16_t i, j;
   uint8_t ch;
 
   for (i = connecthead; i >= 0; i = connectpoint2[i])
@@ -10351,7 +10351,7 @@ domovethings(void)
 void
 doorders(void)
 {
-  short i;
+  int16_t i;
 
   setview(0, 0, xdim - 1, ydim - 1);
 
@@ -10408,10 +10408,10 @@ doorders(void)
 void
 dobonus(uint8_t bonusonly)
 {
-  short t, gfx_offset;
-  //    short tinc;
+  int16_t t, gfx_offset;
+  //    int16_t tinc;
   int32_t i, y, xfragtotal, yfragtotal;
-  short bonuscnt;
+  int16_t bonuscnt;
   char text[512];
 
   int32_t breathe[] =
@@ -10991,7 +10991,7 @@ FRAGBONUS:
 }
 
 void
-cameratext(short i)
+cameratext(int16_t i)
 {
   uint8_t flipbits;
   int32_t x, y;
@@ -11015,10 +11015,10 @@ cameratext(short i)
 }
 
 void
-vglass(int32_t x, int32_t y, short a, short wn, short n)
+vglass(int32_t x, int32_t y, int16_t a, int16_t wn, int16_t n)
 {
   int32_t z, zincs;
-  short sect;
+  int16_t sect;
 
   sect = wall[wn].nextsector;
   if (sect == -1)
@@ -11030,10 +11030,10 @@ vglass(int32_t x, int32_t y, short a, short wn, short n)
 }
 
 void
-lotsofglass(short i, short wallnum, short n)
+lotsofglass(int16_t i, int16_t wallnum, int16_t n)
 {
   int32_t j, xv, yv, z, x1, y1;
-  short sect, a;
+  int16_t sect, a;
 
   sect = -1;
 
@@ -11079,7 +11079,7 @@ lotsofglass(short i, short wallnum, short n)
 }
 
 void
-spriteglass(short i, short n)
+spriteglass(int16_t i, int16_t n)
 {
   int32_t j, k, a, z;
 
@@ -11093,10 +11093,10 @@ spriteglass(short i, short n)
 }
 
 void
-ceilingglass(short i, short sectnum, short n)
+ceilingglass(int16_t i, int16_t sectnum, int16_t n)
 {
   int32_t j, xv, yv, z, x1, y1;
-  short a, s, startwall, endwall;
+  int16_t a, s, startwall, endwall;
 
   startwall = sector[sectnum].wallptr;
   endwall = startwall + sector[sectnum].wallnum;
@@ -11121,10 +11121,10 @@ ceilingglass(short i, short sectnum, short n)
 }
 
 void
-lotsofcolourglass(short i, short wallnum, short n)
+lotsofcolourglass(int16_t i, int16_t wallnum, int16_t n)
 {
   int32_t j, xv, yv, z, x1, y1;
-  short sect = -1, a, k;
+  int16_t sect = -1, a, k;
 
   if (wallnum < 0)
   {
@@ -11308,7 +11308,7 @@ void
 takescreenshot(void)
 {
   char szFilename[256];
-  int i;
+  int32_t i;
   char score[20];
   time_t time4file;
   struct tm* tmHMS;
@@ -11602,8 +11602,8 @@ Programming:   ( the functions I need )
 
      struct imagetype
         {
-            int *itable; // AngX,AngY,AngZ,Xoff,Yoff,Zoff;
-            int *idata;
+            int32_t *itable; // AngX,AngY,AngZ,Xoff,Yoff,Zoff;
+            int32_t *idata;
             struct imagetype *prev, *next;
         }
 

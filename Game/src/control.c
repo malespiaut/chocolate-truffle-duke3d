@@ -43,39 +43,39 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 
 // FIX_00018: Removed the "smoothmouse" option. This was just a bad fix. Mouse is now faster,
 //            smoother.
-// extern int g_CV_EnableSmoothMouse;
-// extern int g_CV_SmoothMouseSensX;
-// extern int g_CV_SmoothMouseSensY;
+// extern int32_t g_CV_EnableSmoothMouse;
+// extern int32_t g_CV_SmoothMouseSensX;
+// extern int32_t g_CV_SmoothMouseSensY;
 
-uint32 CONTROL_RudderEnabled;
-boolean CONTROL_MousePresent;
-boolean CONTROL_JoysPresent[MaxJoys];
-boolean CONTROL_MouseEnabled;
-boolean CONTROL_JoystickEnabled;
-byte CONTROL_JoystickPort;
-uint32 CONTROL_MouseButtonState1;
-uint32 CONTROL_MouseButtonState2;
+uint32_t CONTROL_RudderEnabled;
+bool CONTROL_MousePresent;
+bool CONTROL_JoysPresent[MaxJoys];
+bool CONTROL_MouseEnabled;
+bool CONTROL_JoystickEnabled;
+uint8_t CONTROL_JoystickPort;
+uint32_t CONTROL_MouseButtonState1;
+uint32_t CONTROL_MouseButtonState2;
 // FIX_00019: DigitalAxis Handling now supported. (cool for medkit use)
-uint32 CONTROL_MouseDigitalAxisState1;
-uint32 CONTROL_MouseDigitalAxisState2;
-// uint32   CONTROL_ButtonHeldState1;
-// uint32   CONTROL_ButtonHeldState2;
-uint32 CONTROL_JoyButtonState1;
-uint32 CONTROL_JoyButtonState2;
+uint32_t CONTROL_MouseDigitalAxisState1;
+uint32_t CONTROL_MouseDigitalAxisState2;
+// uint32_t   CONTROL_ButtonHeldState1;
+// uint32_t   CONTROL_ButtonHeldState2;
+uint32_t CONTROL_JoyButtonState1;
+uint32_t CONTROL_JoyButtonState2;
 
-uint32 CONTROL_JoyHatState1; //[MAXJOYHATS];
-uint32 CONTROL_JoyHatState2; //[MAXJOYHATS];
+uint32_t CONTROL_JoyHatState1; //[MAXJOYHATS];
+uint32_t CONTROL_JoyHatState2; //[MAXJOYHATS];
 
-static short mouseButtons = 0;
-static short lastmousebuttons = 0;
+static int16_t mouseButtons = 0;
+static int16_t lastmousebuttons = 0;
 
-static short joyHats[MAXJOYHATS];
-static short lastjoyHats[MAXJOYHATS];
+static int16_t joyHats[MAXJOYHATS];
+static int16_t lastjoyHats[MAXJOYHATS];
 
-static int32 mousePositionX = 0;
-static int32 mousePositionY = 0;
-static int32 mouseRelativeX = 0;
-static int32 mouseRelativeY = 0;
+static int32_t mousePositionX = 0;
+static int32_t mousePositionY = 0;
+static int32_t mouseRelativeX = 0;
+static int32_t mouseRelativeY = 0;
 
 //***************************************************************************
 //
@@ -84,14 +84,14 @@ static int32 mouseRelativeY = 0;
 //***************************************************************************
 
 // Joystick/Gamepad bindings
-static int32 JoyAxisMapping[MAXJOYAXES];
-static int32 JoyHatMapping[MAXJOYHATS][8];
-static int32 JoyButtonMapping[MAXJOYBUTTONS];
+static int32_t JoyAxisMapping[MAXJOYAXES];
+static int32_t JoyHatMapping[MAXJOYHATS][8];
+static int32_t JoyButtonMapping[MAXJOYBUTTONS];
 static float JoyAnalogScale[MAXJOYAXES];
-static int32 JoyAnalogDeadzone[MAXJOYAXES];
+static int32_t JoyAnalogDeadzone[MAXJOYAXES];
 
-int
-ACTION(int i)
+int32_t
+ACTION(int32_t i)
 {
 
   // Keyboard input
@@ -177,8 +177,8 @@ ACTION(int i)
   return 0;
 }
 
-int
-RESET_ACTION(int i)
+int32_t
+RESET_ACTION(int32_t i)
 {
   KB_KeyDown[KeyMapping[i].key1] = 0;
   KB_KeyDown[KeyMapping[i].key2] = 0;
@@ -187,12 +187,12 @@ RESET_ACTION(int i)
 }
 
 static void
-SETMOUSEBUTTON(int i)
+SETMOUSEBUTTON(int32_t i)
 {
 
   // CONTROL_MouseButtonState1 |= (1<<i);
 
-  int b;
+  int32_t b;
 
   if (i < 32)
   {
@@ -211,12 +211,12 @@ SETMOUSEBUTTON(int i)
 }
 
 void
-RESMOUSEBUTTON(int i)
+RESMOUSEBUTTON(int32_t i)
 {
 
   // CONTROL_MouseButtonState1 &= ~(1<<i);
 
-  int b;
+  int32_t b;
 
   if (i < 32)
   {
@@ -237,10 +237,10 @@ RESMOUSEBUTTON(int i)
 // FIX_00019: DigitalAxis Handling now supported. (cool for medkit use)
 
 void
-SETMOUSEDIGITALAXIS(int i)
+SETMOUSEDIGITALAXIS(int32_t i)
 {
 
-  int b;
+  int32_t b;
 
   if (i < 0)
     return;
@@ -259,10 +259,10 @@ SETMOUSEDIGITALAXIS(int i)
 }
 
 void
-RESMOUSEDIGITALAXIS(int i)
+RESMOUSEDIGITALAXIS(int32_t i)
 {
 
-  int b;
+  int32_t b;
 
   if (i < 0)
     return;
@@ -281,10 +281,10 @@ RESMOUSEDIGITALAXIS(int i)
 }
 
 static void
-SETJOYBUTTON(int i)
+SETJOYBUTTON(int32_t i)
 {
   // CONTROL_JoyButtonState |= (1<<i);
-  int b;
+  int32_t b;
 
   if (i < 32)
   {
@@ -302,9 +302,9 @@ SETJOYBUTTON(int i)
   }
 }
 static void
-RESJOYBUTTON(int i)
+RESJOYBUTTON(int32_t i)
 {
-  int b;
+  int32_t b;
 
   if (i < 32)
   {
@@ -323,11 +323,11 @@ RESJOYBUTTON(int i)
 }
 
 static void
-SETHATBUTTON(int i)
+SETHATBUTTON(int32_t i)
 {
   // CONTROL_JoyHatState1 |= (1<<i);
 
-  int b;
+  int32_t b;
 
   if (i < 32)
   {
@@ -346,11 +346,11 @@ SETHATBUTTON(int i)
 }
 
 static void
-RESHATBUTTON(int i)
+RESHATBUTTON(int32_t i)
 {
 
   // CONTROL_JoyHatState1 &= ~(1<<i);
-  int b;
+  int32_t b;
 
   if (i < 32)
   {
@@ -369,7 +369,7 @@ RESHATBUTTON(int i)
 }
 
 void
-CONTROL_UpdateKeyboardState(int key, int pressed)
+CONTROL_UpdateKeyboardState(int32_t key, int32_t pressed)
 {
   /*
 
@@ -383,7 +383,7 @@ CONTROL_UpdateKeyboardState(int key, int pressed)
           }
           */
   /*
-  int i;
+  int32_t i;
 
   for (i = 0; i < MAXGAMEBUTTONS; i++)
   {
@@ -410,7 +410,7 @@ CONTROL_UpdateKeyboardState(int key, int pressed)
 }
 
 void
-CONTROL_MapKey(int32 which, kb_scancode key1, kb_scancode key2)
+CONTROL_MapKey(int32_t which, kb_scancode key1, kb_scancode key2)
 {
   // FIX_00020: Protect you from assigning a function to the ESC key through duke3d.cfg
   if (key1 == sc_Escape || key2 == sc_Escape)
@@ -434,9 +434,9 @@ CONTROL_MapKey(int32 which, kb_scancode key1, kb_scancode key2)
 
 void
 CONTROL_MapButton(
-  int32 whichfunction,
-  int32 whichbutton,
-  boolean clicked_or_doubleclicked)
+  int32_t whichfunction,
+  int32_t whichbutton,
+  bool clicked_or_doubleclicked)
 {
   if (clicked_or_doubleclicked)
     return; // TODO
@@ -448,7 +448,7 @@ CONTROL_MapButton(
 }
 
 void
-CONTROL_MapJoyButton(int32 whichfunction, int32 whichbutton, boolean doubleclicked)
+CONTROL_MapJoyButton(int32_t whichfunction, int32_t whichbutton, bool doubleclicked)
 {
   if (whichbutton < 0 || whichbutton >= MAXJOYBUTTONS)
   {
@@ -462,7 +462,7 @@ CONTROL_MapJoyButton(int32 whichfunction, int32 whichbutton, boolean doubleclick
 }
 
 void
-CONTROL_MapJoyHat(int32 whichfunction, int32 whichhat, int32 whichvalue)
+CONTROL_MapJoyHat(int32_t whichfunction, int32_t whichhat, int32_t whichvalue)
 {
   if (whichhat < 0 || whichhat >= MAXJOYHATS)
   {
@@ -473,13 +473,13 @@ CONTROL_MapJoyHat(int32 whichfunction, int32 whichhat, int32 whichvalue)
 }
 
 void
-CONTROL_DefineFlag(int32 which, boolean toggle)
+CONTROL_DefineFlag(int32_t which, bool toggle)
 {
   // STUBBED("CONTROL_DefineFlag");
 }
 
-boolean
-CONTROL_FlagActive(int32 which)
+bool
+CONTROL_FlagActive(int32_t which)
 {
   STUBBED("CONTROL_FlagActive");
   return false;
@@ -500,10 +500,10 @@ CONTROL_GetUserInput(UserInput* info)
 void
 CONTROL_GetInput(ControlInfo* info)
 {
-  int32 sens_X = CONTROL_GetMouseSensitivity_X();
-  int32 sens_Y = CONTROL_GetMouseSensitivity_Y();
-  int32 mx = 0, my = 0;
-  int i, j;
+  int32_t sens_X = CONTROL_GetMouseSensitivity_X();
+  int32_t sens_Y = CONTROL_GetMouseSensitivity_Y();
+  int32_t mx = 0, my = 0;
+  int32_t i, j;
 
   memset(info, '\0', sizeof(ControlInfo));
 
@@ -631,26 +631,26 @@ CONTROL_GetInput(ControlInfo* info)
       {
         case analog_turning:
         {
-          info->dyaw += (int32)((float)CONTROL_FilterDeadzone(
-                                  _joystick_axis(i),
-                                  JoyAnalogDeadzone[i]) *
-                                JoyAnalogScale[i]);
+          info->dyaw += (int32_t)((float)CONTROL_FilterDeadzone(
+                                    _joystick_axis(i),
+                                    JoyAnalogDeadzone[i]) *
+                                  JoyAnalogScale[i]);
         }
         break;
         case analog_strafing:
         {
-          info->dx += (int32)((float)CONTROL_FilterDeadzone(
-                                _joystick_axis(i),
-                                JoyAnalogDeadzone[i]) *
-                              JoyAnalogScale[i]);
+          info->dx += (int32_t)((float)CONTROL_FilterDeadzone(
+                                  _joystick_axis(i),
+                                  JoyAnalogDeadzone[i]) *
+                                JoyAnalogScale[i]);
           // printf("Joy %d = %d\n", i, info->dx);
         }
         break;
         case analog_lookingupanddown:
-          info->dpitch += (int32)((float)CONTROL_FilterDeadzone(
-                                    _joystick_axis(i),
-                                    JoyAnalogDeadzone[i]) *
-                                  JoyAnalogScale[i]);
+          info->dpitch += (int32_t)((float)CONTROL_FilterDeadzone(
+                                      _joystick_axis(i),
+                                      JoyAnalogDeadzone[i]) *
+                                    JoyAnalogScale[i]);
           break;
         case analog_elevation: // STUB
           break;
@@ -658,10 +658,10 @@ CONTROL_GetInput(ControlInfo* info)
           break;
         case analog_moving:
         {
-          info->dz += (int32)((float)CONTROL_FilterDeadzone(
-                                _joystick_axis(i),
-                                JoyAnalogDeadzone[i]) *
-                              JoyAnalogScale[i]);
+          info->dz += (int32_t)((float)CONTROL_FilterDeadzone(
+                                  _joystick_axis(i),
+                                  JoyAnalogDeadzone[i]) *
+                                JoyAnalogScale[i]);
         }
         break;
         default:
@@ -686,7 +686,7 @@ CONTROL_GetInput(ControlInfo* info)
 }
 
 void
-CONTROL_ClearAction(int32 whichbutton)
+CONTROL_ClearAction(int32_t whichbutton)
 {
   // RESBUTTON(whichbutton);
   KB_KeyDown[KeyMapping[whichbutton].key1] = 0;
@@ -727,27 +727,27 @@ CONTROL_CenterJoystick(
   STUBBED("CONTROL_CenterJoystick");
 }
 
-int32
+int32_t
 CONTROL_GetMouseSensitivity_X(void)
 {
   return mouseSensitivity_X;
 }
 
 void
-CONTROL_SetMouseSensitivity_X(int32 newsensitivity)
+CONTROL_SetMouseSensitivity_X(int32_t newsensitivity)
 {
   mouseSensitivity_X = newsensitivity;
 }
 
 // FIX_00014: Added Y cursor setup for mouse sensitivity in the menus
-int32
+int32_t
 CONTROL_GetMouseSensitivity_Y(void)
 {
   return mouseSensitivity_Y;
 }
 
 void
-CONTROL_SetMouseSensitivity_Y(int32 newsensitivity)
+CONTROL_SetMouseSensitivity_Y(int32_t newsensitivity)
 {
   mouseSensitivity_Y = newsensitivity;
 }
@@ -755,10 +755,10 @@ CONTROL_SetMouseSensitivity_Y(int32 newsensitivity)
 void
 CONTROL_Startup(
   controltype which,
-  int32 (*TimeFunction)(void),
-  int32 ticspersecond)
+  int32_t (*TimeFunction)(void),
+  int32_t ticspersecond)
 {
-  int i;
+  int32_t i;
 
   // Init the joystick
   _joystick_init();
@@ -787,8 +787,8 @@ CONTROL_Shutdown(void)
 
 void
 CONTROL_MapAnalogAxis(
-  int32 whichaxis,
-  int32 whichanalog)
+  int32_t whichaxis,
+  int32_t whichanalog)
 {
   // STUBBED("CONTROL_MapAnalogAxis");
   if (whichaxis < MAXJOYAXES)
@@ -800,9 +800,9 @@ CONTROL_MapAnalogAxis(
 // FIX_00019: DigitalAxis Handling now supported. (cool for medkit use)
 void
 CONTROL_MapDigitalAxis(
-  int32 whichaxis,
-  int32 whichfunction,
-  int32 direction)
+  int32_t whichaxis,
+  int32_t whichfunction,
+  int32_t direction)
 {
   if (whichaxis < 0 || whichaxis >= MAXMOUSEAXES || direction < 0 || direction >= 2)
     return;
@@ -812,7 +812,7 @@ CONTROL_MapDigitalAxis(
 
 void
 CONTROL_SetAnalogAxisScale(
-  int32 whichaxis,
+  int32_t whichaxis,
   float axisscale)
 {
   if (whichaxis < MAXJOYAXES)
@@ -824,8 +824,8 @@ CONTROL_SetAnalogAxisScale(
 
 void
 CONTROL_SetAnalogAxisDeadzone(
-  int32 whichaxis,
-  int32 axisdeadzone)
+  int32_t whichaxis,
+  int32_t axisdeadzone)
 {
   if (whichaxis < MAXJOYAXES)
   {
@@ -834,10 +834,10 @@ CONTROL_SetAnalogAxisDeadzone(
   }
 }
 
-int32
+int32_t
 CONTROL_FilterDeadzone(
-  int32 axisvalue,
-  int32 axisdeadzone)
+  int32_t axisvalue,
+  int32_t axisdeadzone)
 {
   if ((axisvalue < axisdeadzone) && (axisvalue > -axisdeadzone))
   {
@@ -847,13 +847,13 @@ CONTROL_FilterDeadzone(
   return axisvalue;
 }
 
-int32
-CONTROL_GetFilteredAxisValue(int32 axis)
+int32_t
+CONTROL_GetFilteredAxisValue(int32_t axis)
 {
-  return (int32)((float)CONTROL_FilterDeadzone(
-                   _joystick_axis(axis),
-                   JoyAnalogDeadzone[axis]) *
-                 JoyAnalogScale[axis]);
+  return (int32_t)((float)CONTROL_FilterDeadzone(
+                     _joystick_axis(axis),
+                     JoyAnalogDeadzone[axis]) *
+                   JoyAnalogScale[axis]);
 }
 
 void
@@ -862,7 +862,7 @@ CONTROL_PrintAxes(void)
   STUBBED("CONTROL_PrintAxes");
 }
 
-boolean
+bool
 MOUSE_Init(void)
 {
   memset(MouseMapping, -1, sizeof(MouseMapping));
@@ -892,7 +892,7 @@ static void
 updateMouse(void)
 {
   // this is in buildengine.
-  short x, y;
+  int16_t x, y;
   getmousevalues(&x, &y, &mouseButtons);
 
   mouseRelativeX += x;
@@ -901,15 +901,15 @@ updateMouse(void)
   mousePositionY += y;
 }
 
-int32
+int32_t
 MOUSE_GetButtons(void)
 {
   // updateMouse();
-  return ((int32)mouseButtons);
+  return ((int32_t)mouseButtons);
 }
 
 void
-MOUSE_GetPosition(int32* x, int32* y)
+MOUSE_GetPosition(int32_t* x, int32_t* y)
 {
   if (x)
     *x = mousePositionX;
@@ -918,7 +918,7 @@ MOUSE_GetPosition(int32* x, int32* y)
 }
 
 void
-MOUSE_GetDelta(int32* x, int32* y)
+MOUSE_GetDelta(int32_t* x, int32_t* y)
 {
   updateMouse();
 
@@ -934,7 +934,7 @@ MOUSE_GetDelta(int32* x, int32* y)
 void
 JOYSTICK_UpdateHats()
 {
-  int i;
+  int32_t i;
 
   for (i = 0; i < MAXJOYHATS; i++)
   {

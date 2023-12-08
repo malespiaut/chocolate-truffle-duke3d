@@ -54,7 +54,7 @@ int32_t backflag, numenvsnds;
 void
 SoundStartup(void)
 {
-  int32 status;
+  int32_t status;
 
   // if they chose None lets return
   if (FXDevice == SC_Unknown)
@@ -92,7 +92,7 @@ SoundStartup(void)
 void
 SoundShutdown(void)
 {
-  int32 status;
+  int32_t status;
 
   // if they chose None lets return
   if (FXDevice == SC_Unknown)
@@ -116,7 +116,7 @@ SoundShutdown(void)
 void
 MusicStartup(void)
 {
-  int32 status;
+  int32_t status;
 
   // if they chose None lets return
   if (MusicDevice == SC_Unknown)
@@ -153,7 +153,7 @@ MusicStartup(void)
 void
 MusicShutdown(void)
 {
-  int32 status;
+  int32_t status;
 
   // if they chose None lets return
   if (MusicDevice == SC_Unknown)

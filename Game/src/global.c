@@ -30,6 +30,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 
 #include <ctype.h>
 #include <stdarg.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,35 +64,35 @@ uint8_t grpVersion = 0;
 // For BYTEVERSION diff, 27/116 vs 28/117 see extras\duke3d.h vs source\duke3d.h
 // from the official source code release.
 
-int BYTEVERSION_27 = 27;   // 1.3 under 1.4 Plutonium. Not supported anymore
-int BYTEVERSION_116 = 116; // 1.4 Plutonium. Not supported anymore
+int32_t BYTEVERSION_27 = 27;   // 1.3 under 1.4 Plutonium. Not supported anymore
+int32_t BYTEVERSION_116 = 116; // 1.4 Plutonium. Not supported anymore
 
-int BYTEVERSION_28 = 28;   // 1.3 under 1.5 engine
-int BYTEVERSION_117 = 117; // 1.5 Atomic
+int32_t BYTEVERSION_28 = 28;   // 1.3 under 1.5 engine
+int32_t BYTEVERSION_117 = 117; // 1.5 Atomic
 
-int BYTEVERSION_29 = 29;   // 1.3 under xDuke v19.6.
-int BYTEVERSION_118 = 118; // 1.5 Atomic under xDuke v19.6.
+int32_t BYTEVERSION_29 = 29;   // 1.3 under xDuke v19.6.
+int32_t BYTEVERSION_118 = 118; // 1.5 Atomic under xDuke v19.6.
 
-int BYTEVERSION_1_3 = 1; // for 1.3 demos (Not compatible)
+int32_t BYTEVERSION_1_3 = 1; // for 1.3 demos (Not compatible)
 
-int BYTEVERSION = 119; // xDuke v19.7
+int32_t BYTEVERSION = 119; // xDuke v19.7
 
-short global_random;
-short neartagsector, neartagwall, neartagsprite;
+uint16_t global_random;
+int16_t neartagsector, neartagwall, neartagsprite;
 
 int32_t gc, neartaghitdist, lockclock, max_player_health, max_armour_amount, max_ammo_amount[MAX_WEAPONS];
 
 // int32_t temp_data[MAXSPRITES][6];
 struct weaponhit hittype[MAXSPRITES];
-short spriteq[1024], spriteqloc, spriteqamount = 64;
+int16_t spriteq[1024], spriteqloc, spriteqamount = 64;
 
 struct animwalltype animwall[MAXANIMWALLS];
-short numanimwalls;
+int16_t numanimwalls;
 int32_t *animateptr[MAXANIMATES], animategoal[MAXANIMATES], animatevel[MAXANIMATES], animatecnt;
 // int32_t oanimateval[MAXANIMATES];
-short animatesect[MAXANIMATES];
+int16_t animatesect[MAXANIMATES];
 int32_t msx[2048], msy[2048];
-short cyclers[MAXCYCLERS][6], numcyclers;
+int16_t cyclers[MAXCYCLERS][6], numcyclers;
 
 char fta_quotes[NUMOFFIRSTTIMEACTIVE][64];
 
@@ -100,10 +101,10 @@ uint8_t packbuf[576];
 
 char buf[80];
 
-short camsprite;
-short mirrorwall[64], mirrorsector[64], mirrorcnt;
+int16_t camsprite;
+int16_t mirrorwall[64], mirrorsector[64], mirrorcnt;
 
-int current_menu;
+int32_t current_menu;
 
 uint8_t betaname[80];
 
@@ -116,11 +117,11 @@ char skill_names[5][33] = {"PIECE OF CAKE", "LET'S ROCK", "COME GET SOME", "DAMN
 volatile int32_t checksume;
 int32_t soundsiz[NUM_SOUNDS];
 
-short soundps[NUM_SOUNDS], soundpe[NUM_SOUNDS], soundvo[NUM_SOUNDS];
+int16_t soundps[NUM_SOUNDS], soundpe[NUM_SOUNDS], soundvo[NUM_SOUNDS];
 uint8_t soundm[NUM_SOUNDS], soundpr[NUM_SOUNDS];
 char sounds[NUM_SOUNDS][14];
 
-short title_zoom;
+int16_t title_zoom;
 
 SAMPLE Sound[NUM_SOUNDS];
 SOUNDOWNER SoundOwner[NUM_SOUNDS][4];
@@ -146,7 +147,7 @@ input recsync[RECSYNCBUFSIZ];
 int32_t movefifosendplc;
 
 // Multiplayer syncing variables
-short screenpeek;
+int16_t screenpeek;
 int32_t movefifoend[MAXPLAYERS];
 
 // Game recording variables
@@ -170,7 +171,7 @@ uint8_t music_select;
 char env_music_fn[4][13];
 uint8_t rtsplaying;
 
-short weaponsandammosprites[15] = {
+int16_t weaponsandammosprites[15] = {
   RPGSPRITE,
   CHAINGUNSPRITE,
   DEVISTATORAMMO,
@@ -191,8 +192,8 @@ int32_t impact_damage;
 
 // GLOBAL.C - replace the end "my's" with this
 int32_t myx, omyx, myxvel, myy, omyy, myyvel, myz, omyz, myzvel;
-short myhoriz, omyhoriz, myhorizoff, omyhorizoff;
-short myang, omyang, mycursectnum, myjumpingcounter, frags[MAXPLAYERS][MAXPLAYERS];
+int16_t myhoriz, omyhoriz, myhorizoff, omyhorizoff;
+int16_t myang, omyang, mycursectnum, myjumpingcounter, frags[MAXPLAYERS][MAXPLAYERS];
 
 uint8_t myjumpingtoggle, myonground, myhardlanding, myreturntocenter;
 int8_t multiwho, multipos, multiwhat, multiflag;
@@ -201,7 +202,7 @@ int32_t fakemovefifoplc, movefifoplc;
 int32_t myxbak[MOVEFIFOSIZ], myybak[MOVEFIFOSIZ], myzbak[MOVEFIFOSIZ];
 int32_t myhorizbak[MOVEFIFOSIZ], dukefriction = 0xcc00, show_shareware;
 
-short myangbak[MOVEFIFOSIZ];
+int16_t myangbak[MOVEFIFOSIZ];
 char myname[2048] = "XDUKE";
 uint8_t camerashitable, freezerhurtowner = 0, lasermode;
 // CTW - MODIFICATION
@@ -212,7 +213,7 @@ int32_t numfreezebounces = 3, rpgblastradius, pipebombblastradius, tripbombblast
 STATUSBARTYPE sbar;
 
 int32_t myminlag[MAXPLAYERS], mymaxlag, otherminlag, bufferjitter = 1;
-short numclouds, clouds[128], cloudx[128], cloudy[128];
+int16_t numclouds, clouds[128], cloudx[128], cloudy[128];
 int32_t cloudtotalclock = 0, totalmemory = 0;
 int32_t numinterpolations = 0, startofdynamicinterpolations = 0;
 int32_t oldipos[MAXINTERPOLATIONS];
@@ -301,8 +302,8 @@ FixFilePath(char* filename)
 }
 
 #if WIN32
-int
-_dos_findfirst(uint8_t* filename, int x, struct find_t* f)
+int32_t
+_dos_findfirst(uint8_t* filename, int32_t x, struct find_t* f)
 {
   int32_t rc = _findfirst(filename, &f->data);
   f->handle = rc;
@@ -315,10 +316,10 @@ _dos_findfirst(uint8_t* filename, int x, struct find_t* f)
   return (1);
 }
 
-int
+int32_t
 _dos_findnext(struct find_t* f)
 {
-  int rc = 0;
+  int32_t rc = 0;
   if (f->handle == -1)
     return (1); /* invalid handle. */
 
@@ -336,8 +337,8 @@ _dos_findnext(struct find_t* f)
 }
 
 #elif defined(UNIX) || defined(PLATFORM_MACOSX)
-int
-_dos_findfirst(char* filename, int x, struct find_t* f)
+int32_t
+_dos_findfirst(char* filename, int32_t x, struct find_t* f)
 {
   char* ptr;
 
@@ -363,7 +364,7 @@ _dos_findfirst(char* filename, int x, struct find_t* f)
   return (_dos_findnext(f));
 }
 
-static int
+static int32_t
 check_pattern_nocase(const char* x, const char* y)
 {
   if ((x == NULL) || (y == NULL))
@@ -401,7 +402,7 @@ check_pattern_nocase(const char* x, const char* y)
   return (*x == *y); /* it's a match (both should be EOS). */
 }
 
-int
+int32_t
 _dos_findnext(struct find_t* f)
 {
   struct dirent* dent;
@@ -452,16 +453,16 @@ _dos_getdate(struct dosdate_t* date)
 }
 
 int
-FindDistance2D(int ix, int iy)
+FindDistance2D(int32_t ix, int32_t iy)
 {
-  int t;
+  int32_t t;
 
   ix = abs(ix); /* absolute values */
   iy = abs(iy);
 
   if (ix < iy)
   {
-    int tmp = ix;
+    int32_t tmp = ix;
     ix = iy;
     iy = tmp;
   }
@@ -472,9 +473,9 @@ FindDistance2D(int ix, int iy)
 }
 
 int
-FindDistance3D(int ix, int iy, int iz)
+FindDistance3D(int32_t ix, int32_t iy, int32_t iz)
 {
-  int t;
+  int32_t t;
 
   ix = abs(ix); /* absolute values */
   iy = abs(iy);
@@ -482,14 +483,14 @@ FindDistance3D(int ix, int iy, int iz)
 
   if (ix < iy)
   {
-    int tmp = ix;
+    int32_t tmp = ix;
     ix = iy;
     iy = tmp;
   }
 
   if (ix < iz)
   {
-    int tmp = ix;
+    int32_t tmp = ix;
     ix = iz;
     iz = tmp;
   }
@@ -500,7 +501,7 @@ FindDistance3D(int ix, int iy, int iz)
 }
 #include "SDL2/SDL.h"
 void
-Error(int errorType, const char* error, ...)
+Error(int32_t errorType, const char* error, ...)
 {
   va_list argptr;
 
@@ -527,11 +528,11 @@ Error(int errorType, const char* error, ...)
 }
 
 void
-write2disk(int line, char* cfilename, char* filename2write, char* message)
+write2disk(int32_t line, char* cfilename, char* filename2write, char* message)
 {
   // usage: write2disk(__LINE__, __FILE__, "c:\temp\my_dbug_file.txt", uint8_t * msg);
 
-  int i, k = 0;
+  int32_t i, k = 0;
   char filename[2048];
   FILE* pFile;
 
@@ -549,10 +550,10 @@ write2disk(int line, char* cfilename, char* filename2write, char* message)
   fclose(pFile);
 }
 
-int32
-SafeOpenAppend(const char* _filename, int32 filetype)
+int32_t
+SafeOpenAppend(const char* _filename, int32_t filetype)
 {
-  int handle;
+  int32_t handle;
   char filename[MAX_PATH];
 
   strncpy(filename, _filename, sizeof(filename));
@@ -571,7 +572,7 @@ SafeOpenAppend(const char* _filename, int32 filetype)
   return handle;
 }
 
-boolean
+bool
 SafeFileExists(const char* _filename)
 {
   char filename[MAX_PATH];
@@ -586,10 +587,10 @@ SafeFileExists(const char* _filename)
 #endif
 }
 
-int32
-SafeOpenWrite(const char* _filename, int32 filetype)
+int32_t
+SafeOpenWrite(const char* _filename, int32_t filetype)
 {
-  int handle;
+  int32_t handle;
   char filename[MAX_PATH];
   strncpy(filename, _filename, sizeof(filename));
   filename[sizeof(filename) - 1] = '\0';
@@ -607,10 +608,10 @@ SafeOpenWrite(const char* _filename, int32 filetype)
   return handle;
 }
 
-int32
-SafeOpenRead(const char* _filename, int32 filetype)
+int32_t
+SafeOpenRead(const char* _filename, int32_t filetype)
 {
-  int handle;
+  int32_t handle;
   char filename[MAX_PATH];
   strncpy(filename, _filename, sizeof(filename));
   filename[sizeof(filename) - 1] = '\0';
@@ -625,7 +626,7 @@ SafeOpenRead(const char* _filename, int32 filetype)
 }
 
 void
-SafeRead(int32 handle, void* buffer, int32 count)
+SafeRead(int32_t handle, void* buffer, int32_t count)
 {
   unsigned iocount;
 
@@ -634,13 +635,13 @@ SafeRead(int32 handle, void* buffer, int32 count)
     iocount = count > 0x8000 ? 0x8000 : count;
     if (read(handle, buffer, iocount) != (int)iocount)
       Error(EXIT_FAILURE, "File read failure reading %ld bytes", count);
-    buffer = (void*)((byte*)buffer + iocount);
+    buffer = (void*)((uint8_t*)buffer + iocount);
     count -= iocount;
   }
 }
 
 void
-SafeWrite(int32 handle, void* buffer, int32 count)
+SafeWrite(int32_t handle, void* buffer, int32_t count)
 {
   unsigned iocount;
 
@@ -649,13 +650,13 @@ SafeWrite(int32 handle, void* buffer, int32 count)
     iocount = count > 0x8000 ? 0x8000 : count;
     if (write(handle, buffer, iocount) != (int)iocount)
       Error(EXIT_FAILURE, "File write failure writing %ld bytes", count);
-    buffer = (void*)((byte*)buffer + iocount);
+    buffer = (void*)((uint8_t*)buffer + iocount);
     count -= iocount;
   }
 }
 
 void
-SafeWriteString(int handle, char* buffer)
+SafeWriteString(int32_t handle, char* buffer)
 {
   unsigned iocount;
 
@@ -678,7 +679,7 @@ SafeMalloc(int32_t size)
 }
 
 void
-SafeRealloc(void** x, int32 size)
+SafeRealloc(void** x, int32_t size)
 {
   void* ptr;
 
@@ -712,10 +713,10 @@ SafeFree(void* ptr)
   free(ptr);
 }
 
-short
-SwapShort(short l)
+int16_t
+SwapShort(int16_t l)
 {
-  byte b1, b2;
+  uint8_t b1, b2;
 
   b1 = l & 255;
   b2 = (l >> 8) & 255;
@@ -723,8 +724,8 @@ SwapShort(short l)
   return (b1 << 8) + b2;
 }
 
-short
-KeepShort(short l)
+int16_t
+KeepShort(int16_t l)
 {
   return l;
 }
@@ -732,7 +733,7 @@ KeepShort(short l)
 int32_t
 Swapint32_t(int32_t l)
 {
-  byte b1, b2, b3, b4;
+  uint8_t b1, b2, b3, b4;
 
   b1 = l & 255;
   b2 = (l >> 8) & 255;
@@ -760,13 +761,13 @@ SwapIntelLong(int32_t* l)
 }
 
 void
-SwapIntelShort(short* s)
+SwapIntelShort(int16_t* s)
 {
   *s = IntelShort(*s);
 }
 
 void
-SwapIntelLongArray(int32_t* l, int num)
+SwapIntelLongArray(int32_t* l, int32_t num)
 {
   while (num--)
   {
@@ -776,7 +777,7 @@ SwapIntelLongArray(int32_t* l, int num)
 }
 
 void
-SwapIntelShortArray(short* s, int num)
+SwapIntelShortArray(int16_t* s, int32_t num)
 {
   while (num--)
   {
@@ -821,7 +822,7 @@ strupr(uint8_t* s)
 }
 
 uint8_t*
-itoa(int value, uint8_t* string, int radix)
+itoa(int32_t value, uint8_t* string, int32_t radix)
 {
   switch (radix)
   {
@@ -840,7 +841,7 @@ itoa(int value, uint8_t* string, int radix)
 }
 
 uint8_t*
-ltoa(int32_t value, uint8_t* string, int radix)
+ltoa(int32_t value, uint8_t* string, int32_t radix)
 {
   switch (radix)
   {
@@ -859,7 +860,7 @@ ltoa(int32_t value, uint8_t* string, int radix)
 }
 
 uint8_t*
-ultoa(uint32_t value, uint8_t* string, int radix)
+ultoa(uint32_t value, uint8_t* string, int32_t radix)
 {
   switch (radix)
   {
@@ -884,7 +885,7 @@ int
 setup_homedir(void)
 {
 #if UNIX
-  int err;
+  int32_t err;
 
   snprintf(ApogeePath, sizeof(ApogeePath), "%s/.duke3d/", getenv("HOME"));
 
@@ -905,7 +906,7 @@ setup_homedir(void)
 uint8_t
 CheckParm(char* check)
 {
-  int i;
+  int32_t i;
   for (i = 1; i < _argc; i++)
   {
     if ((*(_argv[i]) == '-') && (strcmpi(_argv[i] + 1, check) == 0))

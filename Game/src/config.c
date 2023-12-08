@@ -49,42 +49,42 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 //
 // Sound variables
 //
-int32 FXDevice;
-int32 MusicDevice;
-int32 FXVolume;
-int32 MusicVolume;
-int32 SoundToggle;
-int32 MusicToggle;
-int32 VoiceToggle;
-int32 AmbienceToggle;
-int32 OpponentSoundToggle; // xduke to toggle opponent's sounds on/off in DM (duke 1.3d scheme)
-int32 NumVoices;
-int32 NumChannels;
-int32 NumBits;
-int32 MixRate;
-int32 MidiPort;
-int32 ReverseStereo;
+int32_t FXDevice;
+int32_t MusicDevice;
+int32_t FXVolume;
+int32_t MusicVolume;
+int32_t SoundToggle;
+int32_t MusicToggle;
+int32_t VoiceToggle;
+int32_t AmbienceToggle;
+int32_t OpponentSoundToggle; // xduke to toggle opponent's sounds on/off in DM (duke 1.3d scheme)
+int32_t NumVoices;
+int32_t NumChannels;
+int32_t NumBits;
+int32_t MixRate;
+int32_t MidiPort;
+int32_t ReverseStereo;
 
-int32 ControllerType;
-int32 MouseAiming = 0;
-int32 FullScreen = 0;
+int32_t ControllerType;
+int32_t MouseAiming = 0;
+int32_t FullScreen = 0;
 
 //
 // Screen variables
 //
 
-int32 ScreenWidth = 640;
-int32 ScreenHeight = 480;
+int32_t ScreenWidth = 640;
+int32_t ScreenHeight = 480;
 
 //
 // Mouse variables
 //
-int32 mouseSensitivity_X;
-int32 mouseSensitivity_Y;
+int32_t mouseSensitivity_X;
+int32_t mouseSensitivity_Y;
 
 static char setupfilename[512]; //={SETUPFILENAME};
-static int32 scripthandle;
-static int32 setupread = 0;
+static int32_t scripthandle;
+static int32_t setupread = 0;
 /*
 ===================
 =
@@ -96,7 +96,7 @@ static int32 setupread = 0;
 void
 CONFIG_GetSetupFilename(void)
 {
-  int32 i;
+  int32_t i;
 
   setupfilename[0] = '\0';
 
@@ -141,10 +141,10 @@ CONFIG_GetSetupFilename(void)
 ===================
 */
 
-int32
+int32_t
 CONFIG_FunctionNameToNum(char* func)
 {
-  int32 i;
+  int32_t i;
 
   for (i = 0; i < NUMGAMEFUNCTIONS; i++)
   {
@@ -165,7 +165,7 @@ CONFIG_FunctionNameToNum(char* func)
 */
 
 char*
-CONFIG_FunctionNumToName(int32 func)
+CONFIG_FunctionNumToName(int32_t func)
 {
   if (-1 < func && func < NUMGAMEFUNCTIONS)
   {
@@ -185,7 +185,7 @@ CONFIG_FunctionNumToName(int32 func)
 ===================
 */
 
-int32
+int32_t
 CONFIG_AnalogNameToNum(char* func)
 {
 
@@ -288,9 +288,9 @@ CONFIG_SetDefaults(void)
 void
 CONFIG_ReadKeys(void)
 {
-  int32 i;
-  int32 numkeyentries;
-  int32 function;
+  int32_t i;
+  int32_t numkeyentries;
+  int32_t function;
   char keyname1[80];
   char keyname2[80];
   kb_scancode key1, key2;
@@ -303,8 +303,8 @@ CONFIG_ReadKeys(void)
   for (i = 0; i < NUMKEYENTRIES; i++)
   {
     function = CONFIG_FunctionNameToNum(keydefaults[i].entryKey);
-    key1 = (byte)KB_StringToScanCode(keydefaults[i].keyname1);
-    key2 = (byte)KB_StringToScanCode(keydefaults[i].keyname2);
+    key1 = (uint8_t)KB_StringToScanCode(keydefaults[i].keyname1);
+    key2 = (uint8_t)KB_StringToScanCode(keydefaults[i].keyname2);
     CONTROL_MapKey(function, key1, key2);
   }
 
@@ -327,11 +327,11 @@ CONFIG_ReadKeys(void)
       key2 = 0;
       if (keyname1[0])
       {
-        key1 = (byte)KB_StringToScanCode(keyname1);
+        key1 = (uint8_t)KB_StringToScanCode(keyname1);
       }
       if (keyname2[0])
       {
-        key2 = (byte)KB_StringToScanCode(keyname2);
+        key2 = (uint8_t)KB_StringToScanCode(keyname2);
       }
       CONTROL_MapKey(function, key1, key2);
     }
@@ -347,12 +347,12 @@ CONFIG_ReadKeys(void)
 */
 
 void
-CONFIG_SetupMouse(int32 scripthandle)
+CONFIG_SetupMouse(int32_t scripthandle)
 {
-  int32 i;
+  int32_t i;
   char str[80];
   char temp[80];
-  int32 function, scale;
+  int32_t function, scale;
 
   for (i = 0; i < MAXMOUSEBUTTONS; i++)
   {
@@ -415,12 +415,12 @@ CONFIG_SetupMouse(int32 scripthandle)
 */
 
 void
-CONFIG_SetupGamePad(int32 scripthandle)
+CONFIG_SetupGamePad(int32_t scripthandle)
 {
-  int32 i;
+  int32_t i;
   char str[80];
   char temp[80];
-  int32 function;
+  int32_t function;
 
   for (i = 0; i < MAXJOYBUTTONS; i++)
   {
@@ -466,12 +466,12 @@ CONFIG_SetupGamePad(int32 scripthandle)
 */
 
 void
-CONFIG_SetupJoystick(int32 scripthandle)
+CONFIG_SetupJoystick(int32_t scripthandle)
 {
-  int32 i, j;
+  int32_t i, j;
   char str[80];
   char temp[80];
-  int32 function, deadzone;
+  int32_t function, deadzone;
   float scale;
 
   for (i = 0; i < MAXJOYBUTTONS; i++)
@@ -596,12 +596,12 @@ readsavenames(void)
 ===================
 */
 
-// int32 dukever13;
+// int32_t dukever13;
 
 void
 CONFIG_ReadSetup(void)
 {
-  int32 dummy;
+  int32_t dummy;
   char commmacro[] = COMMMACRO;
   FILE* setup_file_hdl;
 
@@ -723,8 +723,8 @@ CONFIG_ReadSetup(void)
   SCRIPT_GetNumber(scripthandle, "Controls", "ControllerType", &ControllerType);
   SCRIPT_GetNumber(scripthandle, "Controls", "MouseAimingFlipped", &ud.mouseflip);
   SCRIPT_GetNumber(scripthandle, "Controls", "MouseAiming", &MouseAiming);
-  SCRIPT_GetNumber(scripthandle, "Controls", "GameMouseAiming", (int32*)&ps[0].aim_mode);
-  SCRIPT_GetNumber(scripthandle, "Controls", "AimingFlag", (int32*)&myaimmode);
+  SCRIPT_GetNumber(scripthandle, "Controls", "GameMouseAiming", (int32_t*)&ps[0].aim_mode);
+  SCRIPT_GetNumber(scripthandle, "Controls", "AimingFlag", (int32_t*)&myaimmode);
 
   CONTROL_ClearAssignments();
 
@@ -777,7 +777,7 @@ CONFIG_ReadSetup(void)
 void
 CONFIG_WriteSetup(void)
 {
-  int32 dummy, i;
+  int32_t dummy, i;
   char commmacro[] = COMMMACRO;
 
   if (!setupread)
@@ -819,7 +819,7 @@ CONFIG_WriteSetup(void)
     SCRIPT_PutNumber(scripthandle, "Misc", "AutoAim", ud.auto_aim, false, false);
   SCRIPT_PutNumber(scripthandle, "Controls", "MouseAimingFlipped", ud.mouseflip, false, false);
   SCRIPT_PutNumber(scripthandle, "Controls", "MouseAiming", MouseAiming, false, false);
-  SCRIPT_PutNumber(scripthandle, "Controls", "GameMouseAiming", (int32)ps[myconnectindex].aim_mode, false, false);
+  SCRIPT_PutNumber(scripthandle, "Controls", "GameMouseAiming", (int32_t)ps[myconnectindex].aim_mode, false, false);
   SCRIPT_PutNumber(scripthandle, "Controls", "AimingFlag", (int32_t)myaimmode, false, false);
 
   // FIX_00016: Build in Keyboard/mouse setup. Mouse now faster.

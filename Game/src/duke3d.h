@@ -98,15 +98,15 @@ enum
 #define MAXSLEEPDIST 16384
 #define SLEEPTIME 24 * 64
 
-extern int BYTEVERSION;
+extern int32_t BYTEVERSION;
 
-extern int BYTEVERSION_27;
-extern int BYTEVERSION_28;
-extern int BYTEVERSION_29; // really needed???
-extern int BYTEVERSION_116;
-extern int BYTEVERSION_117;
-extern int BYTEVERSION_118;
-extern int BYTEVERSION_1_3;
+extern int32_t BYTEVERSION_27;
+extern int32_t BYTEVERSION_28;
+extern int32_t BYTEVERSION_29; // really needed???
+extern int32_t BYTEVERSION_116;
+extern int32_t BYTEVERSION_117;
+extern int32_t BYTEVERSION_118;
+extern int32_t BYTEVERSION_1_3;
 
 #define NUMPAGES 1
 
@@ -124,8 +124,8 @@ struct player_struct;
 // #define TICRATE (120)
 // #define TICSPERFRAME (TICRATE/26)
 
-extern int g_iTickRate;
-extern int g_iTicksPerFrame;
+extern int32_t g_iTickRate;
+extern int32_t g_iTicksPerFrame;
 
 #define TICRATE g_iTickRate
 #define TICSPERFRAME (TICRATE / g_iTicksPerFrame)
@@ -264,8 +264,8 @@ extern int g_iTicksPerFrame;
 
 typedef struct
 {
-  short i;
-  int voice;
+  int16_t i;
+  int32_t voice;
 } SOUNDOWNER;
 
 #include "audiolib/usrhooks.h"
@@ -288,7 +288,7 @@ enum USRHOOKS_Errors
 typedef struct
 {
   int8_t avel, horz;
-  short fvel, svel;
+  int16_t fvel, svel;
   uint32_t bits;
 } input;
 
@@ -305,23 +305,23 @@ typedef struct
 {
   uint8_t* ptr;
   volatile uint8_t lock; // tanguyf: if not volatile, the game can go into an infinite loop in optimised mode
-  int length, num;
+  int32_t length, num;
 } SAMPLE;
 
 struct animwalltype
 {
-  short wallnum;
+  int16_t wallnum;
   int32_t tag;
 };
 extern struct animwalltype animwall[MAXANIMWALLS];
-extern short numanimwalls, probey, lastprobey;
+extern int16_t numanimwalls, probey, lastprobey;
 
 char* mymembuf;
 extern uint8_t typebuflen;
 char typebuf[41];
 extern uint8_t MusicPtr[72000];
 extern int32_t msx[2048], msy[2048];
-extern short cyclers[MAXCYCLERS][6], numcyclers;
+extern int16_t cyclers[MAXCYCLERS][6], numcyclers;
 extern char myname[2048];
 
 #pragma pack(push, 4)
@@ -335,9 +335,9 @@ struct user_defs
   char pwlockout[128], rtsname[128];
   uint8_t overhead_on, last_overhead;
 
-  short pause_on, from_bonus;
-  short camerasprite, last_camsprite;
-  short last_level, secretlevel;
+  int16_t pause_on, from_bonus;
+  int16_t camerasprite, last_camsprite;
+  int16_t last_level, secretlevel;
 
   int32_t const_visibility, uw_framerate;
   int32_t camera_time, folfvel, folavel, folx, foly, fola;
@@ -375,14 +375,14 @@ struct user_defs
 struct player_orig
 {
   int32_t ox, oy, oz;
-  short oa, os;
+  int16_t oa, os;
 };
 
 extern uint8_t numplayersprites;
 
 typedef struct
 {
-  unsigned int crc32;
+  uint32_t crc32;
   char* name;
   uint32_t size;
 } crc32_t;
@@ -406,29 +406,29 @@ struct player_struct
 
   int32_t aim_mode;
 
-  short ang, oang, angvel, cursectnum, look_ang, last_extra, subweapon;
-  short ammo_amount[MAX_WEAPONS], wackedbyactor, frag, fraggedself;
+  int16_t ang, oang, angvel, cursectnum, look_ang, last_extra, subweapon;
+  int16_t ammo_amount[MAX_WEAPONS], wackedbyactor, frag, fraggedself;
 
-  short curr_weapon, last_weapon, tipincs, horizoff, wantweaponfire;
-  short holoduke_amount, newowner, hurt_delay, hbomb_hold_delay;
-  short jumping_counter, airleft, knee_incs, access_incs;
-  short fta, ftq, access_wallnum, access_spritenum;
-  short kickback_pic, got_access, weapon_ang, firstaid_amount;
-  short somethingonplayer, on_crane, i, one_parallax_sectnum;
-  short over_shoulder_on, random_club_frame, fist_incs;
-  short one_eighty_count, cheat_phase;
-  short dummyplayersprite, extra_extra8, quick_kick;
-  short heat_amount, actorsqu, timebeforeexit, customexitsound;
+  int16_t curr_weapon, last_weapon, tipincs, horizoff, wantweaponfire;
+  int16_t holoduke_amount, newowner, hurt_delay, hbomb_hold_delay;
+  int16_t jumping_counter, airleft, knee_incs, access_incs;
+  int16_t fta, ftq, access_wallnum, access_spritenum;
+  int16_t kickback_pic, got_access, weapon_ang, firstaid_amount;
+  int16_t somethingonplayer, on_crane, i, one_parallax_sectnum;
+  int16_t over_shoulder_on, random_club_frame, fist_incs;
+  int16_t one_eighty_count, cheat_phase;
+  int16_t dummyplayersprite, extra_extra8, quick_kick;
+  int16_t heat_amount, actorsqu, timebeforeexit, customexitsound;
 
-  short weaprecs[16], weapreccnt;
+  int16_t weaprecs[16], weapreccnt;
   uint32_t interface_toggle_flag;
 
-  short rotscrnang, dead_flag, show_empty_weapon;
-  short scuba_amount, jetpack_amount, steroids_amount, shield_amount;
-  short holoduke_on, pycount, weapon_pos, frag_ps;
-  short transporter_hold, last_full_weapon, footprintshade, boot_amount;
+  int16_t rotscrnang, dead_flag, show_empty_weapon;
+  int16_t scuba_amount, jetpack_amount, steroids_amount, shield_amount;
+  int16_t holoduke_on, pycount, weapon_pos, frag_ps;
+  int16_t transporter_hold, last_full_weapon, footprintshade, boot_amount;
 
-  int scream_voice;
+  int32_t scream_voice;
 
   uint8_t gm, on_warping_sector, footprintcount;
   uint8_t hbomb_on, jumping_toggle, rapid_fire_hold, on_ground;
@@ -475,12 +475,12 @@ extern int32_t impact_damage, respawnactortime, respawnitemtime;
 
 #define MOVFIFOSIZ 256
 
-extern short spriteq[1024], spriteqloc, spriteqamount;
+extern int16_t spriteq[1024], spriteqloc, spriteqamount;
 extern struct player_struct ps[MAXPLAYERS];
 extern struct player_orig po[MAXPLAYERS];
 extern struct user_defs ud;
 
-extern short int global_random;
+extern uint16_t global_random;
 extern int32_t scaredfallz;
 extern char buf[80]; // My own generic input buffer
 
@@ -489,8 +489,8 @@ extern uint8_t scantoasc[128], ready2send;
 extern uint8_t scantoascwithshift[128];
 
 extern SAMPLE Sound[NUM_SOUNDS];
-extern int32 VoiceToggle, AmbienceToggle, OpponentSoundToggle;
-extern int32 mouseSensitivity_X, mouseSensitivity_Y;
+extern int32_t VoiceToggle, AmbienceToggle, OpponentSoundToggle;
+extern int32_t mouseSensitivity_X, mouseSensitivity_Y;
 extern SOUNDOWNER SoundOwner[NUM_SOUNDS][4];
 
 extern uint8_t playerreadyflag[MAXPLAYERS], playerquitflag[MAXPLAYERS];
@@ -508,18 +508,18 @@ extern uint8_t ipath[80], opath[80];
 extern char music_fn[4][11][13];
 extern uint8_t music_select;
 extern char env_music_fn[4][13];
-extern short camsprite;
+extern int16_t camsprite;
 
 // extern uint8_t  gotz;
-extern uint8_t inspace(short sectnum);
+extern uint8_t inspace(int16_t sectnum);
 
 #pragma pack(push, 4)
 struct weaponhit
 {
   uint8_t cgg;
-  short picnum, ang, extra, owner, movflag;
-  short tempang, actorstayput, dispicnum;
-  short timetosleep;
+  int16_t picnum, ang, extra, owner, movflag;
+  int16_t tempang, actorstayput, dispicnum;
+  int16_t timetosleep;
   int32_t floorz, ceilingz, lastvx, lastvy, bposx, bposy, bposz;
   int32_t temp_data[6];
 };
@@ -531,11 +531,11 @@ extern input loc;
 extern input recsync[RECSYNCBUFSIZ];
 extern int32_t avgfvel, avgsvel, avgavel, avghorz, avgbits;
 
-extern short numplayers, myconnectindex;
-extern short connecthead, connectpoint2[MAXPLAYERS]; // Player linked list variables (indeces, not connection numbers)
-extern short screenpeek;
+extern int16_t numplayers, myconnectindex;
+extern int16_t connecthead, connectpoint2[MAXPLAYERS]; // Player linked list variables (indeces, not connection numbers)
+extern int16_t screenpeek;
 
-extern int current_menu;
+extern int32_t current_menu;
 extern int32_t tempwallptr, animatecnt;
 extern int32_t lockclock;
 extern uint8_t display_mirror, rtsplaying;
@@ -546,12 +546,12 @@ extern int32_t ototalclock;
 extern int32_t *animateptr[MAXANIMATES], animategoal[MAXANIMATES];
 extern int32_t animatevel[MAXANIMATES];
 // extern int32_t oanimateval[MAXANIMATES];
-extern short neartagsector, neartagwall, neartagsprite;
+extern int16_t neartagsector, neartagwall, neartagsprite;
 extern int32_t neartaghitdist;
-extern short animatesect[MAXANIMATES];
+extern int16_t animatesect[MAXANIMATES];
 extern int32_t movefifoplc, vel, svel, angvel, horiz;
 
-extern short mirrorwall[64], mirrorsector[64], mirrorcnt;
+extern int16_t mirrorwall[64], mirrorsector[64], mirrorcnt;
 
 #define NUMKEYS 19
 
@@ -562,7 +562,7 @@ extern volatile int32_t checksume;
 // #include "engine_protos.h"
 
 extern uint8_t screencapt;
-extern short soundps[NUM_SOUNDS], soundpe[NUM_SOUNDS], soundvo[NUM_SOUNDS];
+extern int16_t soundps[NUM_SOUNDS], soundpe[NUM_SOUNDS], soundvo[NUM_SOUNDS];
 extern uint8_t soundpr[NUM_SOUNDS], soundm[NUM_SOUNDS];
 extern int32_t soundsiz[NUM_SOUNDS];
 extern char level_names[44][33];
@@ -571,11 +571,11 @@ extern char volume_names[4][33];
 extern char skill_names[5][33];
 extern char level_file_names[44][128];
 
-extern int32 SoundToggle, MusicToggle;
-extern short last_threehundred, lastsavedpos;
+extern int32_t SoundToggle, MusicToggle;
+extern int16_t last_threehundred, lastsavedpos;
 extern uint8_t restorepalette;
 
-extern short buttonstat;
+extern int16_t buttonstat;
 extern int32_t cachecount;
 extern uint8_t waterpal[768], slimepal[768], titlepal[768], drealms[768], endingpal[768];
 extern char boardfilename[128];
@@ -586,30 +586,30 @@ extern uint8_t lumplockbyte[11];
 
 // DUKE3D.H - replace the end "my's" with this
 extern int32_t myx, omyx, myxvel, myy, omyy, myyvel, myz, omyz, myzvel;
-extern short myhoriz, omyhoriz, myhorizoff, omyhorizoff, globalskillsound;
-extern short myang, omyang, mycursectnum, myjumpingcounter;
+extern int16_t myhoriz, omyhoriz, myhorizoff, omyhorizoff, globalskillsound;
+extern int16_t myang, omyang, mycursectnum, myjumpingcounter;
 extern uint8_t myjumpingtoggle, myonground, myhardlanding, myreturntocenter;
 extern int32_t fakemovefifoplc;
 extern int32_t myxbak[MOVEFIFOSIZ], myybak[MOVEFIFOSIZ], myzbak[MOVEFIFOSIZ];
 extern int32_t myhorizbak[MOVEFIFOSIZ];
-extern short myangbak[MOVEFIFOSIZ];
+extern int16_t myangbak[MOVEFIFOSIZ];
 
-extern short weaponsandammosprites[15];
+extern int16_t weaponsandammosprites[15];
 
 // DUKE3D.H:
 typedef struct
 {
-  short frag[MAXPLAYERS], got_access, last_extra, shield_amount, curr_weapon;
-  short ammo_amount[MAX_WEAPONS], holoduke_on;
+  int16_t frag[MAXPLAYERS], got_access, last_extra, shield_amount, curr_weapon;
+  int16_t ammo_amount[MAX_WEAPONS], holoduke_on;
   uint8_t gotweapon[MAX_WEAPONS], inven_icon, jetpack_on, heat_on;
-  short firstaid_amount, steroids_amount, holoduke_amount, jetpack_amount;
-  short heat_amount, scuba_amount, boot_amount;
-  short last_weapon, weapon_pos, kickback_pic;
+  int16_t firstaid_amount, steroids_amount, holoduke_amount, jetpack_amount;
+  int16_t heat_amount, scuba_amount, boot_amount;
+  int16_t last_weapon, weapon_pos, kickback_pic;
 
 } STATUSBARTYPE;
 
 extern STATUSBARTYPE sbar;
-extern short frags[MAXPLAYERS][MAXPLAYERS];
+extern int16_t frags[MAXPLAYERS][MAXPLAYERS];
 extern int32_t cameradist, cameraclock, dukefriction, show_shareware;
 extern uint8_t networkmode, movesperpacket;
 extern uint8_t gamequit;
@@ -630,7 +630,7 @@ extern int32_t oldipos[MAXINTERPOLATIONS];
 extern int32_t bakipos[MAXINTERPOLATIONS];
 extern int32_t* curipos[MAXINTERPOLATIONS];
 
-extern short numclouds, clouds[128], cloudx[128], cloudy[128];
+extern int16_t numclouds, clouds[128], cloudx[128], cloudy[128];
 extern int32_t cloudtotalclock, totalmemory;
 
 extern int32_t myaimmode, myaimstat, omyaimstat;

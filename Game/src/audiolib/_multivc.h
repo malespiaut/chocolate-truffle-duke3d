@@ -31,8 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef ___MULTIVC_H
 #define ___MULTIVC_H
 
-#define TRUE (1 == 1)
-#define FALSE (!TRUE)
+#include <stdint.h>
 
 #define VOC_8BIT 0x0
 #define VOC_CT4_ADPCM 0x1
@@ -114,19 +113,19 @@ typedef struct VoiceNode
   uint32_t SamplingRate;
   uint32_t RateScale;
   uint32_t position;
-  int Playing;
+  int32_t Playing;
 
-  int handle;
-  int priority;
+  int32_t handle;
+  int32_t priority;
 
   void (*DemandFeed)(uint8_t** ptr, uint32_t* length);
 
-  int LeftVolume;
-  int RightVolume;
+  int32_t LeftVolume;
+  int32_t RightVolume;
 
-  int GLast;
-  int GPos;
-  int GVal[4];
+  int32_t GLast;
+  int32_t GPos;
+  int32_t GVal[4];
 
   uint32_t callbackval;
 
@@ -144,27 +143,24 @@ typedef struct
   uint8_t right;
 } Pan;
 
-typedef signed short MONO16;
-typedef int8_t MONO8;
-
 typedef struct
 {
-  MONO16 left;
-  MONO16 right;
-  //   unsigned short left;
-  //   unsigned short right;
+  int16_t left;
+  int16_t right;
+  //   uint16_t left;
+  //   uint16_t right;
 } STEREO16;
 
 typedef struct
 {
-  MONO16 left;
-  MONO16 right;
+  int16_t left;
+  int16_t right;
 } SIGNEDSTEREO16;
 
 typedef struct
 {
-  //   MONO8 left;
-  //   MONO8 right;
+  //   int8_t left;
+  //   int8_t right;
   uint8_t left;
   uint8_t right;
 } STEREO8;
@@ -180,12 +176,12 @@ typedef struct
 
 typedef struct
 {
-  unsigned short wFormatTag;
-  unsigned short nChannels;
+  uint16_t wFormatTag;
+  uint16_t nChannels;
   uint32_t nSamplesPerSec;
   uint32_t nAvgBytesPerSec;
-  unsigned short nBlockAlign;
-  unsigned short nBitsPerSample;
+  uint16_t nBlockAlign;
+  uint16_t nBitsPerSample;
 } format_header;
 
 typedef struct
@@ -194,8 +190,8 @@ typedef struct
   uint32_t size;
 } data_header;
 
-typedef MONO8 VOLUME8[256];
-typedef MONO16 VOLUME16[256];
+typedef int8_t VOLUME8[256];
+typedef int16_t VOLUME16[256];
 
 // typedef uint8_t HARSH_CLIP_TABLE_8[ MV_NumVoices * 256 ];
 
@@ -210,22 +206,22 @@ typedef MONO16 VOLUME16[256];
 // static playbackstatus MV_GetNextWAVBlock( VoiceNode *voice );
 
 // static void       MV_ServiceRecord( void );
-// static VoiceNode *MV_GetVoice( int handle );
-// static VoiceNode *MV_AllocVoice( int priority );
+// static VoiceNode *MV_GetVoice( int32_t handle );
+// static VoiceNode *MV_AllocVoice( int32_t priority );
 
 // #if 0
-// static short     *MV_GetVolumeTable( int vol );
+// static short     *MV_GetVolumeTable( int32_t vol );
 // #else
-// static int        MV_GetVolumeTable( int vol );
+// static int32_t        MV_GetVolumeTable( int32_t vol );
 // #endif
 
 void MV_SetVoiceMixMode(VoiceNode* voice);
 
-// static void       MV_SetVoicePitch( VoiceNode *voice, uint32_t rate, int pitchoffset );
-// static void       MV_CalcVolume( int MaxLevel );
+// static void       MV_SetVoicePitch( VoiceNode *voice, uint32_t rate, int32_t pitchoffset );
+// static void       MV_CalcVolume( int32_t MaxLevel );
 // static void       MV_CalcPanTable( void );
 
-void ClearBuffer_DW(void* ptr, unsigned data, int length);
+void ClearBuffer_DW(void* ptr, unsigned data, int32_t length);
 
 /*
 void MV_Mix8BitMono( uint32_t position, uint32_t rate,
@@ -261,18 +257,18 @@ void MV_MixFPStereo8(uint32_t position, uint32_t rate, const uint8_t* start, uin
 
 void MV_MixFPStereo16(uint32_t position, uint32_t rate, const uint8_t* start, uint32_t length);
 
-void MV_FPReverb(int volume);
+void MV_FPReverb(int32_t volume);
 
 void MV_FPReverbFree(void);
 
-void MV_16BitDownmix(uint8_t* dest, int count);
+void MV_16BitDownmix(uint8_t* dest, int32_t count);
 
-void MV_8BitDownmix(uint8_t* dest, int count);
+void MV_8BitDownmix(uint8_t* dest, int32_t count);
 
 /*
-void MV_16BitReverbFast( const uint8_t *src, uint8_t *dest, int count, int shift );
+void MV_16BitReverbFast( const uint8_t *src, uint8_t *dest, int32_t count, int32_t shift );
 
-void MV_8BitReverbFast( const int8_t *src, int8_t *dest, int count, int shift );
+void MV_8BitReverbFast( const int8_t *src, int8_t *dest, int32_t count, int32_t shift );
 */
 
 #endif

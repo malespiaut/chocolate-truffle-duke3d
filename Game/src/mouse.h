@@ -26,6 +26,10 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 
 #ifndef __mouse_h
 #define __mouse_h
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -38,13 +42,13 @@ extern "C"
 #define RIGHT_MOUSE_PRESSED(button) (((button)&RIGHT_MOUSE) != 0)
 #define MIDDLE_MOUSE_PRESSED(button) (((button)&MIDDLE_MOUSE) != 0)
 
-  boolean MOUSE_Init(void);
+  bool MOUSE_Init(void);
   void MOUSE_Shutdown(void);
   void MOUSE_ShowCursor(void);
   void MOUSE_HideCursor(void);
-  int32 MOUSE_GetButtons(void);
-  void MOUSE_GetPosition(int32* x, int32* y);
-  void MOUSE_GetDelta(int32* x, int32* y);
+  int32_t MOUSE_GetButtons(void);
+  void MOUSE_GetPosition(int32_t* x, int32_t* y);
+  void MOUSE_GetDelta(int32_t* x, int32_t* y);
 
 #ifdef __cplusplus
 };

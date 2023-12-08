@@ -46,12 +46,12 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "sounds.h"
 
 extern SDL_Surface* surface;
-extern short inputloc;
+extern int16_t inputloc;
 extern int recfilep;
 extern uint8_t vgacompatible;
-short probey = 0, lastprobey = 0, last_menu, globalskillsound = -1;
-short sh, onbar, buttonstat, deletespot;
-short last_zero, last_fifty, last_threehundred = 0;
+int16_t probey = 0, lastprobey = 0, last_menu, globalskillsound = -1;
+int16_t sh, onbar, buttonstat, deletespot;
+int16_t last_zero, last_fifty, last_threehundred = 0;
 static uint8_t fileselect = 1, menunamecnt;
 static char menuname[256][17];
 
@@ -143,7 +143,7 @@ void TENtext(void)
 // CTW END - REMOVED
 
 void
-cmenu(short cm)
+cmenu(int16_t cm)
 {
   current_menu = cm;
 
@@ -176,9 +176,9 @@ savetemp(char* fn, uint8_t* daptr, int32_t dasiz)
 }
 
 void
-getangplayers(short snum)
+getangplayers(int16_t snum)
 {
-  short i, a;
+  int16_t i, a;
 
   for (i = connecthead; i >= 0; i = connectpoint2[i])
   {
@@ -204,7 +204,7 @@ getangplayers(short snum)
 }
 
 int
-loadpheader(uint8_t spot, int32* vn, int32* ln, int32* psk, int32* nump)
+loadpheader(uint8_t spot, int32_t* vn, int32_t* ln, int32_t* psk, int32_t* nump)
 {
 
   char fn[] = "game0.sav";
@@ -226,12 +226,12 @@ loadpheader(uint8_t spot, int32* vn, int32* ln, int32* psk, int32* nump)
     return 1;
   }
 
-  kdfread(nump, sizeof(int32), 1, fil);
+  kdfread(nump, sizeof(int32_t), 1, fil);
 
   kdfread(tempbuf, 19, 1, fil);
-  kdfread(vn, sizeof(int32), 1, fil);
-  kdfread(ln, sizeof(int32), 1, fil);
-  kdfread(psk, sizeof(int32), 1, fil);
+  kdfread(vn, sizeof(int32_t), 1, fil);
+  kdfread(ln, sizeof(int32_t), 1, fil);
+  kdfread(psk, sizeof(int32_t), 1, fil);
 
   if (tiles[MAXTILES - 3].data == NULL)
     allocache(&tiles[MAXTILES - 3].data, 160 * 100, &tiles[MAXTILES - 3].lock);
@@ -245,13 +245,13 @@ loadpheader(uint8_t spot, int32* vn, int32* ln, int32* psk, int32* nump)
 int
 loadplayer(int8_t spot)
 {
-  short k, music_changed;
+  int16_t k, music_changed;
   char fn[] = "game0.sav";
   char mpfn[] = "gameA_00.sav";
   char* fnptr;
   int32_t fil, bv, i, x;
-  int32 nump;
-  int32 ptrbuf[MAXTILES];
+  int32_t nump;
+  int32_t ptrbuf[MAXTILES];
 
   assert(MAXTILES > MAXANIMATES);
 
@@ -379,20 +379,20 @@ loadplayer(int8_t spot)
   kdfread(&animwall, sizeof(animwall), 1, fil);
   kdfread(&msx[0], sizeof(int32_t), sizeof(msx) / sizeof(int32_t), fil);
   kdfread(&msy[0], sizeof(int32_t), sizeof(msy) / sizeof(int32_t), fil);
-  kdfread((short*)&spriteqloc, sizeof(short), 1, fil);
-  kdfread((short*)&spriteqamount, sizeof(short), 1, fil);
-  kdfread((short*)&spriteq[0], sizeof(short), spriteqamount, fil);
-  kdfread(&mirrorcnt, sizeof(short), 1, fil);
-  kdfread(&mirrorwall[0], sizeof(short), 64, fil);
-  kdfread(&mirrorsector[0], sizeof(short), 64, fil);
+  kdfread((int16_t*)&spriteqloc, sizeof(int16_t), 1, fil);
+  kdfread((int16_t*)&spriteqamount, sizeof(int16_t), 1, fil);
+  kdfread((int16_t*)&spriteq[0], sizeof(int16_t), spriteqamount, fil);
+  kdfread(&mirrorcnt, sizeof(int16_t), 1, fil);
+  kdfread(&mirrorwall[0], sizeof(int16_t), 64, fil);
+  kdfread(&mirrorsector[0], sizeof(int16_t), 64, fil);
   kdfread(&show2dsector[0], sizeof(uint8_t), MAXSECTORS >> 3, fil);
   kdfread(&actortype[0], sizeof(uint8_t), MAXTILES, fil);
   kdfread(&boardfilename[0], sizeof(boardfilename), 1, fil);
 
   kdfread(&numclouds, sizeof(numclouds), 1, fil);
-  kdfread(&clouds[0], sizeof(short) << 7, 1, fil);
-  kdfread(&cloudx[0], sizeof(short) << 7, 1, fil);
-  kdfread(&cloudy[0], sizeof(short) << 7, 1, fil);
+  kdfread(&clouds[0], sizeof(int16_t) << 7, 1, fil);
+  kdfread(&cloudx[0], sizeof(int16_t) << 7, 1, fil);
+  kdfread(&cloudy[0], sizeof(int16_t) << 7, 1, fil);
 
   kdfread(&script[0], 4, MAXSCRIPTSIZE, fil);
   kdfread(&ptrbuf[0], 4, MAXTILES, fil);
@@ -446,7 +446,7 @@ loadplayer(int8_t spot)
   kdfread(&connecthead, sizeof(connecthead), 1, fil);
   kdfread(connectpoint2, sizeof(connectpoint2), 1, fil);
   kdfread(&numplayersprites, sizeof(numplayersprites), 1, fil);
-  kdfread((short*)&frags[0][0], sizeof(frags), 1, fil);
+  kdfread((int16_t*)&frags[0][0], sizeof(frags), 1, fil);
 
   kdfread(&randomseed, sizeof(randomseed), 1, fil);
   kdfread(&global_random, sizeof(global_random), 1, fil);
@@ -654,20 +654,20 @@ saveplayer(int8_t spot)
   dfwrite(&animwall, sizeof(animwall), 1, fil);
   dfwrite(&msx[0], sizeof(int32_t), sizeof(msx) / sizeof(int32_t), fil);
   dfwrite(&msy[0], sizeof(int32_t), sizeof(msy) / sizeof(int32_t), fil);
-  dfwrite(&spriteqloc, sizeof(short), 1, fil);
-  dfwrite(&spriteqamount, sizeof(short), 1, fil);
-  dfwrite(&spriteq[0], sizeof(short), spriteqamount, fil);
-  dfwrite(&mirrorcnt, sizeof(short), 1, fil);
-  dfwrite(&mirrorwall[0], sizeof(short), 64, fil);
-  dfwrite(&mirrorsector[0], sizeof(short), 64, fil);
+  dfwrite(&spriteqloc, sizeof(int16_t), 1, fil);
+  dfwrite(&spriteqamount, sizeof(int16_t), 1, fil);
+  dfwrite(&spriteq[0], sizeof(int16_t), spriteqamount, fil);
+  dfwrite(&mirrorcnt, sizeof(int16_t), 1, fil);
+  dfwrite(&mirrorwall[0], sizeof(int16_t), 64, fil);
+  dfwrite(&mirrorsector[0], sizeof(int16_t), 64, fil);
   dfwrite(&show2dsector[0], sizeof(uint8_t), MAXSECTORS >> 3, fil);
   dfwrite(&actortype[0], sizeof(uint8_t), MAXTILES, fil);
   dfwrite(&boardfilename[0], sizeof(boardfilename), 1, fil);
 
   dfwrite(&numclouds, sizeof(numclouds), 1, fil);
-  dfwrite(&clouds[0], sizeof(short) << 7, 1, fil);
-  dfwrite(&cloudx[0], sizeof(short) << 7, 1, fil);
-  dfwrite(&cloudy[0], sizeof(short) << 7, 1, fil);
+  dfwrite(&clouds[0], sizeof(int16_t) << 7, 1, fil);
+  dfwrite(&cloudx[0], sizeof(int16_t) << 7, 1, fil);
+  dfwrite(&cloudy[0], sizeof(int16_t) << 7, 1, fil);
 
   dfwrite(&script[0], 4, MAXSCRIPTSIZE, fil);
 
@@ -715,7 +715,7 @@ saveplayer(int8_t spot)
   dfwrite(&connecthead, sizeof(connecthead), 1, fil);
   dfwrite(connectpoint2, sizeof(connectpoint2), 1, fil);
   dfwrite(&numplayersprites, sizeof(numplayersprites), 1, fil);
-  dfwrite((short*)&frags[0][0], sizeof(frags), 1, fil);
+  dfwrite((int16_t*)&frags[0][0], sizeof(frags), 1, fil);
 
   dfwrite(&randomseed, sizeof(randomseed), 1, fil);
   dfwrite(&global_random, sizeof(global_random), 1, fil);
@@ -756,8 +756,8 @@ probe(int x, int y, int i, int n)
 int
 probeXduke(int x, int y, int i, int n, int32_t spriteSize)
 {
-  short centre;
-  int32 mouseSens;
+  int16_t centre;
+  int32_t mouseSens;
 
   static int32_t delay_counter_up = 0, delay_counter_down = 0, delay_up = 50, delay_down = 50;
   static int32_t mi = 0;
@@ -882,9 +882,9 @@ probeXduke(int x, int y, int i, int n, int32_t spriteSize)
 }
 
 int
-menutext(int x, int y, short s, short p, char* t)
+menutext(int x, int y, int16_t s, int16_t p, char* t)
 {
-  short i, ac, centre;
+  int16_t i, ac, centre;
 
   y -= 12;
 
@@ -1005,9 +1005,9 @@ menutext(int x, int y, short s, short p, char* t)
 }
 
 int
-menutextc(int x, int y, short s, short p, char* t)
+menutextc(int x, int y, int16_t s, int16_t p, char* t)
 {
-  short i, ac, centre;
+  int16_t i, ac, centre;
 
   s += 8;
   y -= 12;
@@ -1114,9 +1114,9 @@ menutextc(int x, int y, short s, short p, char* t)
 }
 
 void
-bar(int x, int y, short* p, short dainc, uint8_t damodify, short s, short pa)
+bar(int x, int y, int16_t* p, int16_t dainc, uint8_t damodify, int16_t s, int16_t pa)
 {
-  short xloc;
+  int16_t xloc;
   uint8_t rev;
 
   if (dainc < 0)
@@ -1194,13 +1194,13 @@ bar(int x, int y, short* p, short dainc, uint8_t damodify, short s, short pa)
 #define MWIN(X) rotatesprite(320 << 15, 200 << 15, X, 0, MENUSCREEN, -16, 0, 10 + 64, 0, 0, xdim - 1, ydim - 1)
 #define MWINXY(X, OX, OY) rotatesprite((320 + (OX)) << 15, (200 + (OY)) << 15, X, 0, MENUSCREEN, -16, 0, 10 + 64, 0, 0, xdim - 1, ydim - 1)
 
-int32 volnum, levnum, plrskl, numplr;
-short lastsavedpos = -1;
+int32_t volnum, levnum, plrskl, numplr;
+int16_t lastsavedpos = -1;
 
 void
 dispnames(void)
 {
-  short x, c = 160;
+  int16_t x, c = 160;
 
   c += 64;
   for (x = 0; x <= 108; x += 12)
@@ -1230,7 +1230,7 @@ dispnames(void)
 int
 getfilenames(uint8_t kind[6])
 {
-  short type;
+  int16_t type;
   struct find_t fileinfo;
 
   if (strcmp(kind, "SUBD") == 0)
@@ -1267,7 +1267,7 @@ getfilenames(char kind[6])
 {
 /* !!! FIXME: Visual C? */
 #if (defined __WATCOMC__)
-  short type;
+  int16_t type;
   struct find_t fileinfo;
 
   if (strcmp(kind, "SUBD") == 0)
@@ -1411,7 +1411,7 @@ gameexitanycase(void)
 void
 menus(void)
 {
-  short c, x;
+  int16_t c, x;
   volatile int32_t l;
   int i, j;
 
@@ -2616,24 +2616,24 @@ if(boardfilename[0])
       {
         l = FXVolume;
         FXVolume >>= 2;
-        bar(c + 167 + 40, 43 + 16 + 16, (short*)&FXVolume, 4, (FXDevice != SC_Unknown) && x == 2, SHX(-4), SoundToggle == 0 || (FXDevice == SC_Unknown));
+        bar(c + 167 + 40, 43 + 16 + 16, (int16_t*)&FXVolume, 4, (FXDevice != SC_Unknown) && x == 2, SHX(-4), SoundToggle == 0 || (FXDevice == SC_Unknown));
         if (l != FXVolume)
           FXVolume <<= 2;
         if (l != FXVolume)
-          FX_SetVolume((short)FXVolume);
+          FX_SetVolume((int16_t)FXVolume);
       }
       menutext(c, 43 + 16, SHX(-3), (MusicDevice == SC_Unknown), "MUSIC");
       menutext(c, 43 + 16 + 16 + 16, SHX(-5), (MusicDevice == SC_Unknown) || MusicToggle == 0, "MUSIC VOLUME");
       {
         l = MusicVolume;
         MusicVolume >>= 2;
-        bar(c + 167 + 40, 43 + 16 + 16 + 16, (short*)&MusicVolume, 4, (MusicDevice != SC_Unknown) && x == 3, SHX(-5), (MusicToggle == 0) || (MusicDevice == SC_Unknown));
+        bar(c + 167 + 40, 43 + 16 + 16 + 16, (int16_t*)&MusicVolume, 4, (MusicDevice != SC_Unknown) && x == 3, SHX(-5), (MusicToggle == 0) || (MusicDevice == SC_Unknown));
         MusicVolume <<= 2;
         if (l != MusicVolume)
         {
           STUBBED("Check this");
           // !!! FIXME: Used to be Music_ not MUSIC_.  --ryan.
-          MUSIC_SetVolume((short)MusicVolume);
+          MUSIC_SetVolume((int16_t)MusicVolume);
         }
       }
       menutext(c, 43 + 16 + 16 + 16 + 16, SHX(-6), (FXDevice == SC_Unknown) || SoundToggle == 0, "DUKE TALK");
@@ -2742,7 +2742,7 @@ if(boardfilename[0])
       }
 
       {
-        short sense;
+        int16_t sense;
 
         sense = CONTROL_GetMouseSensitivity_X();
         menutext(c, 43 + 16 * 0, SHX(-7), PHX(-7), "X SENSITIVITY");
@@ -3263,11 +3263,11 @@ if(boardfilename[0])
       menutext(c, 43 + 16 * 2, SHX(-2), PHX(-2), "DETAIL");
       menutext(c + 160 + 40, 43 + 16 * 2, 0, 0, ud.detail ? "HIGH" : "LOW");
       {
-        int32 screen_size = ud.screen_size;
+        int32_t screen_size = ud.screen_size;
 
         // FIX_00027: Added an extra small statusbar (HUD)
         menutext(c, 43 + 16 * 3, SHX(-5), PHX(-5), "SCREEN SIZE");
-        bar(c + 167 + 40, 43 + 16 * 3, (short*)&screen_size, -4, x == 3, SHX(-5), PHX(-5));
+        bar(c + 167 + 40, 43 + 16 * 3, (int16_t*)&screen_size, -4, x == 3, SHX(-5), PHX(-5));
         if (ud.screen_size == 4)
         {
           if (screen_size == 0)
@@ -3294,7 +3294,7 @@ if(boardfilename[0])
       }
 
       menutext(c, 43 + 16 * 4, SHX(-6), PHX(-6), "BRIGHTNESS");
-      bar(c + 167 + 40, 43 + 16 * 4, (short*)&ud.brightness, 8, x == 4, SHX(-6), PHX(-6));
+      bar(c + 167 + 40, 43 + 16 * 4, (int16_t*)&ud.brightness, 8, x == 4, SHX(-6), PHX(-6));
       if (x == 4)
         setbrightness(ud.brightness >> 2, &ps[myconnectindex].palette[0]);
 
@@ -4288,13 +4288,13 @@ palto(uint8_t r, uint8_t g, uint8_t b, int32_t e, int present)
 }
 
 void
-drawoverheadmap(int32_t cposx, int32_t cposy, int32_t czoom, short cang)
+drawoverheadmap(int32_t cposx, int32_t cposy, int32_t czoom, int16_t cang)
 {
   int32_t i, j, k, l, x1, y1, x2, y2, x3, y3, x4, y4, ox, oy, xoff, yoff;
   int32_t dax, day, cosang, sinang, xspan, yspan, sprx, spry;
   int32_t xrepeat, yrepeat, z1, z2, startwall, endwall, tilenum, daang;
   int32_t xvect, yvect, xvect2, yvect2;
-  short p;
+  int16_t p;
   uint8_t col;
   walltype *wal, *wal2;
   spritetype* spr;
@@ -4769,7 +4769,7 @@ playanm(char* fn, uint8_t t)
 {
   uint8_t *animbuf, *palptr;
   int32_t i, j, k, length = 0, numframes = 0;
-  int32 handle = -1;
+  int32_t handle = -1;
 
   if (t != 7 && t != 9 && t != 10 && t != 11)
     KB_FlushKeyboardQueue();

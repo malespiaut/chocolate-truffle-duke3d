@@ -30,7 +30,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 //
 //***************************************************************************
 
-#include <inttypes.h>
+#include <stdint.h>
 
 #ifndef _util_lib_public
 #define _util_lib_public
@@ -40,7 +40,7 @@ extern "C"
 {
 #endif
 
-  extern int32 _argc;
+  extern int32_t _argc;
   extern char** _argv;
 
   void RegisterShutdownFunction(void (*shutdown)(void));
@@ -48,18 +48,18 @@ extern "C"
 
   uint8_t CheckParm(char* check);
 
-  void* SafeMalloc(int32 size);
-  int32 SafeMallocSize(void* ptr);
+  void* SafeMalloc(int32_t size);
+  int32_t SafeMallocSize(void* ptr);
   void SafeFree(void* ptr);
-  void SafeRealloc(void** ptr, int32 newsize);
-  int32 ParseHex(uint8_t* hex);
-  int32 ParseNum(uint8_t* str);
-  int16 MotoShort(int16 l);
-  int16 IntelShort(int16 l);
+  void SafeRealloc(void** ptr, int32_t newsize);
+  int32_t ParseHex(uint8_t* hex);
+  int32_t ParseNum(uint8_t* str);
+  int16_t MotoShort(int16_t l);
+  int16_t IntelShort(int16_t l);
   int32_t Motoint32_t(int32_t l);
   int32_t Intelint32_t(int32_t l);
 
-  void HeapSort(uint8_t* base, int32 nel, int32 width, int32 (*compare)(), void (*switcher)());
+  void HeapSort(uint8_t* base, int32_t nel, int32_t width, int32_t (*compare)(), void (*switcher)());
 
 #ifdef __cplusplus
 };

@@ -28,6 +28,10 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 
 #ifndef _scriplib_public
 #define _scriplib_public
+
+#include <stdbool.h>
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -40,7 +44,7 @@ extern "C"
   =
   ==============
   */
-  int32 SCRIPT_Init(uint8_t* name);
+  int32_t SCRIPT_Init(uint8_t* name);
 
   /*
   ==============
@@ -49,7 +53,7 @@ extern "C"
   =
   ==============
   */
-  void SCRIPT_Free(int32 scripthandle);
+  void SCRIPT_Free(int32_t scripthandle);
 
   /*
   ==============
@@ -59,7 +63,7 @@ extern "C"
   ==============
   */
 
-  int32 SCRIPT_Parse(uint8_t* data, int32 length, char* name);
+  int32_t SCRIPT_Parse(uint8_t* data, int32_t length, char* name);
 
   /*
   ==============
@@ -69,7 +73,7 @@ extern "C"
   ==============
   */
 
-  int32 SCRIPT_Load(char* filename);
+  int32_t SCRIPT_Load(char* filename);
 
   /*
   ==============
@@ -78,7 +82,7 @@ extern "C"
   =
   ==============
   */
-  void SCRIPT_Save(int32 scripthandle, char* filename);
+  void SCRIPT_Save(int32_t scripthandle, char* filename);
 
   /*
   ==============
@@ -88,7 +92,7 @@ extern "C"
   ==============
   */
 
-  int32 SCRIPT_NumberSections(int32 scripthandle);
+  int32_t SCRIPT_NumberSections(int32_t scripthandle);
 
   /*
   ==============
@@ -98,7 +102,7 @@ extern "C"
   ==============
   */
 
-  uint8_t* SCRIPT_Section(int32 scripthandle, int32 which);
+  uint8_t* SCRIPT_Section(int32_t scripthandle, int32_t which);
 
   /*
   ==============
@@ -108,7 +112,7 @@ extern "C"
   ==============
   */
 
-  int32 SCRIPT_NumberEntries(int32 scripthandle, char* sectionname);
+  int32_t SCRIPT_NumberEntries(int32_t scripthandle, char* sectionname);
 
   /*
   ==============
@@ -118,7 +122,7 @@ extern "C"
   ==============
   */
 
-  char* SCRIPT_Entry(int32 scripthandle, char* sectionname, int32 which);
+  char* SCRIPT_Entry(int32_t scripthandle, char* sectionname, int32_t which);
 
   /*
   ==============
@@ -127,7 +131,7 @@ extern "C"
   =
   ==============
   */
-  char* SCRIPT_GetRaw(int32 scripthandle, char* sectionname, char* entryname);
+  char* SCRIPT_GetRaw(int32_t scripthandle, char* sectionname, char* entryname);
 
   /*
   ==============
@@ -137,7 +141,7 @@ extern "C"
   ==============
   */
   void SCRIPT_GetString(
-    int32 scripthandle,
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
     char* dest);
@@ -150,7 +154,7 @@ extern "C"
   ==============
   */
   void SCRIPT_GetDoubleString(
-    int32 scripthandle,
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
     char* dest1,
@@ -163,11 +167,11 @@ extern "C"
   =
   ==============
   */
-  boolean SCRIPT_GetNumber(
-    int32 scripthandle,
+  bool SCRIPT_GetNumber(
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
-    int32* number);
+    int32_t* number);
 
   /*
   ==============
@@ -177,10 +181,10 @@ extern "C"
   ==============
   */
   void SCRIPT_GetBoolean(
-    int32 scripthandle,
+    int32_t scripthandle,
     uint8_t* sectionname,
     uint8_t* entryname,
-    boolean* bool);
+    bool* boolean);
 
   /*
   ==============
@@ -190,8 +194,8 @@ extern "C"
   ==============
   */
 
-  boolean SCRIPT_GetFloat(
-    int32 scripthandle,
+  bool SCRIPT_GetFloat(
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
     float* floatnumber);
@@ -205,7 +209,7 @@ extern "C"
   */
 
   void SCRIPT_GetDouble(
-    int32 scripthandle,
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
     double* number);
@@ -217,7 +221,7 @@ extern "C"
   =
   ==============
   */
-  void SCRIPT_PutComment(int32 scripthandle, uint8_t* sectionname, uint8_t* comment);
+  void SCRIPT_PutComment(int32_t scripthandle, uint8_t* sectionname, uint8_t* comment);
 
   /*
   ==============
@@ -226,7 +230,7 @@ extern "C"
   =
   ==============
   */
-  void SCRIPT_PutEOL(int32 scripthandle, uint8_t* sectionname);
+  void SCRIPT_PutEOL(int32_t scripthandle, uint8_t* sectionname);
 
   /*
   ==============
@@ -236,7 +240,7 @@ extern "C"
   ==============
   */
   void SCRIPT_PutMultiComment(
-    int32 scripthandle,
+    int32_t scripthandle,
     uint8_t* sectionname,
     uint8_t* comment,
     ...);
@@ -248,7 +252,7 @@ extern "C"
   =
   ==============
   */
-  void SCRIPT_PutSection(int32 scripthandle, uint8_t* sectionname);
+  void SCRIPT_PutSection(int32_t scripthandle, uint8_t* sectionname);
 
   /*
   ==============
@@ -258,7 +262,7 @@ extern "C"
   ==============
   */
   void SCRIPT_PutRaw(
-    int32 scripthandle,
+    int32_t scripthandle,
     uint8_t* sectionname,
     uint8_t* entryname,
     uint8_t* raw);
@@ -271,7 +275,7 @@ extern "C"
   ==============
   */
   void SCRIPT_PutString(
-    int32 scripthandle,
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
     char* string);
@@ -284,7 +288,7 @@ extern "C"
   ==============
   */
   void SCRIPT_PutDoubleString(
-    int32 scripthandle,
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
     char* string1,
@@ -298,12 +302,12 @@ extern "C"
   ==============
   */
   void SCRIPT_PutNumber(
-    int32 scripthandle,
+    int32_t scripthandle,
     char* sectionname,
     char* entryname,
-    int32 number,
-    boolean hexadecimal,
-    boolean defaultvalue);
+    int32_t number,
+    bool hexadecimal,
+    bool defaultvalue);
 
   /*
   ==============
@@ -313,10 +317,10 @@ extern "C"
   ==============
   */
   void SCRIPT_PutBoolean(
-    int32 scripthandle,
+    int32_t scripthandle,
     uint8_t* sectionname,
     uint8_t* entryname,
-    boolean bool);
+    bool boolean);
 
   /*
   ==============
@@ -327,11 +331,11 @@ extern "C"
   */
 
   void SCRIPT_PutDouble(
-    int32 scripthandle,
+    int32_t scripthandle,
     uint8_t* sectionname,
     uint8_t* entryname,
     double number,
-    boolean defaultvalue);
+    bool defaultvalue);
 
 #ifdef __cplusplus
 };

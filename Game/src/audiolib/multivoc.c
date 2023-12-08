@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
    (c) Copyright 1993 James R. Dose.  All Rights Reserved.
 **********************************************************************/
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,7 +64,7 @@ static int MV_ReverbTable = -1;
 // static Pan MV_PanTable[ MV_NumPanPositions ][ MV_MaxVolume + 1 ];
 static Pan MV_PanTable[MV_NumPanPositions][63 + 1];
 
-static int MV_Installed = FALSE;
+static int MV_Installed = false;
 static int MV_SoundCard = SC_Unknown;
 static int MV_TotalVolume = MV_MaxTotalVolume;
 static int MV_MaxVoices = 1;
@@ -78,7 +79,7 @@ int MV_Channels = 1;
 static int MV_Bits = 8;
 
 static int MV_Silence = SILENCE_8BIT;
-static int MV_SwapLeftRight = FALSE;
+static int MV_SwapLeftRight = false;
 
 static int MV_RequestedMixRate;
 int MV_MixRate;
@@ -385,7 +386,7 @@ MV_ServiceVoc(
 
   {
     ClearBuffer_DW(MV_FooBuffer, 0, sizeof(double) / 4 * MV_BufferSize / MV_SampleSize * MV_Channels);
-    MV_BufferEmpty[MV_MixPage] = TRUE;
+    MV_BufferEmpty[MV_MixPage] = true;
   }
 
   // Play any waiting voices
@@ -407,7 +408,7 @@ MV_ServiceVoc(
       break;
     }
 
-    MV_BufferEmpty[MV_MixPage] = FALSE;
+    MV_BufferEmpty[MV_MixPage] = false;
 
     MV_MixFunction(voice);
 
@@ -500,20 +501,20 @@ MV_GetNextVOCBlock(
 
   ptr = (unsigned char*)voice->NextBlock;
 
-  voice->Playing = TRUE;
+  voice->Playing = true;
 
   voicemode = 0;
   lastblocktype = 0;
   packtype = 0;
 
-  done = FALSE;
+  done = false;
   while (!done)
   {
     // Stop playing if we get a NULL pointer
     if (ptr == NULL)
     {
-      voice->Playing = FALSE;
-      done = TRUE;
+      voice->Playing = false;
+      done = true;
       break;
     }
 
@@ -528,8 +529,8 @@ MV_GetNextVOCBlock(
         if ((voice->LoopStart == NULL) ||
             (voice->LoopStart >= (ptr - 4)))
         {
-          voice->Playing = FALSE;
-          done = TRUE;
+          voice->Playing = false;
+          done = true;
         }
         else
         {
@@ -564,7 +565,7 @@ MV_GetNextVOCBlock(
         }
         else
         {
-          done = TRUE;
+          done = true;
         }
         voicemode = 0;
         break;
@@ -572,7 +573,7 @@ MV_GetNextVOCBlock(
       case 2:
         // Sound continuation block
         samplespeed = voice->SamplingRate;
-        done = TRUE;
+        done = true;
         break;
 
       case 3:
@@ -650,7 +651,7 @@ MV_GetNextVOCBlock(
           ptr += 12;
           blocklength -= 12;
           voice->bits = 8;
-          done = TRUE;
+          done = true;
         }
         else if ((BitsPerSample == 16) && (Channels == 1) &&
                  (Format == VOC_16BIT))
@@ -658,7 +659,7 @@ MV_GetNextVOCBlock(
           ptr += 12;
           blocklength -= 12;
           voice->bits = 16;
-          done = TRUE;
+          done = true;
         }
         else
         {
@@ -668,8 +669,8 @@ MV_GetNextVOCBlock(
 
       default:
         // Unknown data.  Probably not a VOC file.
-        voice->Playing = FALSE;
-        done = TRUE;
+        voice->Playing = false;
+        done = true;
         break;
     }
 
@@ -777,7 +778,7 @@ MV_GetNextRawBlock(
   {
     if (voice->LoopStart == NULL)
     {
-      voice->Playing = FALSE;
+      voice->Playing = false;
       return (NoMoreData);
     }
 
@@ -816,7 +817,7 @@ MV_GetNextWAVBlock(
   {
     if (voice->LoopStart == NULL)
     {
-      voice->Playing = FALSE;
+      voice->Playing = false;
       return (NoMoreData);
     }
 
@@ -889,17 +890,17 @@ MV_VoicePlaying(
   if (!MV_Installed)
   {
     MV_SetErrorCode(MV_NotInstalled);
-    return (FALSE);
+    return (false);
   }
 
   voice = MV_GetVoice(handle);
 
   if (voice == NULL)
   {
-    return (FALSE);
+    return (false);
   }
 
-  return (TRUE);
+  return (true);
 }
 
 /*---------------------------------------------------------------------
@@ -1070,7 +1071,7 @@ MV_VoiceAvailable(
   // Check if we have any free voices
   if (!LL_Empty(&VoicePool, next, prev))
   {
-    return (TRUE);
+    return (true);
   }
 
   // check if we have a higher priority than a voice that is playing.
@@ -1085,10 +1086,10 @@ MV_VoiceAvailable(
 
   if ((voice != &VoiceList) && (priority >= voice->priority))
   {
-    return (TRUE);
+    return (true);
   }
 
-  return (FALSE);
+  return (false);
 }
 
 /*---------------------------------------------------------------------
@@ -1437,7 +1438,7 @@ MV_SetMixMode(
   }
 
   MV_BuffShift = 7 + MV_Channels;
-  MV_SampleSize = sizeof(MONO8) * MV_Channels;
+  MV_SampleSize = sizeof(int8_t) * MV_Channels;
 
   if (MV_Bits == 8)
   {
@@ -1476,7 +1477,7 @@ MV_StartPlayback()
   ClearBuffer_DW(MV_MixBuffer[0], MV_Silence, TotalBufferSize >> 2);
   for (buffer = 0; buffer < MV_NumberOfBuffers; buffer++)
   {
-    MV_BufferEmpty[buffer] = TRUE;
+    MV_BufferEmpty[buffer] = true;
   }
 
   // Set the mix buffer variables
@@ -1710,7 +1711,7 @@ MV_PlayLoopedWAV(
   loopend = min(loopend, data->size);
   absloopend = min(absloopend, length);
 
-  voice->Playing = TRUE;
+  voice->Playing = true;
   voice->DemandFeed = NULL;
   voice->LoopStart = NULL;
   voice->LoopCount = 0;
@@ -2161,7 +2162,7 @@ MV_Init(
     return (MV_Error);
   }
 
-  MV_SetReverseStereo(FALSE);
+  MV_SetReverseStereo(false);
 
   // Initialize the sound card
   status = DSL_Init();
@@ -2183,7 +2184,7 @@ MV_Init(
   }
 
   MV_SoundCard = soundcard;
-  MV_Installed = TRUE;
+  MV_Installed = true;
   MV_CallBackFunc = NULL;
   MV_RecordFunc = NULL;
   MV_ReverbLevel = 0;
@@ -2265,7 +2266,7 @@ MV_Shutdown(
 
   MV_KillAllVoices();
 
-  MV_Installed = FALSE;
+  MV_Installed = false;
 
   // Stop the sound playback engine
   MV_StopPlayback();

@@ -27,14 +27,16 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #ifndef _config_public
 #define _config_public
 
+#include <stdint.h>
+
 #define SETUPNAMEPARM "SETUPFILE"
 #define COMMMACRO "CommbatMacro# "
 
-extern int32 ControllerType;
-extern int32 MouseAiming;
-extern int32 ScreenWidth;
-extern int32 ScreenHeight;
-extern int32 FullScreen;
+extern int32_t ControllerType;
+extern int32_t MouseAiming;
+extern int32_t ScreenWidth;
+extern int32_t ScreenHeight;
+extern int32_t FullScreen;
 
 void CONFIG_ReadSetup(void);
 void CONFIG_GetSetupFilename(void);

@@ -24,6 +24,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 */
 //-------------------------------------------------------------------------
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,19 +40,19 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "sounds.h"
 
 extern uint8_t everyothertime;
-short which_palookup = 9;
+int16_t which_palookup = 9;
 
 static void
-tloadtile(short tilenume)
+tloadtile(int16_t tilenume)
 {
   gotpic[tilenume >> 3] |= (1 << (tilenume & 7));
 }
 
 void
-cachespritenum(short i)
+cachespritenum(int16_t i)
 {
   uint8_t maxc;
-  short j;
+  int16_t j;
 
   if (ud.monsters_off && badguy(&sprite[i]))
     return;
@@ -176,7 +177,7 @@ cachespritenum(short i)
 void
 cachegoodsprites(void)
 {
-  short i;
+  int16_t i;
 
   if (ud.screen_size >= 8)
   {
@@ -250,7 +251,7 @@ cachegoodsprites(void)
 uint8_t
 getsound(uint16_t num)
 {
-  short fp;
+  int16_t fp;
   int32_t l;
 
   if (num >= NUM_SOUNDS || SoundToggle == 0)
@@ -280,7 +281,7 @@ getsound(uint16_t num)
 void
 precachenecessarysounds(void)
 {
-  short i, j;
+  int16_t i, j;
 
   if (FXDevice == SC_Unknown)
     return;
@@ -299,7 +300,7 @@ precachenecessarysounds(void)
 void
 cacheit(void)
 {
-  short i, j;
+  int16_t i, j;
 
   precachenecessarysounds();
 
@@ -349,7 +350,7 @@ docacheit(void)
   for (i = 0; i < MAXTILES; i++)
     if ((gotpic[i >> 3] & (1 << (i & 7))) && tiles[i].data == NULL)
     {
-      loadtile((short)i);
+      loadtile((int16_t)i);
       j++;
       if ((j & 7) == 0)
         getpackets();
@@ -359,7 +360,7 @@ docacheit(void)
 }
 
 void
-xyzmirror(short i, short tileId)
+xyzmirror(int16_t i, int16_t tileId)
 {
   if (tiles[tileId].data == NULL)
     loadtile(tileId);
@@ -436,10 +437,10 @@ countfragbars(void)
 }
 
 void
-pickrandomspot(short snum)
+pickrandomspot(int16_t snum)
 {
   struct player_struct* p;
-  short i;
+  int16_t i;
 
   p = &ps[snum];
 
@@ -456,7 +457,7 @@ pickrandomspot(short snum)
 }
 
 void
-resetplayerstats(short snum)
+resetplayerstats(int16_t snum)
 {
   struct player_struct* p;
 
@@ -564,9 +565,9 @@ resetplayerstats(short snum)
 }
 
 void
-resetweapons(short snum)
+resetweapons(int16_t snum)
 {
-  short weapon;
+  int16_t weapon;
   struct player_struct* p;
 
   p = &ps[snum];
@@ -591,7 +592,7 @@ resetweapons(short snum)
 }
 
 void
-resetinventory(short snum)
+resetinventory(int16_t snum)
 {
   struct player_struct* p;
 
@@ -614,10 +615,10 @@ resetinventory(short snum)
 }
 
 void
-resetprestat(short snum, uint8_t g)
+resetprestat(int16_t snum, uint8_t g)
 {
   struct player_struct* p;
-  short i;
+  int16_t i;
 
   p = &ps[snum];
 
@@ -677,9 +678,9 @@ resetprestat(short snum, uint8_t g)
 }
 
 void
-setupbackdrop(short sky)
+setupbackdrop(int16_t sky)
 {
-  short i;
+  int16_t i;
 
   for (i = 0; i < MAXPSKYTILES; i++)
     pskyoff[i] = 0;
@@ -723,8 +724,8 @@ setupbackdrop(short sky)
 void
 prelevel(uint8_t g)
 {
-  short i, nexti, j, startwall, endwall, lotaglist;
-  short lotags[65];
+  int16_t i, nexti, j, startwall, endwall, lotaglist;
+  int16_t lotags[65];
 
   clearbufbyte(show2dsector, sizeof(show2dsector), 0L);
   clearbufbyte(show2dwall, sizeof(show2dwall), 0L);
@@ -1045,7 +1046,7 @@ void
 newgame(uint8_t vn, uint8_t ln, uint8_t sk)
 {
   struct player_struct* p = &ps[0];
-  short i;
+  int16_t i;
 
   if (globalskillsound >= 0)
     while (Sound[globalskillsound].lock >= 200)
@@ -1127,14 +1128,14 @@ newgame(uint8_t vn, uint8_t ln, uint8_t sk)
 void
 resetpspritevars(uint8_t g)
 {
-  short i, j, nexti; // circ;
+  int16_t i, j, nexti; // circ;
   //    int32_t firstx,firsty;
   spritetype* s;
   uint8_t aimmode[MAXPLAYERS];
   STATUSBARTYPE tsbar[MAXPLAYERS];
 
 #define BOT_MAX_NAME 20
-  int bot_used[BOT_MAX_NAME] = {false};
+  int32_t bot_used[BOT_MAX_NAME] = {false};
   char* bot_names[] = {"* ELASTI",
                        "* ^ZookeM^",
                        "* DOOM",
@@ -1324,7 +1325,7 @@ resetpspritevars(uint8_t g)
 void
 clearfrags(void)
 {
-  short i;
+  int16_t i;
 
   for (i = 0; i < MAXPLAYERS; i++)
     ps[i].frag = ps[i].fraggedself = 0;
@@ -1517,7 +1518,7 @@ resetmys(void)
 void
 enterlevel(uint8_t g)
 {
-  short i;
+  int16_t i;
   int32_t l;
   char levname[256];
   char fulllevelfilename[512];
@@ -1791,8 +1792,8 @@ Programming:
 
      struct imagetype
         {
-            int *itable; // AngX,AngY,AngZ,Xoff,Yoff,Zoff;
-            int *idata;
+            int32_t *itable; // AngX,AngY,AngZ,Xoff,Yoff,Zoff;
+            int32_t *idata;
             struct imagetype *prev, *next;
         }
 

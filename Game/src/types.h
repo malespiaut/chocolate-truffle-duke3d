@@ -34,40 +34,6 @@ extern "C"
 {
 #endif
 
-  //***************************************************************************
-  //
-  //  Global Data Types (For portability)
-  //
-  //***************************************************************************
-
-  typedef uint8_t uint8;
-  typedef uint8 byte;
-  typedef int8_t int8;
-
-  typedef uint16_t uint16;
-  typedef uint16 word;
-  typedef short int int16;
-
-  typedef unsigned int uint32;
-  typedef int int32;
-  typedef uint32 dword;
-
-  typedef int32 fixed;
-#define boolean uint8_t
-  typedef float float32;
-  typedef double float64;
-  typedef int64_t float128;
-  typedef float64 appfloat;
-
-  //***************************************************************************
-  //
-  //  boolean values
-  //
-  //***************************************************************************
-
-#define true (1 == 1)
-#define false (!true)
-
 //***************************************************************************
 //
 //  BYTE ACCESS MACROS

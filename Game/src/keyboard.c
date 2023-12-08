@@ -40,10 +40,10 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 =============================================================================
 */
 
-byte KB_KeyDown[MAXKEYBOARDSCAN]; // Keyboard state array
+uint8_t KB_KeyDown[MAXKEYBOARDSCAN]; // Keyboard state array
 kb_scancode KB_LastScan;
 
-static volatile boolean keyIsWaiting = 0;
+static volatile bool keyIsWaiting = 0;
 
 static uint8_t scancodeToASCII[MAXKEYBOARDSCAN];
 static uint8_t shiftedScancodeToASCII[MAXKEYBOARDSCAN];
@@ -58,13 +58,13 @@ FUNCTIONS
 void
 keyhandler(void)
 {
-  static boolean gotextended = false;
+  static bool gotextended = false;
 
-  int rawkey = _readlastkeyhit();
-  int lastkey = rawkey & 0x7f;
+  int32_t rawkey = _readlastkeyhit();
+  int32_t lastkey = rawkey & 0x7f;
 
   // 128 bit means key was released.
-  int pressed = !(rawkey & 0x80);
+  int32_t pressed = !(rawkey & 0x80);
 
   if (rawkey == 0xe0 && !gotextended)
   {
@@ -106,7 +106,7 @@ keyhandler(void)
 }
 
 void
-KB_KeyEvent(int scancode, int keypressed)
+KB_KeyEvent(int32_t scancode, int32_t keypressed)
 {
   STUBBED("KB_KeyEvent");
 }
@@ -161,7 +161,7 @@ KB_ClearKeysDown(void)
 static struct
 {
   char* name;
-  int code;
+  int32_t code;
 } keyname2scancode[] = {
   {",", sc_Comma},
   {".", sc_Period},
@@ -270,7 +270,7 @@ static struct
 char*
 KB_ScanCodeToString(kb_scancode scancode)
 {
-  int i;
+  int32_t i;
   for (i = 0; keyname2scancode[i].name != NULL; i++)
   {
     if (keyname2scancode[i].code == scancode)
@@ -284,7 +284,7 @@ kb_scancode
 KB_StringToScanCode(char* string)
 {
   char* name = NULL;
-  int32 i = 0;
+  int32_t i = 0;
   name = keyname2scancode[i].name;
   for (; name; ++i, name = keyname2scancode[i].name)
   {

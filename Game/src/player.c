@@ -37,8 +37,8 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "soundefs.h"
 #include "sounds.h"
 
-int32 turnheldtime;    // MED
-int32 lastcontroltime; // MED
+int32_t turnheldtime;    // MED
+int32_t lastcontroltime; // MED
 
 void
 setpal(struct player_struct* p)
@@ -112,7 +112,7 @@ quickkill(struct player_struct* p)
 void
 forceplayerangle(struct player_struct* p)
 {
-  short n;
+  int16_t n;
 
   n = 128 - (TRAND & 255);
 
@@ -126,7 +126,7 @@ void
 tracers(int32_t x1, int32_t y1, int32_t z1, int32_t x2, int32_t y2, int32_t z2, int32_t n)
 {
   int32_t i, xv, yv, zv;
-  short sect = -1;
+  int16_t sect = -1;
 
   i = n + 1;
   xv = (x2 - x1) / i;
@@ -153,10 +153,10 @@ tracers(int32_t x1, int32_t y1, int32_t z1, int32_t x2, int32_t y2, int32_t z2, 
 }
 
 int32_t
-hits(short i)
+hits(int16_t i)
 {
   int32_t sx, sy, sz;
-  short sect, hw, hs;
+  int16_t sect, hw, hs;
   int32_t zoff;
 
   if (PN == APLAYER)
@@ -170,10 +170,10 @@ hits(short i)
 }
 
 int32_t
-hitasprite(short i, short* hitsp)
+hitasprite(int16_t i, int16_t* hitsp)
 {
   int32_t sx, sy, sz, zoff;
-  short sect, hw;
+  int16_t sect, hw;
 
   if (badguy(&sprite[i]))
     zoff = (42 << 8);
@@ -191,10 +191,10 @@ hitasprite(short i, short* hitsp)
 }
 
 /*
-int32_t hitaspriteandwall(short i,short *hitsp,short *hitw,short *x, short *y)
+int32_t hitaspriteandwall(int16_t i,int16_t *hitsp,int16_t *hitw,int16_t *x, int16_t *y)
 {
     int32_t sz;
-    short sect;
+    int16_t sect;
 
     hitscan(SX,SY,SZ,SECT,
         sintable[(SA+512)&2047],
@@ -206,22 +206,22 @@ int32_t hitaspriteandwall(short i,short *hitsp,short *hitw,short *x, short *y)
 */
 
 int32_t
-hitawall(struct player_struct* p, short* hitw)
+hitawall(struct player_struct* p, int16_t* hitw)
 {
   int32_t sx, sy, sz;
-  short sect, hs;
+  int16_t sect, hs;
 
   hitscan(p->posx, p->posy, p->posz, p->cursectnum, sintable[(p->ang + 512) & 2047], sintable[p->ang & 2047], 0, &sect, hitw, &hs, &sx, &sy, &sz, CLIPMASK0);
 
   return (FindDistance2D(sx - p->posx, sy - p->posy));
 }
 
-short
-aim(spritetype* s, short aang, short auto_aim)
+int16_t
+aim(spritetype* s, int16_t aang, int16_t auto_aim)
 {
   uint8_t gotshrinker, gotfreezer;
-  short i, j, a, k, cans;
-  short aimstats[] = {10, 13, 1, 2};
+  int16_t i, j, a, k, cans;
+  int16_t aimstats[] = {10, 13, 1, 2};
   int32_t dx1, dy1, dx2, dy2, dx3, dy3, smax, sdist;
   int32_t xv, yv;
 
@@ -329,9 +329,9 @@ aim(spritetype* s, short aang, short auto_aim)
 }
 
 void
-shoot(short i, short atwith)
+shoot(int16_t i, int16_t atwith)
 {
-  short sect, hitsect, hitspr, hitwall, l, sa, p, j, k, scount;
+  int16_t sect, hitsect, hitspr, hitwall, l, sa, p, j, k, scount;
   int32_t sx, sy, sz, vel, zvel, hitx, hity, hitz, x, oldzvel, dal;
   uint8_t sizx, sizy;
   spritetype* s;
@@ -1172,7 +1172,7 @@ shoot(short i, short atwith)
 }
 
 void
-displayloogie(short snum)
+displayloogie(int16_t snum)
 {
   int32_t i, a, x, y, z;
 
@@ -1192,9 +1192,9 @@ displayloogie(short snum)
 }
 
 uint8_t
-animatefist(short gs, short snum)
+animatefist(int16_t gs, int16_t snum)
 {
-  short looking_arc, fisti, fistpal;
+  int16_t looking_arc, fisti, fistpal;
   int32_t fistzoom, fistz;
 
   fisti = ps[snum].fist_incs;
@@ -1235,10 +1235,10 @@ animatefist(short gs, short snum)
 }
 
 uint8_t
-animateknee(short gs, short snum)
+animateknee(int16_t gs, int16_t snum)
 {
-  short knee_y[] = {0, -8, -16, -32, -64, -84, -108, -108, -108, -72, -32, -8};
-  short looking_arc, pal;
+  int16_t knee_y[] = {0, -8, -16, -32, -64, -84, -108, -108, -108, -72, -32, -8};
+  int16_t looking_arc, pal;
 
   if (ps[snum].knee_incs > 11 || ps[snum].knee_incs == 0 || sprite[ps[snum].i].extra <= 0)
     return 0;
@@ -1262,10 +1262,10 @@ animateknee(short gs, short snum)
 }
 
 uint8_t
-animateknuckles(short gs, short snum)
+animateknuckles(int16_t gs, int16_t snum)
 {
-  short knuckle_frames[] = {0, 1, 2, 2, 3, 3, 3, 2, 2, 1, 0};
-  short looking_arc, pal;
+  int16_t knuckle_frames[] = {0, 1, 2, 2, 3, 3, 3, 2, 2, 1, 0};
+  int16_t looking_arc, pal;
 
   if (ps[snum].knuckle_incs == 0 || sprite[ps[snum].i].extra <= 0)
     return 0;
@@ -1287,9 +1287,9 @@ animateknuckles(short gs, short snum)
 int32_t lastvisinc;
 
 void
-displaymasks(short snum)
+displaymasks(int16_t snum)
 {
-  short p;
+  int16_t p;
 
   if (sprite[ps[snum].i].pal == 1)
     p = 1;
@@ -1312,10 +1312,10 @@ displaymasks(short snum)
 }
 
 uint8_t
-animatetip(short gs, short snum)
+animatetip(int16_t gs, int16_t snum)
 {
-  short p, looking_arc;
-  short tip_y[] = {0, -8, -16, -32, -64, -84, -108, -108, -108, -108, -108, -108, -108, -108, -108, -108, -96, -72, -64, -32, -16};
+  int16_t p, looking_arc;
+  int16_t tip_y[] = {0, -8, -16, -32, -64, -84, -108, -108, -108, -108, -108, -108, -108, -108, -108, -108, -96, -72, -64, -32, -16};
 
   if (ps[snum].tipincs == 0)
     return 0;
@@ -1344,10 +1344,10 @@ animatetip(short gs, short snum)
 }
 
 uint8_t
-animateaccess(short gs, short snum)
+animateaccess(int16_t gs, int16_t snum)
 {
-  short access_y[] = {0, -8, -16, -32, -64, -84, -108, -108, -108, -108, -108, -108, -108, -108, -108, -108, -96, -72, -64, -32, -16};
-  short looking_arc;
+  int16_t access_y[] = {0, -8, -16, -32, -64, -84, -108, -108, -108, -108, -108, -108, -108, -108, -108, -108, -96, -72, -64, -32, -16};
+  int16_t looking_arc;
   uint8_t p;
 
   if (ps[snum].access_incs == 0 || sprite[ps[snum].i].extra <= 0)
@@ -1371,17 +1371,17 @@ animateaccess(short gs, short snum)
   return 1;
 }
 
-short fistsign;
+int16_t fistsign;
 
 void
-displayweapon(short snum)
+displayweapon(int16_t snum)
 {
   int32_t gun_pos, looking_arc, cw;
   int32_t weapon_xoffset, i, j;
   uint8_t o, pal;
   int8_t gs;
   struct player_struct* p;
-  short* kb;
+  int16_t* kb;
 
   p = &ps[snum];
   kb = &p->kickback_pic;
@@ -1674,7 +1674,7 @@ displayweapon(short snum)
 
           if ((*kb) < 5)
           {
-            short kb_frames[] = {0, 1, 2, 0, 0}, l;
+            int16_t kb_frames[] = {0, 1, 2, 0, 0}, l;
 
             l = 195 - 12 + weapon_xoffset;
 
@@ -1916,23 +1916,23 @@ displayweapon(short snum)
 int32_t myaimmode = 0, myaimstat = 0, omyaimstat = 0;
 
 void
-getinput(short snum)
+getinput(int16_t snum)
 {
 
-  short j, daang;
+  int16_t j, daang;
   // MED
   ControlInfo info;
-  int32 tics;
-  boolean running;
-  int32 turnamount;
-  int32 keymove;
-  int32 momx, momy;
+  int32_t tics;
+  bool running;
+  int32_t turnamount;
+  int32_t keymove;
+  int32_t momx, momy;
   struct player_struct* p;
 
   // FIX_00038: Improved Mouse accuracy (losses of integer computation)
-  static fixed previousInfoDyaw = 0;
-  static fixed previousInfoDpitch = 0;
-  static fixed previousInfoDyawSvel = 0;
+  static int32_t previousInfoDyaw = 0;
+  static int32_t previousInfoDpitch = 0;
+  static int32_t previousInfoDyawSvel = 0;
 
   momx = momy = 0;
   p = &ps[snum];
@@ -2461,12 +2461,12 @@ doincrements(struct player_struct* p)
   return 0;
 }
 
-short weapon_sprites[MAX_WEAPONS] = {KNEE, FIRSTGUNSPRITE, SHOTGUNSPRITE, CHAINGUNSPRITE, RPGSPRITE, HEAVYHBOMB, SHRINKERSPRITE, DEVISTATORSPRITE, TRIPBOMBSPRITE, FREEZESPRITE, HEAVYHBOMB, SHRINKERSPRITE};
+int16_t weapon_sprites[MAX_WEAPONS] = {KNEE, FIRSTGUNSPRITE, SHOTGUNSPRITE, CHAINGUNSPRITE, RPGSPRITE, HEAVYHBOMB, SHRINKERSPRITE, DEVISTATORSPRITE, TRIPBOMBSPRITE, FREEZESPRITE, HEAVYHBOMB, SHRINKERSPRITE};
 
 void
 checkweapons(struct player_struct* p)
 {
-  short cw;
+  int16_t cw;
 
   cw = p->curr_weapon;
 
@@ -2489,12 +2489,12 @@ checkweapons(struct player_struct* p)
 }
 
 void
-processinput(short snum)
+processinput(int16_t snum)
 {
   int32_t j, i, k, doubvel, fz, cz, hz, lz, truefdist, x, y;
   uint8_t shrunk;
   uint32_t sb_snum;
-  short psect, psectlotag, *kb, tempsect, pi;
+  int16_t psect, psectlotag, *kb, tempsect, pi;
   struct player_struct* p;
   spritetype* s;
   char text[512];
@@ -3812,7 +3812,7 @@ SHOOTINCODE:
           if (p->ammo_amount[TRIPBOMB_WEAPON] > 0)
           {
             int32_t sx, sy, sz;
-            short sect, hw, hitsp;
+            int16_t sect, hw, hitsp;
 
             hitscan(p->posx, p->posy, p->posz, p->cursectnum, sintable[(p->ang + 512) & 2047], sintable[p->ang & 2047], (100 - p->horiz - p->horizoff) * 32, &sect, &hw, &hitsp, &sx, &sy, &sz, CLIPMASK1);
 
@@ -4402,7 +4402,7 @@ static int32_t fdmatrix[12][12] =
 static int32_t goalx[MAXPLAYERS], goaly[MAXPLAYERS], goalz[MAXPLAYERS];
 static int32_t goalsect[MAXPLAYERS], goalwall[MAXPLAYERS], goalsprite[MAXPLAYERS];
 static int32_t goalplayer[MAXPLAYERS], clipmovecount[MAXPLAYERS];
-short searchsect[MAXSECTORS], searchparent[MAXSECTORS];
+int16_t searchsect[MAXSECTORS], searchparent[MAXSECTORS];
 uint8_t dashow2dsector[(MAXSECTORS + 7) >> 3];
 void
 computergetinput(int32_t snum, input* syn)
@@ -4410,7 +4410,7 @@ computergetinput(int32_t snum, input* syn)
   int32_t i, j, k, l, x1, y1, z1, x2, y2, z2, x3, y3, z3, dx, dy;
   int32_t dist, daang, zang, fightdist, damyang, damysect;
   int32_t startsect, endsect, splc, send, startwall, endwall;
-  short dasect, dawall, daspr;
+  int16_t dasect, dawall, daspr;
   struct player_struct* p;
   walltype* wal;
 
@@ -4632,8 +4632,8 @@ computergetinput(int32_t snum, input* syn)
         if ((dashow2dsector[j >> 3] & (1 << (j & 7))) == 0)
         {
           dashow2dsector[j >> 3] |= (1 << (j & 7));
-          searchsect[send] = (short)j;
-          searchparent[send] = (short)splc;
+          searchsect[send] = (int16_t)j;
+          searchparent[send] = (int16_t)splc;
           send++;
           if (j == endsect)
           {
@@ -4701,8 +4701,8 @@ computergetinput(int32_t snum, input* syn)
           if ((dashow2dsector[j >> 3] & (1 << (j & 7))) == 0)
           {
             dashow2dsector[j >> 3] |= (1 << (j & 7));
-            searchsect[send] = (short)j;
-            searchparent[send] = (short)splc;
+            searchsect[send] = (int16_t)j;
+            searchparent[send] = (int16_t)splc;
             send++;
             if (j == endsect)
             {
