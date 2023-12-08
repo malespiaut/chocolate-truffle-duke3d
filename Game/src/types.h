@@ -11,7 +11,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -30,45 +30,43 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include <inttypes.h>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
+  //***************************************************************************
+  //
+  //  Global Data Types (For portability)
+  //
+  //***************************************************************************
 
-//***************************************************************************
-//
-//  Global Data Types (For portability)
-//
-//***************************************************************************
+  typedef uint8_t uint8;
+  typedef uint8 byte;
+  typedef int8_t int8;
 
-typedef uint8_t            uint8;
-typedef uint8                   byte;
-typedef int8_t             int8;
+  typedef uint16_t uint16;
+  typedef uint16 word;
+  typedef short int int16;
 
-typedef uint16_t            uint16;
-typedef uint16                  word;
-typedef short int               int16;
+  typedef unsigned int uint32;
+  typedef int int32;
+  typedef uint32 dword;
 
-typedef unsigned int           uint32;
-typedef int                    int32;
-typedef uint32                  dword;
-
-typedef int32                   fixed;
+  typedef int32 fixed;
 #define boolean uint8_t
-typedef float                   float32;
-typedef double                  float64;
-typedef int64_t                 float128;
-typedef float64                 appfloat;
+  typedef float float32;
+  typedef double float64;
+  typedef int64_t float128;
+  typedef float64 appfloat;
 
+  //***************************************************************************
+  //
+  //  boolean values
+  //
+  //***************************************************************************
 
-
-//***************************************************************************
-//
-//  boolean values
-//
-//***************************************************************************
-
-#define true ( 1 == 1 )
-#define false ( ! true )
+#define true (1 == 1)
+#define false (!true)
 
 //***************************************************************************
 //
@@ -77,14 +75,14 @@ typedef float64                 appfloat;
 //***************************************************************************
 
 // WORD macros
-#define Int16_HighByte( x ) ( (uint8) ((x)>>8) )
-#define Int16_LowByte( x )  ( (uint8) ((x)&0xff) )
+#define Int16_HighByte(x) ((uint8)((x) >> 8))
+#define Int16_LowByte(x) ((uint8)((x)&0xff))
 
 // DWORD macros
-#define Int32_4Byte( x )   ( (uint8) ((x)>>24)&0xff )
-#define Int32_3Byte( x )   ( (uint8) (((x)>>16)&0xff) )
-#define Int32_2Byte( x )   ( (uint8) (((x)>>8)&0xff) )
-#define Int32_1Byte( x )   ( (uint8) ((x)&0xff) )
+#define Int32_4Byte(x) ((uint8)((x) >> 24) & 0xff)
+#define Int32_3Byte(x) ((uint8)(((x) >> 16) & 0xff))
+#define Int32_2Byte(x) ((uint8)(((x) >> 8) & 0xff))
+#define Int32_1Byte(x) ((uint8)((x)&0xff))
 
 #ifdef __NeXT__
 #define stricmp strcasecmp

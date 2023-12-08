@@ -33,7 +33,6 @@ uint32_t sounddebugActiveSounds;
 uint32_t sounddebugAllocateSoundCalls;
 uint32_t sounddebugDeallocateSoundCalls;
 
-
 int g_CV_CubicInterpolation;
 
 #endif

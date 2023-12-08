@@ -11,7 +11,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -32,23 +32,23 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 //===============
 
 typedef struct
-   {
-   char  name[8];
-   int32 handle,position,size;
-   } lumpinfo_t;
+{
+  char name[8];
+  int32 handle, position, size;
+} lumpinfo_t;
 
 typedef struct
-   {
-   char  identification[4];              // should be IWAD
-   int32 numlumps;
-   int32 infotableofs;
-   } wadinfo_t;
+{
+  char identification[4]; // should be IWAD
+  int32 numlumps;
+  int32 infotableofs;
+} wadinfo_t;
 
 typedef struct
-   {
-   int32 filepos;
-   int32 size;
-   char  name[8];
-   } filelump_t;
+{
+  int32 filepos;
+  int32 size;
+  char name[8];
+} filelump_t;
 
 #endif

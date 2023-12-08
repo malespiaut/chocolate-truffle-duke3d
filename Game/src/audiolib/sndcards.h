@@ -33,8 +33,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 typedef enum
 {
-    SC_SoundScape,
-    SC_Unknown
+  SC_SoundScape,
+  SC_Unknown
 } soundcardnames;
 
 #endif

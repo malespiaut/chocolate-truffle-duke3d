@@ -18,190 +18,215 @@
  (the full version of Duke Nukem 3D is a 43MB GRP) we need to extract the music
  from it and store it in RAM.
 */
-#define KILOBYTE (1024*1024)
+#define KILOBYTE (1024 * 1024)
 uint8_t musicDataBuffer[100 * KILOBYTE];
 
-char  *MUSIC_ErrorString(int ErrorNumber)
+char*
+MUSIC_ErrorString(int ErrorNumber)
 {
-	return "";
+  return "";
 }
 
-int MUSIC_Init(int SoundCard, int Address)
+int
+MUSIC_Init(int SoundCard, int Address)
 {
-    if (Mix_Init(MIX_INIT_MID) != MIX_INIT_MID)
-    {
-        printf("Mix_Init: %s\n", Mix_GetError());
-        //return MUSIC_Error; // Do not fatal on missing MIDI subsystem.
-    }
+  if (Mix_Init(MIX_INIT_MID) != MIX_INIT_MID)
+  {
+    printf("Mix_Init: %s\n", Mix_GetError());
+    // return MUSIC_Error; // Do not fatal on missing MIDI subsystem.
+  }
 
-	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024)==-1) {
-	    printf("Mix_OpenAudio: %s\n", Mix_GetError());
-    }
-    
-    return MUSIC_Ok;
+  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+  {
+    printf("Mix_OpenAudio: %s\n", Mix_GetError());
+  }
+
+  return MUSIC_Ok;
 }
 
-int MUSIC_Shutdown(void)
+int
+MUSIC_Shutdown(void)
 {
-	MUSIC_StopSong();
-    return(MUSIC_Ok);
+  MUSIC_StopSong();
+  return (MUSIC_Ok);
 }
 
-void MUSIC_SetMaxFMMidiChannel(int channel)
-{
-}
-
-void MUSIC_SetVolume(int volume)
-{
-    Mix_VolumeMusic((int)(volume / 2));
-}
-
-void MUSIC_SetMidiChannelVolume(int channel, int volume)
+void
+MUSIC_SetMaxFMMidiChannel(int channel)
 {
 }
 
-void MUSIC_ResetMidiChannelVolumes(void)
+void
+MUSIC_SetVolume(int volume)
+{
+  Mix_VolumeMusic((int)(volume / 2));
+}
+
+void
+MUSIC_SetMidiChannelVolume(int channel, int volume)
 {
 }
 
-int MUSIC_GetVolume(void)
-{
-	return 0;
-}
-
-void MUSIC_SetLoopFlag(int loopflag)
+void
+MUSIC_ResetMidiChannelVolumes(void)
 {
 }
 
-int MUSIC_SongPlaying(void)
+int
+MUSIC_GetVolume(void)
 {
-	return Mix_PlayingMusic();
+  return 0;
 }
 
-void MUSIC_Continue(void)
-{
-    if (Mix_PausedMusic())
-        Mix_ResumeMusic();
-}
-
-void MUSIC_Pause(void)
-{
-    Mix_PauseMusic();
-}
-
-int MUSIC_StopSong(void)
-{
-	if ( (Mix_PlayingMusic()) || (Mix_PausedMusic()) )
-        Mix_HaltMusic();
-    
-    return(MUSIC_Ok);
-}
-
-
-
-int MUSIC_PlaySong(char  *songFilename, int loopflag)
-{
-    int32_t fd =  0;
-    int fileSize;
-    SDL_RWops *rw;
-    Mix_Music* sdlMusic;
-    
-    fd = kopen4load(songFilename,0);
-    
-	if(fd == -1){ 
-        printf("The music '%s' cannot be found in the GRP or the filesystem.\n",songFilename);
-        return 0;
-    }
-    
-    
-    
-    fileSize = kfilelength( fd );
-    if(fileSize >= sizeof(musicDataBuffer))
-    {
-        printf("The music '%s' was found but is too big (%dKB)to fit in the buffer (%lluKB).\n",songFilename,fileSize/1024,sizeof(musicDataBuffer)/1024);
-        kclose(fd);
-        return 0;
-    }
-    
-    kread( fd, musicDataBuffer, fileSize);
-    kclose( fd );
-    
-    //Ok, the file is in memory
-    if ((rw = SDL_RWFromMem((void *) musicDataBuffer, fileSize)) == NULL)
-    {
-        printf("SDL_RWFromMem: %s\n", SDL_GetError());
-        return 0;
-    }
-    
-    if ((sdlMusic = Mix_LoadMUS_RW(rw, SDL_TRUE)) == NULL)
-    {
-        printf("Mix_LoadMUS_RW: %s\n", Mix_GetError());
-        return 0;
-    }
-    
-    if (Mix_PlayMusic(sdlMusic, (loopflag == MUSIC_PlayOnce) ? 0 : -1) == -1)
-    {
-        printf("Mix_PlayMusic: %s\n", Mix_GetError());
-        return 0;
-    }
-    
-    return 1;
-}
-
-
-void MUSIC_SetContext(int context)
+void
+MUSIC_SetLoopFlag(int loopflag)
 {
 }
 
-int MUSIC_GetContext(void)
+int
+MUSIC_SongPlaying(void)
 {
-	return 0;
+  return Mix_PlayingMusic();
 }
 
-void MUSIC_SetSongTick(uint32_t PositionInTicks)
+void
+MUSIC_Continue(void)
+{
+  if (Mix_PausedMusic())
+    Mix_ResumeMusic();
+}
+
+void
+MUSIC_Pause(void)
+{
+  Mix_PauseMusic();
+}
+
+int
+MUSIC_StopSong(void)
+{
+  if ((Mix_PlayingMusic()) || (Mix_PausedMusic()))
+    Mix_HaltMusic();
+
+  return (MUSIC_Ok);
+}
+
+int
+MUSIC_PlaySong(char* songFilename, int loopflag)
+{
+  int32_t fd = 0;
+  int fileSize;
+  SDL_RWops* rw;
+  Mix_Music* sdlMusic;
+
+  fd = kopen4load(songFilename, 0);
+
+  if (fd == -1)
+  {
+    printf("The music '%s' cannot be found in the GRP or the filesystem.\n", songFilename);
+    return 0;
+  }
+
+  fileSize = kfilelength(fd);
+  if (fileSize >= sizeof(musicDataBuffer))
+  {
+    printf("The music '%s' was found but is too big (%dKB)to fit in the buffer (%lluKB).\n", songFilename, fileSize / 1024, sizeof(musicDataBuffer) / 1024);
+    kclose(fd);
+    return 0;
+  }
+
+  kread(fd, musicDataBuffer, fileSize);
+  kclose(fd);
+
+  // Ok, the file is in memory
+  if ((rw = SDL_RWFromMem((void*)musicDataBuffer, fileSize)) == NULL)
+  {
+    printf("SDL_RWFromMem: %s\n", SDL_GetError());
+    return 0;
+  }
+
+  if ((sdlMusic = Mix_LoadMUS_RW(rw, SDL_TRUE)) == NULL)
+  {
+    printf("Mix_LoadMUS_RW: %s\n", Mix_GetError());
+    return 0;
+  }
+
+  if (Mix_PlayMusic(sdlMusic, (loopflag == MUSIC_PlayOnce) ? 0 : -1) == -1)
+  {
+    printf("Mix_PlayMusic: %s\n", Mix_GetError());
+    return 0;
+  }
+
+  return 1;
+}
+
+void
+MUSIC_SetContext(int context)
 {
 }
 
-void MUSIC_SetSongTime(uint32_t milliseconds)
+int
+MUSIC_GetContext(void)
+{
+  return 0;
+}
+
+void
+MUSIC_SetSongTick(uint32_t PositionInTicks)
 {
 }
 
-void MUSIC_SetSongPosition(int measure, int beat, int tick)
+void
+MUSIC_SetSongTime(uint32_t milliseconds)
 {
 }
 
-void MUSIC_GetSongPosition(songposition *pos)
+void
+MUSIC_SetSongPosition(int measure, int beat, int tick)
 {
 }
 
-void MUSIC_GetSongLength(songposition *pos)
+void
+MUSIC_GetSongPosition(songposition* pos)
 {
 }
 
-int MUSIC_FadeVolume(int tovolume, int milliseconds)
-{
-	return(MUSIC_Ok);
-}
-
-int MUSIC_FadeActive(void)
-{
-	return 0;
-}
-
-void MUSIC_StopFade(void)
-
+void
+MUSIC_GetSongLength(songposition* pos)
 {
 }
 
-void MUSIC_RerouteMidiChannel(int channel, int cdecl (*function)( int event, int c1, int c2 ))
+int
+MUSIC_FadeVolume(int tovolume, int milliseconds)
+{
+  return (MUSIC_Ok);
+}
+
+int
+MUSIC_FadeActive(void)
+{
+  return 0;
+}
+
+void
+MUSIC_StopFade(void)
+
 {
 }
 
-void MUSIC_RegisterTimbreBank(uint8_t  *timbres)
+void
+MUSIC_RerouteMidiChannel(int channel, int cdecl (*function)(int event, int c1, int c2))
+{
+}
+
+void
+MUSIC_RegisterTimbreBank(uint8_t* timbres)
 {
 }
 
 // This is the method called from the Game Module.
-void PlayMusic(char  *fileName){
-    MUSIC_PlaySong(fileName,1);
+void
+PlayMusic(char* fileName)
+{
+  MUSIC_PlaySong(fileName, 1);
 }

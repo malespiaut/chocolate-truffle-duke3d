@@ -8,9 +8,7 @@
 
 #include "build.h"
 
-
 short numplayers = 1, myconnectindex = 0;
 short connecthead, connectpoint2[MAXPLAYERS];
 
-
-uint8_t  syncstate=0;
+uint8_t syncstate = 0;

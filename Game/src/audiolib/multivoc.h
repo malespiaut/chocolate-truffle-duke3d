@@ -31,81 +31,71 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef __MULTIVOC_H
 #define __MULTIVOC_H
 
-//#include <windows.h>
+// #include <windows.h>
 #include <SDL2/SDL.h>
 
 // forward declare
-//struct SDL_mutex;
+// struct SDL_mutex;
 
-
-#define MV_MinVoiceHandle  1
+#define MV_MinVoiceHandle 1
 
 extern int MV_ErrorCode;
 
 enum MV_Errors
-   {
-   MV_Warning = -2,
-   MV_Error   = -1,
-   MV_Ok      = 0,
-   MV_UnsupportedCard,
-   MV_NotInstalled,
-   MV_NoVoices,
-   MV_NoMem,
-   MV_VoiceNotFound,
-   MV_BlasterError,
-   MV_PasError,
-   MV_SoundScapeError,
-   MV_SoundSourceError,
-   MV_DPMI_Error,
-   MV_InvalidVOCFile,
-   MV_InvalidWAVFile,
-   MV_InvalidMixMode,
-   MV_SoundSourceFailure,
-   MV_IrqFailure,
-   MV_DMAFailure,
-   MV_DMA16Failure,
-   MV_NullRecordFunction
-   };
+{
+  MV_Warning = -2,
+  MV_Error = -1,
+  MV_Ok = 0,
+  MV_UnsupportedCard,
+  MV_NotInstalled,
+  MV_NoVoices,
+  MV_NoMem,
+  MV_VoiceNotFound,
+  MV_BlasterError,
+  MV_PasError,
+  MV_SoundScapeError,
+  MV_SoundSourceError,
+  MV_DPMI_Error,
+  MV_InvalidVOCFile,
+  MV_InvalidWAVFile,
+  MV_InvalidMixMode,
+  MV_SoundSourceFailure,
+  MV_IrqFailure,
+  MV_DMAFailure,
+  MV_DMA16Failure,
+  MV_NullRecordFunction
+};
 
-char *MV_ErrorString( int ErrorNumber );
-int   MV_VoicePlaying( int handle );
-int   MV_KillAllVoices( void );
-int   MV_Kill( int handle );
-int   MV_VoicesPlaying( void );
-int   MV_VoiceAvailable( int priority );
-int   MV_SetPan( int handle, int vol, int left, int right );
-int   MV_Pan3D( int handle, int angle, int distance );
-void  MV_SetReverb( int reverb );
-int   MV_GetMaxReverbDelay( void );
-void  MV_SetReverbDelay( int delay );
-int   MV_SetMixMode( int numchannels, int samplebits );
-int   MV_StartPlayback( void );
-void  MV_StopPlayback( void );
-int   MV_PlayWAV( uint8_t *ptr, int pitchoffset, int vol, int left,
-         int right, int priority, unsigned long callbackval );
-int   MV_PlayWAV3D( uint8_t *ptr, int pitchoffset, int angle, int distance,
-         int priority, unsigned long callbackval );
-int   MV_PlayLoopedWAV( uint8_t *ptr, long loopstart, long loopend,
-         int pitchoffset, int vol, int left, int right, int priority,
-         unsigned long callbackval );
-int   MV_PlayVOC3D( uint8_t *ptr, int pitchoffset, int angle, int distance,
-         int priority, unsigned long callbackval );
-int   MV_PlayVOC( uint8_t * ptr, int pitchoffset, int vol, int left, int right,
-         int priority, unsigned long callbackval );
-int   MV_PlayLoopedVOC( uint8_t *ptr, long loopstart, long loopend,
-         int pitchoffset, int vol, int left, int right, int priority,
-         uint32_t callbackval );
-void  MV_CreateVolumeTable( int index, int volume, int MaxVolume );
-void  MV_SetVolume( int volume );
-int   MV_GetVolume( void );
-void  MV_SetCallBack( void ( *function )( int32_t ) );
-void  MV_SetReverseStereo( int setting );
-int   MV_GetReverseStereo( void );
-int   MV_Init( int soundcard, int MixRate, int Voices, int numchannels,
-         int samplebits );
-int   MV_Shutdown( void );
+char* MV_ErrorString(int ErrorNumber);
+int MV_VoicePlaying(int handle);
+int MV_KillAllVoices(void);
+int MV_Kill(int handle);
+int MV_VoicesPlaying(void);
+int MV_VoiceAvailable(int priority);
+int MV_SetPan(int handle, int vol, int left, int right);
+int MV_Pan3D(int handle, int angle, int distance);
+void MV_SetReverb(int reverb);
+int MV_GetMaxReverbDelay(void);
+void MV_SetReverbDelay(int delay);
+int MV_SetMixMode(int numchannels, int samplebits);
+int MV_StartPlayback(void);
+void MV_StopPlayback(void);
+int MV_PlayWAV(uint8_t* ptr, int pitchoffset, int vol, int left, int right, int priority, unsigned long callbackval);
+int MV_PlayWAV3D(uint8_t* ptr, int pitchoffset, int angle, int distance, int priority, unsigned long callbackval);
+int MV_PlayLoopedWAV(uint8_t* ptr, long loopstart, long loopend, int pitchoffset, int vol, int left, int right, int priority, unsigned long callbackval);
+int MV_PlayVOC3D(uint8_t* ptr, int pitchoffset, int angle, int distance, int priority, unsigned long callbackval);
+int MV_PlayVOC(uint8_t* ptr, int pitchoffset, int vol, int left, int right, int priority, unsigned long callbackval);
+int MV_PlayLoopedVOC(uint8_t* ptr, long loopstart, long loopend, int pitchoffset, int vol, int left, int right, int priority, uint32_t callbackval);
+void MV_CreateVolumeTable(int index, int volume, int MaxVolume);
+void MV_SetVolume(int volume);
+int MV_GetVolume(void);
+void MV_SetCallBack(void (*function)(int32_t));
+void MV_SetReverseStereo(int setting);
+int MV_GetReverseStereo(void);
+int MV_Init(int soundcard, int MixRate, int Voices, int numchannels, int samplebits);
+int MV_Shutdown(void);
 
-//CRITICAL_SECTION reverbCS;
+// CRITICAL_SECTION reverbCS;
 SDL_mutex* reverbMutex;
 
 #endif

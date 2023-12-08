@@ -30,16 +30,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define LOCKMEMORY
 
-#include <stddef.h>
 #include "ll_man.h"
+#include <stddef.h>
 
 #ifdef LOCKMEMORY
 #include "dpmi.h"
 #endif
 
-#define OFFSET( structure, offset ) \
-   ( *( ( char ** )&( structure )[ offset ] ) )
-
+#define OFFSET(structure, offset) \
+  (*((char**)&(structure)[offset]))
 
 /**********************************************************************
 
@@ -47,63 +46,59 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 **********************************************************************/
 
-
 #define LL_LockStart LL_AddNode
 
+void
+LL_AddNode(
+  char* item,
+  char** head,
+  char** tail,
+  int next,
+  int prev)
 
-void LL_AddNode
-   (
-   char *item,
-   char **head,
-   char **tail,
-   int next,
-   int prev
-   )
+{
+  OFFSET(item, prev) = NULL;
+  OFFSET(item, next) = *head;
 
-   {
-   OFFSET( item, prev ) = NULL;
-   OFFSET( item, next ) = *head;
+  if (*head)
+  {
+    OFFSET(*head, prev) = item;
+  }
+  else
+  {
+    *tail = item;
+  }
 
-   if ( *head )
-      {
-      OFFSET( *head, prev ) = item;
-      }
-   else
-      {
-      *tail = item;
-      }
+  *head = item;
+}
 
-   *head = item;
-   }
+void
+LL_RemoveNode(
+  char* item,
+  char** head,
+  char** tail,
+  int next,
+  int prev)
 
-void LL_RemoveNode
-   (
-   char *item,
-   char **head,
-   char **tail,
-   int next,
-   int prev
-   )
+{
+  if (OFFSET(item, prev) == NULL)
+  {
+    *head = OFFSET(item, next);
+  }
+  else
+  {
+    OFFSET(OFFSET(item, prev), next) = OFFSET(item, next);
+  }
 
-   {
-   if ( OFFSET( item, prev ) == NULL )
-      {
-      *head = OFFSET( item, next );
-      }
-   else
-      {
-      OFFSET( OFFSET( item, prev ), next ) = OFFSET( item, next );
-      }
+  if (OFFSET(item, next) == NULL)
+  {
+    *tail = OFFSET(item, prev);
+  }
+  else
+  {
+    OFFSET(OFFSET(item, next), prev) = OFFSET(item, prev);
+  }
 
-   if ( OFFSET( item, next ) == NULL )
-      {
-      *tail = OFFSET( item, prev );
-      }
-   else
-      {
-      OFFSET( OFFSET( item, next ), prev ) = OFFSET( item, prev );
-      }
-
-   OFFSET( item, next ) = NULL;
-   OFFSET( item, prev ) = NULL;
-   }
+  OFFSET(item, next) = NULL;
+  OFFSET(item, prev) = NULL;
+}

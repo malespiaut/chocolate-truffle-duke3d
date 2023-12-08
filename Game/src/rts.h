@@ -11,7 +11,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -43,7 +43,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 ====================
 */
 
-void RTS_Init (char  *filename);
+void RTS_Init(char* filename);
 /*
 ====================
 =
@@ -52,7 +52,7 @@ void RTS_Init (char  *filename);
 ====================
 */
 
-int32 RTS_NumSounds (void);
+int32 RTS_NumSounds(void);
 /*
 ====================
 =
@@ -63,7 +63,7 @@ int32 RTS_NumSounds (void);
 ====================
 */
 
-int32 RTS_SoundLength (int32 lump);
+int32 RTS_SoundLength(int32 lump);
 /*
 ====================
 =
@@ -72,7 +72,7 @@ int32 RTS_SoundLength (int32 lump);
 ====================
 */
 
-char  * RTS_GetSoundName (int32 i);
+char* RTS_GetSoundName(int32 i);
 /*
 ====================
 =
@@ -80,5 +80,5 @@ char  * RTS_GetSoundName (int32 i);
 =
 ====================
 */
-void *RTS_GetSound (int32 lump);
+void* RTS_GetSound(int32 lump);
 #endif

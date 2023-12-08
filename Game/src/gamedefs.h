@@ -11,7 +11,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -35,7 +35,8 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #ifndef _gamedefs_public_
 #define _gamedefs_public_
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 //****************************************************************************
@@ -49,7 +50,6 @@ extern "C" {
 //
 #define SETUPFILENAME "duke3d.cfg"
 
-
 // Max number of players
 #define MAXPLAYERS 16
 
@@ -62,70 +62,69 @@ extern "C" {
 // Number of joystick "top hats"
 #define MAXJOYHATS 6
 
-// Number of EXTERNAL buttons
+  // Number of EXTERNAL buttons
 
-//#define MAXEXTERNALBUTTONS 6
+  // #define MAXEXTERNALBUTTONS 6
 
-//
-// modem string defines
-//
+  //
+  // modem string defines
+  //
 
 #define MAXMODEMSTRING 50
 
-// MACRO defines
+  // MACRO defines
 
-#define MAXMACROS      10
+#define MAXMACROS 10
 #define MAXMACROLENGTH 34
 
-// Phone list defines
+  // Phone list defines
 
 #define PHONENUMBERLENGTH 28
-#define PHONENAMELENGTH   16
-#define MAXPHONEENTRIES   10
+#define PHONENAMELENGTH 16
+#define MAXPHONEENTRIES 10
 
-// length of program functions
+  // length of program functions
 
 #define MAXFUNCTIONLENGTH 30
 
-// length of axis functions
+  // length of axis functions
 
 #define MAXAXISFUNCTIONLENGTH 30
 
-// Max Player Name length
+  // Max Player Name length
 
 #define MAXPLAYERNAMELENGTH 11
 
-// Max RTS Name length
+  // Max RTS Name length
 
 #define MAXRTSNAMELENGTH 15
 
-// Number of Mouse Axes
+  // Number of Mouse Axes
 
 #define MAXMOUSEAXES 2
 
-// Number of JOY axes
+  // Number of JOY axes
 
 #define MAXJOYAXES 6
-    //4
+  // 4
 
-// Number of GAMEPAD axes
+  // Number of GAMEPAD axes
 
 #define MAXGAMEPADAXES 2
 
-// MIN/MAX scale value for controller scales
+  // MIN/MAX scale value for controller scales
 
-#define MAXCONTROLSCALEVALUE (1<<19)
+#define MAXCONTROLSCALEVALUE (1 << 19)
 
-// DEFAULT scale value for controller scales
+  // DEFAULT scale value for controller scales
 
-#define DEFAULTCONTROLSCALEVALUE (1<<16)
+#define DEFAULTCONTROLSCALEVALUE (1 << 16)
 
-// base value for controller scales
+  // base value for controller scales
 
-#define BASECONTROLSCALEVALUE (1<<16)
+#define BASECONTROLSCALEVALUE (1 << 16)
 
 #ifdef __cplusplus
 };
 #endif
 #endif
-

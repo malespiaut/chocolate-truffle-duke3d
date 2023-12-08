@@ -9,10 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "build.h"
 #include "cache.h"
 #include "display.h"
 #include "fixedPoint_math.h"
-#include "build.h"
 
 /*
  *   This module keeps track of a standard linear cacheing system.
@@ -48,176 +48,212 @@
 
 static int32_t cachesize = 0;
 int32_t cachecount = 0;
-uint8_t  zerochar = 0;
+uint8_t zerochar = 0;
 uint8_t* cachestart = NULL;
 int32_t cacnum = 0, agecount = 0;
 
-typedef struct { 
-    uint8_t** hand;
-    int32_t leng;
-    uint8_t  *lock; } 
-cactype;
+typedef struct
+{
+  uint8_t** hand;
+  int32_t leng;
+  uint8_t* lock;
+} cactype;
 
 cactype cac[MAXCACHEOBJECTS];
 int32_t lockrecip[200];
 
 // TC game directory
-char  game_dir[512] = { '\0' };
+char game_dir[512] = {'\0'};
 
-void initcache(uint8_t* dacachestart, int32_t dacachesize)
+void
+initcache(uint8_t* dacachestart, int32_t dacachesize)
 {
-	int32_t i;
+  int32_t i;
 
-	for(i=1;i<200;i++) lockrecip[i] = (1<<28)/(200-i);
+  for (i = 1; i < 200; i++)
+    lockrecip[i] = (1 << 28) / (200 - i);
 
-	cachestart = dacachestart;
-	cachesize = dacachesize;
+  cachestart = dacachestart;
+  cachesize = dacachesize;
 
-	cac[0].leng = cachesize;
-	cac[0].lock = &zerochar;
-	cacnum = 1;
+  cac[0].leng = cachesize;
+  cac[0].lock = &zerochar;
+  cacnum = 1;
 }
 
-void allocache (uint8_t** newhandle, int32_t newbytes, uint8_t  *newlockptr)
+void
+allocache(uint8_t** newhandle, int32_t newbytes, uint8_t* newlockptr)
 {
-	int32_t i, z, zz, bestz=0, daval, bestval, besto=0, o1, o2, sucklen, suckz;
+  int32_t i, z, zz, bestz = 0, daval, bestval, besto = 0, o1, o2, sucklen, suckz;
 
-	newbytes = newbytes+15;
+  newbytes = newbytes + 15;
 
-	if ((uint32_t)newbytes > (uint32_t)cachesize)
-	{
-		printf("Cachesize: %d\n",cachesize);
-		printf("*Newhandle: 0x%p, Newbytes: %d, *Newlock: %d\n",newhandle,newbytes,*newlockptr);
-		reportandexit("BUFFER TOO BIG TO FIT IN CACHE!\n");
-	}
+  if ((uint32_t)newbytes > (uint32_t)cachesize)
+  {
+    printf("Cachesize: %d\n", cachesize);
+    printf("*Newhandle: 0x%p, Newbytes: %d, *Newlock: %d\n", newhandle, newbytes, *newlockptr);
+    reportandexit("BUFFER TOO BIG TO FIT IN CACHE!\n");
+  }
 
-	if (*newlockptr == 0)
-	{
-		reportandexit("ALLOCACHE CALLED WITH LOCK OF 0!\n");
-	}
+  if (*newlockptr == 0)
+  {
+    reportandexit("ALLOCACHE CALLED WITH LOCK OF 0!\n");
+  }
 
-		/* Find best place */
-	bestval = 0x7fffffff; o1 = cachesize;
-	for(z=cacnum-1;z>=0;z--)
-	{
-		o1 -= cac[z].leng;
-		o2 = o1+newbytes; if (o2 > cachesize) continue;
+  /* Find best place */
+  bestval = 0x7fffffff;
+  o1 = cachesize;
+  for (z = cacnum - 1; z >= 0; z--)
+  {
+    o1 -= cac[z].leng;
+    o2 = o1 + newbytes;
+    if (o2 > cachesize)
+      continue;
 
-		daval = 0;
-		for(i=o1,zz=z;i<o2;i+=cac[zz++].leng)
-		{
-			if (*cac[zz].lock == 0) continue;
-			if (*cac[zz].lock >= 200) { daval = 0x7fffffff; break; }
-			daval += (int32_t ) mulscale32(cac[zz].leng+65536,lockrecip[*cac[zz].lock]);
-			if (daval >= bestval) break;
-		}
-		if (daval < bestval)
-		{
-			bestval = daval; besto = o1; bestz = z;
-			if (bestval == 0) break;
-		}
-	}
+    daval = 0;
+    for (i = o1, zz = z; i < o2; i += cac[zz++].leng)
+    {
+      if (*cac[zz].lock == 0)
+        continue;
+      if (*cac[zz].lock >= 200)
+      {
+        daval = 0x7fffffff;
+        break;
+      }
+      daval += (int32_t)mulscale32(cac[zz].leng + 65536, lockrecip[*cac[zz].lock]);
+      if (daval >= bestval)
+        break;
+    }
+    if (daval < bestval)
+    {
+      bestval = daval;
+      besto = o1;
+      bestz = z;
+      if (bestval == 0)
+        break;
+    }
+  }
 
-	/*printf("%ld %ld %ld\n",besto,newbytes,*newlockptr);*/
+  /*printf("%ld %ld %ld\n",besto,newbytes,*newlockptr);*/
 
-	if (bestval == 0x7fffffff)
-		reportandexit("CACHE SPACE ALL LOCKED UP!\n");
+  if (bestval == 0x7fffffff)
+    reportandexit("CACHE SPACE ALL LOCKED UP!\n");
 
-		/* Suck things out */
-	for(sucklen=-newbytes,suckz=bestz;sucklen<0;sucklen+=cac[suckz++].leng)
-		if (*cac[suckz].lock) *cac[suckz].hand = 0;
+  /* Suck things out */
+  for (sucklen = -newbytes, suckz = bestz; sucklen < 0; sucklen += cac[suckz++].leng)
+    if (*cac[suckz].lock)
+      *cac[suckz].hand = 0;
 
-		/* Remove all blocks except 1 */
-	suckz -= (bestz+1); cacnum -= suckz;
-	copybufbyte(&cac[bestz+suckz],&cac[bestz],(cacnum-bestz)*sizeof(cactype));
-	cac[bestz].hand = newhandle;
-    *newhandle = cachestart+besto;
-	cac[bestz].leng = newbytes;
-	cac[bestz].lock = newlockptr;
-	cachecount++;
+  /* Remove all blocks except 1 */
+  suckz -= (bestz + 1);
+  cacnum -= suckz;
+  copybufbyte(&cac[bestz + suckz], &cac[bestz], (cacnum - bestz) * sizeof(cactype));
+  cac[bestz].hand = newhandle;
+  *newhandle = cachestart + besto;
+  cac[bestz].leng = newbytes;
+  cac[bestz].lock = newlockptr;
+  cachecount++;
 
-		/* Add new empty block if necessary */
-	if (sucklen <= 0) return;
+  /* Add new empty block if necessary */
+  if (sucklen <= 0)
+    return;
 
-	bestz++;
-	if (bestz == cacnum)
-	{
-		cacnum++; if (cacnum > MAXCACHEOBJECTS) reportandexit("Too many objects in cache! (cacnum > MAXCACHEOBJECTS)\n");
-		cac[bestz].leng = sucklen;
-		cac[bestz].lock = &zerochar;
-		return;
-	}
+  bestz++;
+  if (bestz == cacnum)
+  {
+    cacnum++;
+    if (cacnum > MAXCACHEOBJECTS)
+      reportandexit("Too many objects in cache! (cacnum > MAXCACHEOBJECTS)\n");
+    cac[bestz].leng = sucklen;
+    cac[bestz].lock = &zerochar;
+    return;
+  }
 
-	if (*cac[bestz].lock == 0) { cac[bestz].leng += sucklen; return; }
+  if (*cac[bestz].lock == 0)
+  {
+    cac[bestz].leng += sucklen;
+    return;
+  }
 
-	cacnum++; if (cacnum > MAXCACHEOBJECTS) reportandexit("Too many objects in cache! (cacnum > MAXCACHEOBJECTS)\n");
-	for(z=cacnum-1;z>bestz;z--) cac[z] = cac[z-1];
-	cac[bestz].leng = sucklen;
-	cac[bestz].lock = &zerochar;
+  cacnum++;
+  if (cacnum > MAXCACHEOBJECTS)
+    reportandexit("Too many objects in cache! (cacnum > MAXCACHEOBJECTS)\n");
+  for (z = cacnum - 1; z > bestz; z--)
+    cac[z] = cac[z - 1];
+  cac[bestz].leng = sucklen;
+  cac[bestz].lock = &zerochar;
 }
 
-void suckcache (int32_t *suckptr)
+void
+suckcache(int32_t* suckptr)
 {
-	int32_t i;
+  int32_t i;
 
-		/* Can't exit early, because invalid pointer might be same even though lock = 0 */
-	for(i=0;i<cacnum;i++)
-		if ((intptr_t)(*cac[i].hand) == (intptr_t)suckptr)
-		{
-			if (*cac[i].lock) *cac[i].hand = 0;
-			cac[i].lock = &zerochar;
-			cac[i].hand = 0;
+  /* Can't exit early, because invalid pointer might be same even though lock = 0 */
+  for (i = 0; i < cacnum; i++)
+    if ((intptr_t)(*cac[i].hand) == (intptr_t)suckptr)
+    {
+      if (*cac[i].lock)
+        *cac[i].hand = 0;
+      cac[i].lock = &zerochar;
+      cac[i].hand = 0;
 
-				/* Combine empty blocks */
-			if ((i > 0) && (*cac[i-1].lock == 0))
-			{
-				cac[i-1].leng += cac[i].leng;
-				cacnum--; copybuf(&cac[i+1],&cac[i],(cacnum-i)*sizeof(cactype));
-			}
-			else if ((i < cacnum-1) && (*cac[i+1].lock == 0))
-			{
-				cac[i+1].leng += cac[i].leng;
-				cacnum--; copybuf(&cac[i+1],&cac[i],(cacnum-i)*sizeof(cactype));
-			}
-		}
+      /* Combine empty blocks */
+      if ((i > 0) && (*cac[i - 1].lock == 0))
+      {
+        cac[i - 1].leng += cac[i].leng;
+        cacnum--;
+        copybuf(&cac[i + 1], &cac[i], (cacnum - i) * sizeof(cactype));
+      }
+      else if ((i < cacnum - 1) && (*cac[i + 1].lock == 0))
+      {
+        cac[i + 1].leng += cac[i].leng;
+        cacnum--;
+        copybuf(&cac[i + 1], &cac[i], (cacnum - i) * sizeof(cactype));
+      }
+    }
 }
 
-void agecache(void)
+void
+agecache(void)
 {
-	int32_t cnt;
-	uint8_t  ch;
+  int32_t cnt;
+  uint8_t ch;
 
-	if (agecount >= cacnum) agecount = cacnum-1;
-	assert(agecount >= 0);
+  if (agecount >= cacnum)
+    agecount = cacnum - 1;
+  assert(agecount >= 0);
 
-	for(cnt=(cacnum>>4);cnt>=0;cnt--)
-	{
-		ch = (*cac[agecount].lock);
-		if (((ch-2)&255) < 198)
-			(*cac[agecount].lock) = (uint8_t ) (ch-1);
+  for (cnt = (cacnum >> 4); cnt >= 0; cnt--)
+  {
+    ch = (*cac[agecount].lock);
+    if (((ch - 2) & 255) < 198)
+      (*cac[agecount].lock) = (uint8_t)(ch - 1);
 
-		agecount--; if (agecount < 0) agecount = cacnum-1;
-	}
+    agecount--;
+    if (agecount < 0)
+      agecount = cacnum - 1;
+  }
 }
 
-void reportandexit(char  *errormessage)
+void
+reportandexit(char* errormessage)
 {
-	int32_t i, j;
+  int32_t i, j;
 
-	setvmode(0x3);
-	j = 0;
-	for(i=0;i<cacnum;i++)
-	{
-		printf("%d- ",i);
-		printf("ptr: 0x%p, ", *cac[i].hand);
-		printf("leng: %d, ",cac[i].leng);
-		printf("lock: %d\n",*cac[i].lock);
-		j += cac[i].leng;
-	}
-	printf("Cachesize = %d\n",cachesize);
-	printf("Cacnum = %d\n",cacnum);
-	printf("Cache length sum = %d\n",j);
-	printf("ERROR: %s",errormessage);
-	Error(EXIT_FAILURE, "");
+  setvmode(0x3);
+  j = 0;
+  for (i = 0; i < cacnum; i++)
+  {
+    printf("%d- ", i);
+    printf("ptr: 0x%p, ", *cac[i].hand);
+    printf("leng: %d, ", cac[i].leng);
+    printf("lock: %d\n", *cac[i].lock);
+    j += cac[i].leng;
+  }
+  printf("Cachesize = %d\n", cachesize);
+  printf("Cacnum = %d\n", cacnum);
+  printf("Cache length sum = %d\n", j);
+  printf("ERROR: %s", errormessage);
+  Error(EXIT_FAILURE, "");
 }
-

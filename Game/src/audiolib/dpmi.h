@@ -32,13 +32,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __DPMI_H
 
 enum DPMI_Errors
-   {
-   DPMI_Warning = -2,
-   DPMI_Error   = -1,
-   DPMI_Ok      = 0
-   };
+{
+  DPMI_Warning = -2,
+  DPMI_Error = -1,
+  DPMI_Ok = 0
+};
 
-int  DPMI_GetDOSMemory( void **ptr, void **descriptor, unsigned length );
-int  DPMI_FreeDOSMemory( void *descriptor );
+int DPMI_GetDOSMemory(void** ptr, void** descriptor, unsigned length);
+int DPMI_FreeDOSMemory(void* descriptor);
 
 #endif

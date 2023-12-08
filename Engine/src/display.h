@@ -12,23 +12,23 @@
 
 /* set these in your _platform_init() implementation. */
 int _argc;
-char  **_argv;
+char** _argv;
 
 /* !!! gads, look at all the namespace polution... */
 extern int32_t xres, yres, bytesperline, imageSize, maxpages;
-extern uint8_t  *screen, vesachecked;
+extern uint8_t *screen, vesachecked;
 extern int32_t buffermode, origbuffermode, linearmode;
-extern uint8_t  permanentupdate, vgacompatible;
-extern uint8_t  moustat;
+extern uint8_t permanentupdate, vgacompatible;
+extern uint8_t moustat;
 extern int32_t *horizlookup, *horizlookup2, horizycent;
 extern int32_t oxdimen, oviewingrange, oxyaspect;
 extern int32_t curbrightness;
 extern int32_t qsetmode;
-extern int32_t  pageoffset, ydim16;
+extern int32_t pageoffset, ydim16;
 extern uint8_t* frameplace;
 extern uint8_t* frameoffset;
-extern uint8_t  textfont[1024], smalltextfont[1024];
-extern uint8_t  pow2char[8];
+extern uint8_t textfont[1024], smalltextfont[1024];
+extern uint8_t pow2char[8];
 extern int32_t stereomode, visualpage, activepage, whiteband, blackband;
 extern int32_t searchx, searchy;
 extern int32_t wx1, wy1, wx2, wy2, ydimen;
@@ -39,16 +39,16 @@ extern int32_t xdimen, xdimenrecip, halfxdimen, xdimenscale, xdimscale;
  * !!! can be made static again.  --ryan.
  * !!! (Actually, most of these extern declarations used to be static...rcg.)
  */
-extern uint8_t  permanentlock;
+extern uint8_t permanentlock;
 
 // defined in the game project:
-extern int32_t FullScreen;  // defined in Game\src\config.c
+extern int32_t FullScreen; // defined in Game\src\config.c
 
 /* these need to be implemented by YOUR driver. */
-void _platform_init(int argc, char  **argv, const char  *title, const char  *iconName);
+void _platform_init(int argc, char** argv, const char* title, const char* iconName);
 void _idle(void);
 void _handle_events(void);
-void *_getVideoBase(void);
+void* _getVideoBase(void);
 void initkeys(void);
 void uninitkeys(void);
 void _nextpage(void);
@@ -61,29 +61,26 @@ int _joystick_hat(int hat);
 int _joystick_button(int button);
 
 void getvalidvesamodes(void);
-void VBE_getPalette(int32_t start, int32_t num, uint8_t  *dapal);
-void VBE_setPalette(uint8_t  *palettebuffer);
+void VBE_getPalette(int32_t start, int32_t num, uint8_t* dapal);
+void VBE_setPalette(uint8_t* palettebuffer);
 void VBE_presentPalette();
 
-
 void setvmode(int mode);
-uint8_t  readpixel(uint8_t  * location);
-void drawpixel(uint8_t  * location, uint8_t pixel);
-
+uint8_t readpixel(uint8_t* location);
+void drawpixel(uint8_t* location, uint8_t pixel);
 
 void drawpixel16(int32_t offset);
-void fillscreen16 (int32_t input1, int32_t input2, int32_t input3);
-
+void fillscreen16(int32_t input1, int32_t input2, int32_t input3);
 
 void clear2dscreen(void);
 void _updateScreenRect(int32_t x, int32_t y, int32_t w, int32_t h);
 
 /* mouse/keystuff stuff. Also implemented in sdl_driver.c ... */
 int setupmouse(void);
-void readmousexy(short *x, short *y);
-void readmousebstatus(short *bstatus);
+void readmousexy(short* x, short* y);
+void readmousebstatus(short* bstatus);
 void keyhandler(void);
-uint8_t  _readlastkeyhit(void);
+uint8_t _readlastkeyhit(void);
 
 /* timer krap. */
 int inittimer(int);
@@ -97,7 +94,7 @@ int32_t _setgamemode(int32_t daxdim, int32_t daydim);
 
 uint32_t getticks();
 
-void drawline16(int32_t XStart, int32_t YStart, int32_t XEnd, int32_t YEnd, uint8_t  Color);
+void drawline16(int32_t XStart, int32_t YStart, int32_t XEnd, int32_t YEnd, uint8_t Color);
 void setcolor16(uint8_t color);
 
 #endif

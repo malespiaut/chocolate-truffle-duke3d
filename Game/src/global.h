@@ -11,22 +11,22 @@
 
 #include <stdint.h>
 
-void FixFilePath(char  *filename);
+void FixFilePath(char* filename);
 int FindDistance3D(int ix, int iy, int iz);
 void Shutdown(void);
 
 #ifndef LITTLE_ENDIAN
-    #ifdef __APPLE__
-    #else
-        #define LITTLE_ENDIAN 1234
-    #endif
+#ifdef __APPLE__
+#else
+#define LITTLE_ENDIAN 1234
+#endif
 #endif
 
 #ifndef BIG_ENDIAN
-     #ifdef __APPLE__
-     #else
-        #define BIG_ENDIAN 4321
-    #endif
+#ifdef __APPLE__
+#else
+#define BIG_ENDIAN 4321
+#endif
 #endif
 
 #if WIN32
@@ -60,9 +60,9 @@ void Shutdown(void);
 #define Swapint32_t IntelLong
 #endif
 
-int32_t MotoLong (int32_t l);
-int32_t IntelLong (int32_t l);
+int32_t MotoLong(int32_t l);
+int32_t IntelLong(int32_t l);
 
-void Error (int errorType, const char *error, ...);
+void Error(int errorType, const char* error, ...);
 
 #endif

@@ -34,13 +34,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../duke3d.h"
 
 enum PITCH_ERRORS
-   {
-   PITCH_Warning = -2,
-   PITCH_Error = -1,
-   PITCH_Ok = 0,
-   };
+{
+  PITCH_Warning = -2,
+  PITCH_Error = -1,
+  PITCH_Ok = 0,
+};
 
-//void          PITCH_Init( void );
-uint32_t PITCH_GetScale( int pitchoffset );
+// void          PITCH_Init( void );
+uint32_t PITCH_GetScale(int pitchoffset);
 
 #endif

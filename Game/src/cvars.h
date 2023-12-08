@@ -6,20 +6,19 @@
 
 #include <inttypes.h>
 
-typedef void (*function_t) (void* binding);
+typedef void (*function_t)(void* binding);
 
 typedef struct t_cvar_binding
 {
-  char           name[64];
-  char           help[64];
-  void*         variable;
-  function_t	function;
+  char name[64];
+  char help[64];
+  void* variable;
+  function_t function;
 } cvar_binding;
 
-
-void            CVAR_RegisterCvar(const char * varname, const char * varhelp, void* variable, function_t function);
-int             CVAR_GetNumCvarBindings();
-cvar_binding*   CVAR_GetCvarBinding(int nBinding);
-void            CVAR_Render();
+void CVAR_RegisterCvar(const char* varname, const char* varhelp, void* variable, function_t function);
+int CVAR_GetNumCvarBindings();
+cvar_binding* CVAR_GetCvarBinding(int nBinding);
+void CVAR_Render();
 
 #endif

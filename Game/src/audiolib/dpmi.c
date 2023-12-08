@@ -28,20 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
    (c) Copyright 1994 James R. Dose.  All Rights Reserved.
 **********************************************************************/
 
-#include <stdlib.h>
 #include "dpmi.h"
+#include <stdlib.h>
 
-int DPMI_GetDOSMemory( void **ptr, void **descriptor, unsigned length )
+int
+DPMI_GetDOSMemory(void** ptr, void** descriptor, unsigned length)
 {
-    *ptr = malloc(length);
-	*descriptor = *ptr;
-	
-	return (descriptor == 0) ? DPMI_Error : DPMI_Ok;
+  *ptr = malloc(length);
+  *descriptor = *ptr;
+
+  return (descriptor == 0) ? DPMI_Error : DPMI_Ok;
 }
 
-int DPMI_FreeDOSMemory( void* descriptor )
+int
+DPMI_FreeDOSMemory(void* descriptor)
 {
-	free(descriptor);
-	
-	return (descriptor == 0) ? DPMI_Error : DPMI_Ok;
+  free(descriptor);
+
+  return (descriptor == 0) ? DPMI_Error : DPMI_Ok;
 }

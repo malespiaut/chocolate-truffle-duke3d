@@ -20,16 +20,12 @@
 #include <stdint.h>
 
 void initcache(uint8_t* dacachestart, int32_t dacachesize);
-void allocache (uint8_t* *newhandle, int32_t newbytes, uint8_t  *newlockptr);
-void suckcache (int32_t *suckptr);
+void allocache(uint8_t** newhandle, int32_t newbytes, uint8_t* newlockptr);
+void suckcache(int32_t* suckptr);
 void agecache(void);
 
+void reportandexit(char* errormessage);
 
-void reportandexit(char  *errormessage);
-
-
-//Filesystem
-
-
+// Filesystem
 
 #endif

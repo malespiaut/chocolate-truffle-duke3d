@@ -11,8 +11,6 @@
 
 #include "build.h"
 
-
-
 /*
 // The dimension of the tile in texels unit. The sizes can be obtained for
 // any tile by doing a tilesizx * tilesizy
@@ -31,21 +29,19 @@ EXTERN int32_t numtiles, picanm[MAXTILES];
 EXTERN uint8_t* waloff[MAXTILES];
 */
 
-
-
-
-typedef struct dimensions_s{
-    short width;
-    short height;
+typedef struct dimensions_s
+{
+  short width;
+  short height;
 } dimensions_t;
 
-typedef struct tile_s{
-    dimensions_t dim;
-    uint8_t lock;
-    int32_t animFlags;
-    uint8_t* data;
+typedef struct tile_s
+{
+  dimensions_t dim;
+  uint8_t lock;
+  int32_t animFlags;
+  uint8_t* data;
 } tile_t;
-
 
 extern tile_t tiles[MAXTILES];
 
@@ -54,19 +50,16 @@ void squarerotatetile(short tilenume);
 
 void loadtile(short tilenume);
 uint8_t* allocatepermanenttile(short tilenume, int32_t width, int32_t height);
-int loadpics(char  *filename, char * gamedir);
-void copytilepiece(int32_t tilenume1, int32_t sx1, int32_t sy1, int32_t xsiz, int32_t ysiz,int32_t tilenume2, int32_t sx2, int32_t sy2);
+int loadpics(char* filename, char* gamedir);
+void copytilepiece(int32_t tilenume1, int32_t sx1, int32_t sy1, int32_t xsiz, int32_t ysiz, int32_t tilenume2, int32_t sx2, int32_t sy2);
 
-
-//Bitvector marking picture used for rendition.
-extern uint8_t  gotpic[(MAXTILES+7)>>3];
+// Bitvector marking picture used for rendition.
+extern uint8_t gotpic[(MAXTILES + 7) >> 3];
 void setgotpic(int32_t tilenume);
-
-
 
 int animateoffs(int16_t tilenum);
 
-extern uint8_t  *pic ;
+extern uint8_t* pic;
 
 void TILE_MakeAvailable(short picID);
 

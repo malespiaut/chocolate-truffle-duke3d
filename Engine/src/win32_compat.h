@@ -14,16 +14,16 @@
  * See the included license file "BUILDLIC.TXT" for license info.
  * This file IS NOT A PART OF Ken Silverman's original release
  */
-  
+
 #ifndef _INCLUDE_WIN32_COMPAT_H_
 #define _INCLUDE_WIN32_COMPAT_H_
 
 #ifndef max
-#define max(x, y)  (((x) > (y)) ? (x) : (y))
+#define max(x, y) (((x) > (y)) ? (x) : (y))
 #endif
 
 #ifndef min
-#define min(x, y)  (((x) < (y)) ? (x) : (y))
+#define min(x, y) (((x) < (y)) ? (x) : (y))
 #endif
 
 #if (defined _MSC_VER)

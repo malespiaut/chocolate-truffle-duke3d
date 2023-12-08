@@ -9,7 +9,6 @@
 #ifndef Duke3D_premap_h
 #define Duke3D_premap_h
 
-
 void resetmys(void);
 void docacheit(void);
 void clearfifo(void);
